@@ -4,9 +4,9 @@ import unittest
 import lxml.etree as etree
 import time
 
-from tests.common import validate, URL, get_response
+from tests.common import validate, server_wps_url, get_response
 
-from tests.common import NAMESPACES
+from tests.common import NAMESPACES, server_base_url
 
 class SayHello(unittest.TestCase):
     """Test sayhello process
@@ -20,13 +20,13 @@ class SayHello(unittest.TestCase):
     def test_valid(self):
         "GET Execute request"
 
-        url = URL + '?service=wps&request=execute&identifier=say_hello&version=1.0.0&datainputs=name=ahoj'
+        url = server_wps_url + '?service=wps&request=execute&identifier=say_hello&version=1.0.0&datainputs=name=ahoj'
         assert validate(url, self.schema_url)
 
     def test_valid_lineage(self):
         "GET Execute request, lineage=true"
 
-        url = URL + '?service=wps&request=execute&identifier=say_hello&version=1.0.0&datainputs=name=ahoj&lineage=true'
+        url = server_wps_url + '?service=wps&request=execute&identifier=say_hello&version=1.0.0&datainputs=name=ahoj&lineage=true'
         assert validate(url, self.schema_url)
 
 class Buffer(unittest.TestCase):
@@ -36,8 +36,8 @@ class Buffer(unittest.TestCase):
     def setUp(self):
 
         self.schema_url = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_response.xsd'
-        self.url = URL
-        resp = get_response('http://localhost:5000/static/requests/execute_buffer_post.xml')
+        self.url = server_wps_url
+        resp = get_response(server_base_url + '/static/requests/buffer.xml')
         self.request_data = resp.read()
 
     def test_valid(self):
@@ -64,7 +64,7 @@ class SyncAndAsync(unittest.TestCase):
 
     def _get_response(self, request):
 
-        response = get_response(URL, request)
+        response = get_response(server_wps_url, request)
         response_data = response.read()
         response_doc = etree.fromstring(response_data)
 
@@ -72,7 +72,7 @@ class SyncAndAsync(unittest.TestCase):
 
 
     def test_sync(self):
-        request = self._get_request('http://localhost:5000/static/requests/execute_buffer_post.xml')
+        request = self._get_request(server_base_url + '/static/requests/buffer.xml')
         response = self._get_response(request)
 
         self.assertEqual(
@@ -101,7 +101,7 @@ class SyncAndAsync(unittest.TestCase):
             namespaces=NAMESPACES))
 
     def test_async(self):
-        request = self._get_request('http://localhost:5000/static/requests/execute_buffer_async.xml')
+        request = self._get_request(server_base_url + '/static/requests/execute_buffer_async.xml')
         response = self._get_response(request)
 
         self.assertEqual(
@@ -131,7 +131,7 @@ class SyncAndAsync(unittest.TestCase):
             namespaces=NAMESPACES))
 
     def test_async_reference(self):
-        request = self._get_request('http://localhost:5000/static/requests/execute_buffer_async_reference.xml')
+        request = self._get_request(server_base_url + '/static/requests/execute_buffer_async_reference.xml')
         response = self._get_response(request)
 
         self.assertTrue(response.xpath(
