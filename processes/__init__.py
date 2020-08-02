@@ -8,6 +8,15 @@ from .area import Area
 from .bboxinout import Box
 from .jsonprocess import TestJson
 
+from .info import GetInfo
+from .ls import ls
+from .invert import Invert
+from .crop_color import GdalDem
+from .rasval import RasterValue
+from .viewshed import ViewShed
+from .calc import Calc
+from .tester import Tester
+
 # For the process list on the home page
 processes = [
     SayHello(),
@@ -18,7 +27,16 @@ processes = [
     Buffer(),
     Area(),
     Box(),
-    TestJson()
+    TestJson(),
+
+    GetInfo(),
+    ls(),
+    Invert(),
+    GdalDem(),
+    RasterValue(),
+    ViewShed(),
+    Calc(),
+    Tester(),
 ]
 
 # For the process list on the home page

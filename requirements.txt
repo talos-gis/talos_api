@@ -10,3 +10,6 @@ Werkzeug
 SQLAlchemy
 psutil
 pywps
+czml3
+pyyaml
+gdalos

@@ -1,4 +1,7 @@
+MIT License
+
 Copyright (C) 2015 PyWPS Development Team, represented by Jachym Cepicky
+Copyright (C) 2020 Idan Miara, Ben Avrahami
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to

@@ -1,0 +1,27 @@
+say_hello:
+  name: "default-config"
+
+ls:
+  dir: './static/data/maps'
+  pattern: "*.tif"
+
+ras_val:
+  r: './static/data/maps/srtm1_x35_y32.tif'
+#  r: '@xlink:href=file:./static/data/maps/srtm1_x35_y32.tif'
+
+crop_color:
+  r: './static/data/maps/srtm1_x35_y32.tif'
+#  color_palette: './static/data/color_files/color_file_1.txt'
+  of: 'czml'
+#  output_czml: True
+#  output_tif: False
+
+viewshed:
+  of: 'czml'
+  r: './static/data/maps/srtm1_w84u36.tif'
+#  r: './static/data/maps/srtm1_il_w84u36.tif'
+  in_crs: '0'
+  out_crs: '0'
+
+tester:
+  name: 'Idan'

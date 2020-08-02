@@ -16,3 +16,5 @@ pywps_demo.egg-info/
 
 # docs build artifacts
 _build/
+
+temp/
