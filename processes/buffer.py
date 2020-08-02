@@ -1,6 +1,7 @@
+import tempfile
 
 from pywps import Process, LiteralInput, \
-        ComplexInput, ComplexOutput, Format, FORMATS
+        ComplexInput, ComplexOutput, LiteralOutput, Format, FORMATS
 
 
 from pywps.validator.mode import MODE
@@ -19,7 +20,8 @@ class Buffer(Process):
                                  supported_formats=[
                                             Format('application/gml+xml')
                                             ]
-                                 )]
+                                 ),
+                   LiteralOutput('r', 'input raster name', data_type='string')]
 
         super(Buffer, self).__init__(
             self._handler,
@@ -38,18 +40,21 @@ class Buffer(Process):
     def _handler(self, request, response):
         from osgeo import ogr
 
-        inSource = ogr.Open(request.inputs['poly_in'][0].file)
+        filename = request.inputs['poly_in'][0].file
+        response.outputs['r'].data = filename
+        inSource = ogr.Open(filename)
 
         inLayer = inSource.GetLayer()
-        out = inLayer.GetName() + '_buffer'
+        layerName = inLayer.GetName() + '_buffer'
+        out_filename = tempfile.mktemp()
 
         # create output file
         driver = ogr.GetDriverByName('GML')
         outSource = driver.CreateDataSource(
-                                out,
+                                out_filename,
                                 ["XSISCHEMAURI=\
                             http://schemas.opengis.net/gml/2.1.2/feature.xsd"])
-        outLayer = outSource.CreateLayer(out, None, ogr.wkbUnknown)
+        outLayer = outSource.CreateLayer(layerName, None, ogr.wkbUnknown)
 
         # for each feature
         featureCount = inLayer.GetFeatureCount()
@@ -75,6 +80,6 @@ class Buffer(Process):
         outSource.Destroy()
 
         response.outputs['buff_out'].output_format = FORMATS.GML
-        response.outputs['buff_out'].file = out
+        response.outputs['buff_out'].file = out_filename
 
         return response

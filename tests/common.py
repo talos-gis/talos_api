@@ -3,7 +3,7 @@ import sys
 import urllib
 PY2 = sys.version_info[0] == 2
 
-URL = 'http://localhost:5000/wps'
+from app_config import server_wps_url, server_base_url
 
 NAMESPACES = {
     'xlink': "http://www.w3.org/1999/xlink",
