@@ -10,19 +10,6 @@
 
     <wps:DataInputs>
 
-		<wps:Input>
-            <ows:Identifier>output_tif</ows:Identifier>
-            <wps:Data>
-                <wps:LiteralData>False</wps:LiteralData>
-            </wps:Data>
-		</wps:Input>
-
-        <wps:Input>
-            <ows:Identifier>output_czml</ows:Identifier>
-            <wps:Data>
-                <wps:LiteralData>True</wps:LiteralData>
-            </wps:Data>
-		</wps:Input>
 
 <!--		<wps:Input>-->
 <!--            <ows:Identifier>extent</ows:Identifier>-->
@@ -38,8 +25,8 @@
             <ows:Identifier>extent</ows:Identifier>
             <wps:Data>
                 <wps:BoundingBoxData crs="EPSG:4326" dimenstions="2">
-                    <ows:LowerCorner>35.2 32.6</ows:LowerCorner>
-                    <ows:UpperCorner>35.3 32.7</ows:UpperCorner>
+                    <ows:LowerCorner>35.02 32.02</ows:LowerCorner>
+                    <ows:UpperCorner>35.15 32.15</ows:UpperCorner>
 <!--                    <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>-->
 <!--                    <ows:UpperCorner>180.0 90.0</ows:UpperCorner>-->
                 </wps:BoundingBoxData>
@@ -51,31 +38,40 @@
             <wps:Data>
                 <wps:ComplexData>
 
-                    <ogr:FeatureCollection
-                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                         xsi:schemaLocation="http://ogr.maptools.org/ poly.xsd"
-                         xmlns:ogr="http://ogr.maptools.org/"
-                         xmlns:gml="http://www.opengis.net/gml">
-                      <gml:boundedBy>
-                        <gml:Box>
-                          <gml:coord><gml:X>35.15711864406779</gml:X><gml:Y>32.52847457627119</gml:Y></gml:coord>
-                          <gml:coord><gml:X>35.45135593220338</gml:X><gml:Y>32.78237288135593</gml:Y></gml:coord>
-                        </gml:Box>
-                      </gml:boundedBy>
+                <ogr:FeatureCollection
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://ogr.maptools.org/ poly1.xsd"
+                    xmlns:ogr="http://ogr.maptools.org/"
+                    xmlns:gml="http://www.opengis.net/gml">
+                  <gml:boundedBy>
+                    <gml:Box>
+                      <gml:coord><gml:X>35.02971332582586</gml:X><gml:Y>32.00907837837838</gml:Y></gml:coord>
+                      <gml:coord><gml:X>35.11521930680684</gml:X><gml:Y>32.09218463463463</gml:Y></gml:coord>
+                    </gml:Box>
+                  </gml:boundedBy>
 
-                      <gml:featureMember>
-                        <ogr:poly fid="poly.0">
-                          <ogr:geometryProperty><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1571186440678,32.6708474576271 35.2864406779661,32.7823728813559 35.4513559322034,32.6471186440678 35.3338983050847,32.6115254237288 35.1571186440678,32.6708474576271</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>
-                          <ogr:id xsi:nil="true"/>
-                        </ogr:poly>
-                      </gml:featureMember>
-                      <gml:featureMember>
-                        <ogr:poly fid="poly.1">
-                          <ogr:geometryProperty><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1666101694915,32.5913559322034 35.2733898305085,32.606779661017 35.2710169491525,32.536779661017 35.185593220339,32.5284745762712 35.1666101694915,32.5913559322034</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>
-                          <ogr:id xsi:nil="true"/>
-                        </ogr:poly>
-                      </gml:featureMember>
-                    </ogr:FeatureCollection>
+                  <gml:featureMember>
+                    <ogr:poly1 fid="poly1.0">
+                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0297133258259,32.0832172422422 35.0487848223224,32.0918057307307 35.0596467342343,32.0729868368368 35.0359020895896,32.0622512262262 35.0297133258259,32.0832172422422</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
+                    </ogr:poly1>
+                  </gml:featureMember>
+                  <gml:featureMember>
+                    <ogr:poly1 fid="poly1.1">
+                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.084275487988,32.076396971972 35.0905905530531,32.0921846346346 35.1152193068068,32.0787966966967 35.0905905530531,32.0652824574575 35.084275487988,32.076396971972</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
+                    </ogr:poly1>
+                  </gml:featureMember>
+                  <gml:featureMember>
+                    <ogr:poly1 fid="poly1.2">
+                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0669722097097,32.0612408158158 35.0563629004004,32.0426745245245 35.0787182307308,32.0429271271271 35.0669722097097,32.0612408158158</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
+                    </ogr:poly1>
+                  </gml:featureMember>
+                  <gml:featureMember>
+                    <ogr:poly1 fid="poly1.3">
+                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0390596221222,32.0396432932933 35.0510582457458,32.0227189189189 35.0845280905906,32.0234767267267 35.1056204079079,32.0396432932933 35.0921061686687,32.0099624874875 35.0497952327328,32.0090783783784 35.0390596221222,32.0396432932933</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
+                    </ogr:poly1>
+                  </gml:featureMember>
+                </ogr:FeatureCollection>
+
 
                 </wps:ComplexData>
             </wps:Data>
