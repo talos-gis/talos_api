@@ -35,7 +35,7 @@ class ViewShed(Process):
 
             ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
             LiteralInputD(defaults, 'bi', 'band index', data_type='positiveInteger', default=1, min_occurs=0, max_occurs=1),
-            LiteralInputD(defaults, 'r_ovr', 'input raster ovr', data_type='integer', default=-1, min_occurs=0, max_occurs=1),
+            LiteralInputD(defaults, 'r_ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0, max_occurs=1),
 
             LiteralInputD(defaults, 'co', 'creation options', data_type='string', min_occurs=0, max_occurs=1),
 
@@ -175,7 +175,7 @@ class ViewShed(Process):
 
         else:
             r_ovr = request.inputs['r_ovr'][0].data
-            raster_filename, input_ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0], src_ovr=r_ovr)
+            raster_filename, input_ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0], ovr_idx=r_ovr)
             response.outputs['r'].data = raster_filename
             bi = request.inputs['bi'][0].data
 
