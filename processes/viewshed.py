@@ -35,7 +35,7 @@ class ViewShed(Process):
 
             ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
             LiteralInputD(defaults, 'bi', 'band index', data_type='positiveInteger', default=1, min_occurs=0, max_occurs=1),
-            LiteralInputD(defaults, 'r_ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0, max_occurs=1),
+            LiteralInputD(defaults, 'ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0, max_occurs=1),
 
             LiteralInputD(defaults, 'co', 'creation options', data_type='string', min_occurs=0, max_occurs=1),
 
@@ -174,8 +174,8 @@ class ViewShed(Process):
             input_ds = bi = arrays_dict = in_coords_crs_pj = out_crs = color_palette = None
 
         else:
-            r_ovr = request.inputs['r_ovr'][0].data
-            raster_filename, input_ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0], ovr_idx=r_ovr)
+            ovr_idx = request.inputs['ovr'][0].data
+            raster_filename, input_ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0], ovr_idx=ovr_idx)
             response.outputs['r'].data = raster_filename
             bi = request.inputs['bi'][0].data
 
@@ -197,7 +197,7 @@ class ViewShed(Process):
 
         vp_slice = process_helper.get_request_data(request.inputs, 'vps')
 
-        viewshed_calc(input_ds=input_ds, input_filename=raster_filename, bi=bi, backend=backend,
+        viewshed_calc(input_ds=input_ds, input_filename=raster_filename, ovr_idx=ovr_idx, bi=bi, backend=backend,
                       output_filename=output_filename, co=co, of=of,
                       vp_array=arrays_dict, extent=extent, cutline=cutline, operation=operation,
                       in_coords_crs_pj=in_coords_crs_pj, out_crs=out_crs,
