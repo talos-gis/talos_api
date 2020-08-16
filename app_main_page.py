@@ -23,7 +23,7 @@ def sys_path():
     return str(sys.path)
 
 
-# return 'hello to the WPS server root'
+# returns 'hello to the WPS server root'
 @main_page.route('/wps', methods=['GET', 'POST'])
 def wps():
     return service
@@ -31,7 +31,6 @@ def wps():
 
 @main_page.route("/")
 def hello():
-    # server_wps_url = pywps.configuration.get_config_value("server", "url")
     request_url = flask.request.url
     return flask.render_template('home.html', request_url=request_url,
                                  server_url=app_config.server_wps_url,
