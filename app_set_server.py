@@ -1,11 +1,12 @@
 import re
+from exceptions import BadUserInputError
 
 
 def set_server(new_server_wps_url: str):
     pattern = r'((?:.*://)?(.*?)(?:(?::)(\d+))?(?:/.*?)?)$'
     m = re.match(pattern, new_server_wps_url)
     if not m:
-        raise Exception('cannot parse server url: {}'.format(new_server_wps_url))
+        raise BadUserInputError('cannot parse server url: {}'.format(new_server_wps_url))
     # print(m.groups())
     server_wps_url = m.group(1)
     if server_wps_url.endswith('/'):
