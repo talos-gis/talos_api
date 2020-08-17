@@ -4,6 +4,9 @@ import urllib
 
 PY2 = sys.version_info[0] == 2
 
+# server_wps_url, server_base_url are used in the tests
+from app_config import server_wps_url, server_base_url
+
 NAMESPACES = {
     'xlink': "http://www.w3.org/1999/xlink",
     'wps': "http://www.opengis.net/wps/1.0.0",
