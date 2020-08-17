@@ -42,42 +42,42 @@ class Buffer(Process):
 
         filename = request.inputs['poly_in'][0].file
         response.outputs['r'].data = filename
-        inSource = ogr.Open(filename)
+        in_source = ogr.Open(filename)
 
-        inLayer = inSource.GetLayer()
-        layerName = inLayer.GetName() + '_buffer'
+        in_layer = in_source.GetLayer()
+        layer_name = in_layer.GetName() + '_buffer'
         out_filename = tempfile.mktemp()
 
         # create output file
         driver = ogr.GetDriverByName('GML')
-        outSource = driver.CreateDataSource(
+        out_source = driver.CreateDataSource(
                                 out_filename,
                                 ["XSISCHEMAURI=\
                             http://schemas.opengis.net/gml/2.1.2/feature.xsd"])
-        outLayer = outSource.CreateLayer(layerName, None, ogr.wkbUnknown)
+        out_layer = out_source.CreateLayer(layer_name, None, ogr.wkbUnknown)
 
         # for each feature
-        featureCount = inLayer.GetFeatureCount()
+        feature_count = in_layer.GetFeatureCount()
         index = 0
 
-        while index < featureCount:
+        while index < feature_count:
             # get the geometry
-            inFeature = inLayer.GetNextFeature()
-            inGeometry = inFeature.GetGeometryRef()
+            in_feature = in_layer.GetNextFeature()
+            in_geometry = in_feature.GetGeometryRef()
 
             # make the buffer
-            buff = inGeometry.Buffer(float(request.inputs['buffer'][0].data))
+            buff = in_geometry.Buffer(float(request.inputs['buffer'][0].data))
 
             # create output feature to the file
-            outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
-            outFeature.SetGeometryDirectly(buff)
-            outLayer.CreateFeature(outFeature)
-            outFeature.Destroy()  # makes it crash when using debug
+            out_feature = ogr.Feature(feature_def=out_layer.GetLayerDefn())
+            out_feature.SetGeometryDirectly(buff)
+            out_layer.CreateFeature(out_feature)
+            out_feature.Destroy()  # makes it crash when using debug
             index += 1
 
-            response.update_status('Buffering', 100*(index/featureCount))
+            response.update_status('Buffering', 100*(index/feature_count))
 
-        outSource.Destroy()
+        out_source.Destroy()
 
         response.outputs['buff_out'].output_format = FORMATS.GML
         response.outputs['buff_out'].file = out_filename
