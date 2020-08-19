@@ -4,9 +4,7 @@ import unittest
 import lxml.etree as etree
 import time
 
-from tests.common import validate, server_wps_url, get_response
-
-from tests.common import NAMESPACES, server_base_url
+from tests.common import NAMESPACES, validate, server_wps_url, server_base_url, get_response, schema_wps_url
 
 
 process_succeeded = '//wps:ExecuteResponse/wps:Status/wps:ProcessSucceeded'
@@ -22,7 +20,7 @@ class SayHello(unittest.TestCase):
     """
 
     def setUp(self):
-        self.schema_url = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_response.xsd'
+        self.schema_url = schema_wps_url
 
     def test_valid(self):
         """GET Execute request"""
@@ -37,7 +35,7 @@ class Buffer(unittest.TestCase):
     """
 
     def setUp(self):
-        self.schema_url = 'http://schemas.opengis.net/wps/1.0.0/wpsExecute_response.xsd'
+        self.schema_url = schema_wps_url
         self.url = server_wps_url
         resp = get_response(server_base_url + '/static/requests/buffer.xml')
         self.request_data = resp.read()
@@ -169,3 +167,7 @@ def load_tests(loader=None, tests=None, pattern=None):
         loader.loadTestsFromTestCase(Buffer)
     ]
     return unittest.TestSuite(suite_list)
+
+
+if __name__ == "__main__":
+    load_tests()
