@@ -1,15 +1,19 @@
+import os
 import yaml
 from pywps import LiteralInput, ComplexInput, BoundingBoxInput
 
 
 def process_defaults(id, filename="./config/process_defaults.yaml"):
     if 'd' not in process_defaults.__dict__:
-        try:
-            stream = open(filename, 'r')
-            process_defaults.d = yaml.safe_load(stream)
-        except:
-            print('process defaults not found')
-            process_defaults.d = dict()
+        process_defaults.d = dict()
+        if os.path.exists(filename):
+            try:
+                stream = open(filename, 'r')
+                process_defaults.d = yaml.safe_load(stream)
+            except yaml.scanner.ScannerError as err:
+                print('process defaults cannot be loaded {}'.format(err))
+            except:
+                pass
     return process_defaults.d.get(id, dict())
 
 
