@@ -23,15 +23,19 @@
 
 import flask
 
-from set_root import set_root
 # we need to set the root before we import the main_page as there are relative paths to this root (i.e. config files)
-set_root()
+import sys
+import os
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
+os.chdir(project_root)
 
 from app_main_page import main_page
 
 app = flask.Flask(__name__)
 app.register_blueprint(main_page)
 
+application = app  # application is the default name for mod_wsgi
 
 if __name__ == "__main__":
     app.run()
