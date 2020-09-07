@@ -21,9 +21,10 @@ crop_color:
 
 viewshed:
 #  r: './static/data/maps/SRTM1_hgt.x[27.97,37.98]_y[27.43,37.59].cog.tif'
-#  r: 'd:\Maps\w84u36\dtm_SRTM1_hgt_ndv0.w84u36.[31.0, -31.0].x[26.84,40.05]_y[21.8,40.48].scale_0.1.cog.tif'
+#  r: 'd:\Maps\srtm3.tif\utm.cog2\*.tif'
+  r: 'd:\Maps\w84u36\dtm_SRTM1_hgt_ndv0.w84u36.[31.0, -31.0].x[26.84,40.05]_y[21.8,40.48].scale_0.1.cog.tif'
 #  r: './static/data/maps/srtm1_w84u36.tif'
-  r: 'd:\Maps\w84geo\dtm_SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
+#  r: 'd:\Maps\w84geo\dtm_SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
   of: 'czml'
   in_crs: '0'
   out_crs: '0'
