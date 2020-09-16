@@ -1,15 +1,14 @@
 import importlib
 
-import osgeo.gdal
-from pywps import Process, LiteralInput, LiteralOutput, UOM
-from .process_defaults import process_defaults, LiteralInputD
+from pywps import Process, LiteralOutput
+from .process_defaults import process_defaults
+
 
 class GetInfo(Process):
     def __init__(self):
         process_id = 'info'
         defaults = process_defaults(process_id)
-        # inputs = [LiteralInputD(defaults, 'name', 'Input name', data_type='string', default=None)]
-        self.modules = ('talos_wps', 'talosgis', 'gdalos', 'osgeo.gdal')
+        self.modules = ('processes.__data__', 'talosgis', 'gdalos', 'osgeo.gdal')
         outputs = [
             LiteralOutput('output', 'service version', data_type='string'),
             *[LiteralOutput(module, f'{module} version', data_type='string') for module in self.modules]

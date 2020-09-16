@@ -51,9 +51,9 @@ if exist %talos_wps_7z% (
 @echo step 3: install talos_wps python package requirements
 ::%PYTHONHOME%\python -m pip install wheels\%gdal_whl%
 ::%PYTHONHOME%\python -m pip install -r %talos_wps%\requirements.txt
-::%PYTHONHOME%\python -m pip download -r %talos_wps%\requirements.txt
-python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements.txt
-python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements-opt.txt
+::%PYTHONHOME%\python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements-opt.txt
+%PYTHONHOME%\python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements.txt
+
 
 @echo step 4: extract talos_wps additional files
 7za x %talos2_7z% -aoa -o%PYTHONHOME%
