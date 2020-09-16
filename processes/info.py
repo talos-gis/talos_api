@@ -1,14 +1,19 @@
+import importlib
+
 import osgeo.gdal
 from pywps import Process, LiteralInput, LiteralOutput, UOM
 from .process_defaults import process_defaults, LiteralInputD
-
 
 class GetInfo(Process):
     def __init__(self):
         process_id = 'info'
         defaults = process_defaults(process_id)
         # inputs = [LiteralInputD(defaults, 'name', 'Input name', data_type='string', default=None)]
-        outputs = [LiteralOutput('output', 'Output response', data_type='string')]
+        self.modules = ('talos_wps', 'talosgis', 'gdalos', 'osgeo.gdal')
+        outputs = [
+            LiteralOutput('output', 'service version', data_type='string'),
+            *[LiteralOutput(module, f'{module} version', data_type='string') for module in self.modules]
+        ]
 
         super(GetInfo, self).__init__(
             self._handler,
@@ -23,6 +28,10 @@ class GetInfo(Process):
         )
 
     def _handler(self, request, response):
-        response.outputs['output'].data = 'Gdal version: {}'.format(osgeo.gdal.__version__)
-        response.outputs['output'].uom = UOM('unity')
+        versions = {}
+        for m in self.modules:
+            version = importlib.import_module(m).__version__
+            versions[m] = version
+            response.outputs[m].data = version
+        response.outputs['output'].data = '; '.join([f'{m}: {versions[m]}' for m in self.modules])
         return response

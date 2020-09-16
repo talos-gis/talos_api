@@ -1,0 +1,5 @@
+__version__ = "2.1.1"
+__author__ = "Idan Miara"
+__author_email__ = "idan@miara.com"
+__license__ = "MIT"
+__url__ = r"https://github.com/talos-gis"
