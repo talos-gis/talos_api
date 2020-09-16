@@ -160,7 +160,12 @@ class ViewShed(Process):
                 except ValueError:
                     raise Exception ('unknown operation requested {}'.format(operation))
 
-        color_palette = ColorPalette.from_string_list(process_helper.get_request_data(request.inputs, 'color_palette', True))
+        color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
+        if color_palette is None:
+            if is_czml:
+                raise Exception('color_palette is required for czml output')
+        else:
+            color_palette = ColorPalette.from_string_list(color_palette)
         discrete_mode = process_helper.get_request_data(request.inputs, 'discrete_mode')
 
         output_filename = tempfile.mktemp(suffix=ext)
