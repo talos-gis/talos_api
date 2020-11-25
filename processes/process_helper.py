@@ -1,6 +1,7 @@
-import os
+import copy
+from typing import List
+
 from gdalos import gdalos_util
-from gdalos import gdalos_color
 
 
 def get_request_data(request_input, name, get_file: bool = False, index=0):
@@ -14,8 +15,12 @@ def get_request_data(request_input, name, get_file: bool = False, index=0):
     return result
 
 
-def get_input_data_array(request_input):
+def get_input_data_array(request_input) -> List:
     return [x.data for x in request_input]
+
+
+def get_arrays_dict(request_inputs, params) -> dict:
+    return {k: get_input_data_array(request_inputs[k]) if k in request_inputs else None for k in params}
 
 
 def open_ds_from_wps_input(request_input, **kwargs):

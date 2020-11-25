@@ -5,7 +5,7 @@ from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
 from .process_defaults import process_defaults, LiteralInputD, ComplexInputD, BoundingBoxInputD
 import numpy as np
-import gdal
+from osgeo import gdal
 
 
 class Invert(Process):

@@ -30,6 +30,21 @@ viewshed:
   out_crs: '0'
   backend: 'talos'
 
+  frequency: 3333.0
+  KFactor: 0
+  polarity: 'h'
+  calc_type: 'PathLoss'
+
+  refractivity: 333.0
+  conductivity: 3.0
+  permittivity: 33.0
+  humidity: 33.0
+
+  power_diff: 100
+  sampling_interval: 0
+  fill_center: True
+  profile_extension: True
+
 tester:
   r: 'd:\Maps\w84geo\dtm_SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
   name: 'Tester'
