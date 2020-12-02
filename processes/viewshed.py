@@ -13,8 +13,7 @@ from pywps.response.execute import ExecuteResponse
 from processes import process_helper
 from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
 from backend.formats import czml_format
-from gdalos import GeoRectangle
-from gdalos import gdalos_util
+from gdalos.gdalos_main import GeoRectangle, gdalos_util
 from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation, ViewshedBackend
 from gdalos.viewshed.viewshed_params import ViewshedParams
 from gdalos.gdalos_color import ColorPalette

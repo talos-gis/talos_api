@@ -24,7 +24,7 @@ set wheels=%~dp0\wheels\
 
 @echo talos_wps install files
 set talos_wps_7z=%~dp0\talos_wps_install\talos_wps.7z
-set talos2_7z=%~dp0\talos_wps_install\talos2.7z
+set talos_7z=%~dp0\talos_wps_install\talos.7z
 
 @echo step 1: installing python
 if %1x==x (
@@ -51,12 +51,12 @@ if exist %talos_wps_7z% (
 @echo step 3: install talos_wps python package requirements
 ::%PYTHONHOME%\python -m pip install wheels\%gdal_whl%
 ::%PYTHONHOME%\python -m pip install -r %talos_wps%\requirements.txt
-::%PYTHONHOME%\python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements-opt.txt
-%PYTHONHOME%\python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements.txt
+::%PYTHONHOME%\python -m pip install --no-index --find-links %wheels% -r %talos_wps%\requirements-iis.txt
+%PYTHONHOME%\python -m pip install --upgrade --no-index --find-links %wheels% -r %talos_wps%\requirements.txt
 
 
 @echo step 4: extract talos_wps additional files
-7za x %talos2_7z% -aoa -o%PYTHONHOME%
+7za x %talos_7z% -aoa -o%PYTHONHOME%
 
 popd
 

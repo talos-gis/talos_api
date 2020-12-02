@@ -30,8 +30,8 @@ import os
 
 print('adding talos and gdalos to path')
 gdalos_path = r'D:\dev\gis\gdalos'
-talos2_path = r'D:\dev\gis\TaLoS\1\p\TaLoS\talos2'
-sys.path.insert(0, talos2_path + r'\src')
+talos_path = r'D:\dev\gis\TaLoS\1\p\talos'
+sys.path.insert(0, talos_path + r'\src')
 sys.path.insert(0, gdalos_path + r'\src')
 
 project_root = os.path.dirname(os.path.abspath(__file__))

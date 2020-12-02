@@ -41,7 +41,6 @@ viewshed:
   humidity: 33.0
 
   power_diff: 100
-  sampling_interval: 0
   fill_center: True
   profile_extension: True
 

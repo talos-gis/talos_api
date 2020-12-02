@@ -17,7 +17,7 @@ pushd "%~dp0"
 set PYTHONHOME=C:\Python38
 set wheels=%~dp0\wheels\
 
-For /R %wheels% %%f IN (*.whl) do %PYTHONHOME%\python -m pip install %%f
+For /R %wheels% %%f IN (*.whl) do %PYTHONHOME%\python -m pip install --upgrade %%f
 
 popd
 
