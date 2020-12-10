@@ -14,6 +14,7 @@ from .invert import Invert
 from .crop_color import GdalDem
 from .rasval import RasterValue
 from .viewshed import Viewshed
+from .los import LOS
 from .calc import Calc
 from .tester import Tester
 
@@ -35,6 +36,7 @@ processes = [
     GdalDem(),
     RasterValue(),
     Viewshed(),
+    LOS(),
     Calc(),
     Tester(),
 ]

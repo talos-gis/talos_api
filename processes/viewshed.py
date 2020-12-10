@@ -18,6 +18,7 @@ from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation, Viewshed
 from gdalos.viewshed.viewshed_params import ViewshedParams
 from gdalos.gdalos_color import ColorPalette
 from gdalos.viewshed import radio_params
+from gdalos import util
 from pywps.inout.literaltypes import LITERAL_DATA_TYPES
 
 
@@ -35,7 +36,9 @@ class Viewshed(Process):
         inputs = [
             LiteralInputD(defaults, 'out_crs', 'output raster crs', data_type='string', default=None, min_occurs=0,
                           max_occurs=1),
-            LiteralInputD(defaults, 'of', 'output format (czml, gtiff)', data_type='string',
+            LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default=None, min_occurs=0,
+                          max_occurs=1),
+            LiteralInputD(defaults, 'of', 'output raster format (czml, gtiff)', data_type='string',
                           min_occurs=0, max_occurs=1, default='gtiff'),
 
             # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
@@ -44,8 +47,8 @@ class Viewshed(Process):
                           max_occurs=1),
             LiteralInputD(defaults, 'ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0,
                           max_occurs=1),
-
-            LiteralInputD(defaults, 'co', 'creation options', data_type='string', min_occurs=0, max_occurs=1),
+            LiteralInputD(defaults, 'co', 'input raster creation options', data_type='string', min_occurs=0,
+                          max_occurs=1),
 
             LiteralInputD(defaults, 'min_r', 'Minimum visibility range/radius/distance', default=0, **mmm),
             LiteralInputD(defaults, 'max_r', 'Maximum visibility range/radius/distance', **mmm),
@@ -54,9 +57,7 @@ class Viewshed(Process):
             LiteralInputD(defaults, 'max_r_slant', 'Use Slant Range as Max Range (instead of ground range)',
                           data_type='boolean', default=True, **mm),
 
-            # obeserver x,y in the given CRSr
-            LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default=None, min_occurs=0,
-                          max_occurs=1),
+            # obeserver x,y in the given input-CRS
             LiteralInputD(defaults, 'ox', 'observer X/longitude', **mmm),
             LiteralInputD(defaults, 'oy', 'observer Y/latitude', **mmm),
 
@@ -71,10 +72,10 @@ class Viewshed(Process):
                           data_type='boolean', **mm),
 
             # angles
-            LiteralInputD(defaults, 'azimuth', 'horizontal azimuth direction', default=0, **dmm),  # todo
-            LiteralInputD(defaults, 'h_aperture', 'horizontal aperture', default=360, **dmm),  # todo
-            LiteralInputD(defaults, 'elevation', 'vertical elevation direction', default=0, **dmm),  # todo
-            LiteralInputD(defaults, 'v_aperture', 'vertical aperture', default=180, **dmm),  # todo
+            LiteralInputD(defaults, 'azimuth', 'horizontal azimuth direction', default=0, **dmm),
+            LiteralInputD(defaults, 'h_aperture', 'horizontal aperture', default=360, **dmm),
+            LiteralInputD(defaults, 'elevation', 'vertical elevation direction', default=0, **dmm),
+            LiteralInputD(defaults, 'v_aperture', 'vertical aperture', default=180, **dmm),
 
             # optional values
             LiteralInputD(defaults, 'vv', 'visible_value', default=viewshed_defaults['vv'], **mmm),
@@ -82,7 +83,7 @@ class Viewshed(Process):
             LiteralInputD(defaults, 'ov', 'out_of_bounds_value', default=viewshed_defaults['ov'], **mmm),
             LiteralInputD(defaults, 'ndv', 'nodata_value', default=viewshed_defaults['ndv'], **mmm),
 
-            LiteralInputD(defaults, 'vps', 'Use only the given slice of input Viewshed parameter array',
+            LiteralInputD(defaults, 'vps', 'Use only the given slice of input parameters set',
                           default=None, data_type='string', min_occurs=0, max_occurs=1),
 
             # advanced parameters
@@ -252,11 +253,11 @@ class Viewshed(Process):
                         raise Exception(f'creation option {creation_option} unsupported')
                     co.append(creation_option)
 
-            vp_arrays_dict = process_helper.get_arrays_dict(request.inputs, ViewshedParams.__slots__)
+            vp_arrays_dict = process_helper.get_arrays_dict(request.inputs, util.get_all_slots(ViewshedParams))
 
             if 'radio' in backend:
                 backend = ViewshedBackend.talos
-                radio_arrays_dict = process_helper.get_arrays_dict(request.inputs, RadioParams.__slots__)
+                radio_arrays_dict = process_helper.get_arrays_dict(request.inputs, util.get_all_slots(RadioParams))
                 for k, v in radio_arrays_dict.items():
                     if v is None:
                         raise MissingParameterValue(k, k)
