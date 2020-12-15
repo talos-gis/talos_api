@@ -1,11 +1,12 @@
 import tempfile
 
+from gdalos.util import FillMode
 from pywps import FORMATS, UOM
 from pywps.app import Process
 from pywps.inout import LiteralOutput, ComplexOutput
 
 from gdalos.gdalos_selector import DataSetSelector
-from gdalos.viewshed.radio_params import RadioParams
+from gdalos.viewshed.radio_params import RadioParams, RadioCalcType
 from pywps.exceptions import MissingParameterValue
 from .process_defaults import process_defaults, LiteralInputD
 from pywps.app.Common import Metadata
@@ -22,7 +23,7 @@ from gdalos import util
 class LOS(Process):
     def __init__(self):
         process_id = 'los'
-        # calc_type mm0, of-vector, output format
+        # calc_type mm0, mode, of-vector, output format
         defaults = process_defaults(process_id)
         mm = dict(min_occurs=1, max_occurs=1000)
         mm0 = dict(min_occurs=0, max_occurs=1000)
@@ -58,6 +59,8 @@ class LOS(Process):
             LiteralInputD(defaults, 'oz', 'observer height/altitude/elevation', **mmm0),
             LiteralInputD(defaults, 'tz', 'target height/altitude/elevation', **mmm0),
 
+            LiteralInputD(defaults, 'fill_mode', 'zip/zip_cycle/product', default=FillMode.zip_cycle, data_type='string', min_occurs=1, max_occurs=1),
+
             # https://en.wikipedia.org/wiki/Height_above_ground_level MSL/AGL
             LiteralInputD(defaults, 'omsl', 'observer height mode MSL(True) / AGL(False)', default=False,
                           data_type='boolean', **mm),
@@ -69,7 +72,7 @@ class LOS(Process):
                           default=None, data_type='string', **mm0),
             LiteralInputD(defaults, 'refraction_coeff', 'atmospheric refraction correction coefficient',
                           default=atmospheric_refraction_coeff, data_type='float', **mm),  # was: 1-cc
-            LiteralInputD(defaults, 'mode', 'viewshed calc mode', default=2, data_type='integer', **mm),
+            LiteralInputD(defaults, 'mode', 'calc mode', default=str(RadioCalcType.PathLoss), data_type='string', **mm),
 
             # Radio: parameters
             LiteralInputD(defaults, 'frequency', 'radio: Transmitter frequency in MHz. Range: 1.0 to 40000.0 MHz',
