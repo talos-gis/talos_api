@@ -9,8 +9,8 @@ Shapely
 Werkzeug
 SQLAlchemy
 psutil
-pywps
-numpy
+pywps-json
+numpy<=1.19.3
 czml3
 pyyaml
 gdalos
