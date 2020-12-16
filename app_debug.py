@@ -28,22 +28,19 @@ import sys
 import os
 
 
-print('adding talos and gdalos to path')
-gdalos_path = r'D:\dev\gis\gdalos'
-talos_path = r'D:\dev\gis\TaLoS\1\p\talos'
-sys.path.insert(0, talos_path + r'\src')
-sys.path.insert(0, gdalos_path + r'\src')
+my_modules = [
+    r'D:\dev\gis\pywps',
+    r'D:\dev\gis\gdalos\src',
+    r'D:\dev\gis\TaLoS\1\p\talos\src',
+]
+for m in my_modules:
+    print(f'adding {m} to path')
+    sys.path.insert(0, m)
 
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
 os.chdir(project_root)
 
-from app_main_page import main_page
-
-app = flask.Flask(__name__)
-app.register_blueprint(main_page)
-
-application = app  # application is the default name for mod_wsgi
-
 if __name__ == "__main__":
-    app.run()
+    from demo import main
+    main()

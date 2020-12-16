@@ -26,7 +26,7 @@ import os
 from app import app
 from app_config import server_port
 
-if __name__ == "__main__":
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -63,3 +63,6 @@ if __name__ == "__main__":
             os._exit(0)
     else:
         app.run(threaded=True, host=bind_host, port=server_port)
+
+if __name__ == "__main__":
+    main()
