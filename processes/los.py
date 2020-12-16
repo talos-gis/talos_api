@@ -59,7 +59,10 @@ class LOS(Process):
             LiteralInputD(defaults, 'oz', 'observer height/altitude/elevation', **mmm0),
             LiteralInputD(defaults, 'tz', 'target height/altitude/elevation', **mmm0),
 
-            LiteralInputD(defaults, 'fill_mode', 'zip/zip_cycle/product', default=FillMode.zip_cycle, data_type='string', min_occurs=1, max_occurs=1),
+            LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+                          data_type='string', min_occurs=1, max_occurs=1),
+            LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+                          data_type='string', min_occurs=1, max_occurs=1),
 
             # https://en.wikipedia.org/wiki/Height_above_ground_level MSL/AGL
             LiteralInputD(defaults, 'omsl', 'observer height mode MSL(True) / AGL(False)', default=False,
