@@ -15,13 +15,17 @@ pushd "%~dp0"
 
 @echo installation paths
 set PYTHONHOME=C:\Python38
+set python_inst=python-3.8.6-amd64.exe
 
 @echo step 1: installing python
 if %1x==x (
-	set python_inst=python-3.8.6-amd64.exe
 	@echo to skip python installation run this installer with any argument for installing python as well, i.e.:
 	@echo %~nx0 x
 	%python_inst% /passive InstallAllUsers=1 PrependPath=1 TargetDir=%PYTHONHOME%
 ) else (
 	@echo skipping python installtion
 )
+
+
+:finish
+pause
