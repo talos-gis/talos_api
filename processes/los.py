@@ -112,6 +112,9 @@ class LOS(Process):
                           data_type='boolean', default=True, **mm0),
             LiteralInputD(defaults, 'profile_extension', 'radio: allow use profile extension whenever is possible',
                           data_type='boolean', default=True, **mm0),
+
+            LiteralInputD(defaults, 'mock', 'if set then zeros will be returned instread of actual results',
+                          data_type='boolean', default=False, min_occurs=1, max_occurs=1),
         ]
         outputs = [
             LiteralOutput('r', 'input raster name', data_type='string'),
@@ -150,6 +153,7 @@ class LOS(Process):
         if out_crs == '':
             out_crs = None
         backend = process_helper.get_request_data(request.inputs, 'backend')
+        mock = process_helper.get_request_data(request.inputs, 'mock')
 
         co = None
         if 'co' in request.inputs:
@@ -172,13 +176,13 @@ class LOS(Process):
             vp_arrays_dict['radio_parameters'] = radio_arrays_dict
 
         use_data_selector = True
-        input_file = DataSetSelector(raster_filename) if use_data_selector else raster_filename
+        input_file = None if not raster_filename else DataSetSelector(raster_filename) if use_data_selector else raster_filename
 
         los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
             output_filename=output_filename, co=co, of=of,
             vp=vp_arrays_dict,
-            in_coords_srs=in_coords_srs, out_crs=out_crs)
+            in_coords_srs=in_coords_srs, out_crs=out_crs, mock=mock)
 
         response.outputs['output'].output_format = FORMATS.TEXT
         response.outputs['output'].file = output_filename
