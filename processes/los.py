@@ -35,8 +35,8 @@ class LOS(Process):
                           max_occurs=1),
             LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default=None, min_occurs=0,
                           max_occurs=1),
-            LiteralInputD(defaults, 'of', 'output vector format (currently only xyz)', data_type='string',
-                          min_occurs=0, max_occurs=1, default='xyz'),
+            LiteralInputD(defaults, 'of', 'output vector format (xyz/json)', data_type='string',
+                          min_occurs=0, max_occurs=1, default='json'),
 
             # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
             LiteralInputD(defaults, 'r', 'input raster', data_type='string', min_occurs=1, max_occurs=1),
