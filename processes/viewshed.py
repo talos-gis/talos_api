@@ -1,163 +1,49 @@
 import tempfile
 
-from pywps import FORMATS, UOM
+from pywps import FORMATS
 from pywps.app import Process
-from pywps.inout import LiteralOutput, ComplexOutput
 
 from gdalos.gdalos_selector import DataSetSelector
 from gdalos.viewshed.radio_params import RadioParams
-from pywps.exceptions import MissingParameterValue
+
 from .process_defaults import process_defaults, LiteralInputD, ComplexInputD, BoundingBoxInputD
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
 from processes import process_helper
-from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
 from backend.formats import czml_format
 from gdalos.gdalos_main import GeoRectangle, gdalos_util
 from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation, ViewshedBackend
 from gdalos.viewshed.viewshed_params import ViewshedParams
 from gdalos.gdalos_color import ColorPalette
-from gdalos.viewshed import radio_params
 from gdalos import util
-from pywps.inout.literaltypes import LITERAL_DATA_TYPES
+import processes.io_generator as iog
 
 
 class Viewshed(Process):
     def __init__(self):
         process_id = 'viewshed'
-
         defaults = process_defaults(process_id)
-        mm = dict(min_occurs=1, max_occurs=1000)
-        mm0 = dict(min_occurs=0, max_occurs=1000)
-        mmm = dict(data_type='float', uoms=[UOM('metre')], **mm)
-        mmm0 = dict(data_type='float', uoms=[UOM('metre')], **mm0)
-        dmm = dict(data_type='float', uoms=[UOM('degree')], **mm)
-        # 254 is the max possible values for unique function. for sum it's not really limited
-        inputs = [
-            LiteralInputD(defaults, 'out_crs', 'output raster crs', data_type='string', default=None, min_occurs=0,
-                          max_occurs=1),
-            LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default=None, min_occurs=0,
-                          max_occurs=1),
-            LiteralInputD(defaults, 'of', 'output raster format (czml, gtiff)', data_type='string',
-                          min_occurs=0, max_occurs=1, default='gtiff'),
 
-            # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
-            LiteralInputD(defaults, 'r', 'input raster', data_type='string', min_occurs=1, max_occurs=1),
-            LiteralInputD(defaults, 'bi', 'band index', data_type='positiveInteger', default=1, min_occurs=0,
-                          max_occurs=1),
-            LiteralInputD(defaults, 'ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0,
-                          max_occurs=1),
-            LiteralInputD(defaults, 'co', 'input raster creation options', data_type='string', min_occurs=0,
-                          max_occurs=1),
+        inputs = \
+            iog.io_crs(defaults) + \
+            iog.of_raster(defaults) + \
+            iog.raster_input(defaults) + \
+            iog.raster_ranges(defaults) + \
+            iog.observer(defaults, xy=True, z=True, msl=True) + \
+            iog.target(defaults, xy=False, z=True, msl=True) + \
+            iog.angles(defaults) + \
+            iog.viewshed_values(defaults) + \
+            iog.slice(defaults) + \
+            iog.backend(defaults) + \
+            iog.refraction(defaults) + \
+            iog.mode(defaults, default="2") + \
+            iog.color_palette(defaults) + \
+            iog.extent(defaults) + \
+            iog.operation(defaults) + \
+            iog.radio(defaults) + \
+            iog.fake_raster(defaults)
 
-            LiteralInputD(defaults, 'min_r', 'Minimum visibility range/radius/distance', default=0, **mmm),
-            LiteralInputD(defaults, 'max_r', 'Maximum visibility range/radius/distance', **mmm),
-            LiteralInputD(defaults, 'min_r_shave', 'ignore DTM before Minimum range', default=False,
-                          data_type='boolean', **mm),
-            LiteralInputD(defaults, 'max_r_slant', 'Use Slant Range as Max Range (instead of ground range)',
-                          data_type='boolean', default=True, **mm),
-
-            # obeserver x,y in the given input-CRS
-            LiteralInputD(defaults, 'ox', 'observer X/longitude', **mmm),
-            LiteralInputD(defaults, 'oy', 'observer Y/latitude', **mmm),
-
-            # observer and target height/altitude/elevation
-            LiteralInputD(defaults, 'oz', 'observer height/altitude/elevation', **mmm0),
-            LiteralInputD(defaults, 'tz', 'target height/altitude/elevation', **mmm0),
-
-            # https://en.wikipedia.org/wiki/Height_above_ground_level MSL/AGL
-            LiteralInputD(defaults, 'omsl', 'observer height mode MSL(True) / AGL(False)', default=False,
-                          data_type='boolean', **mm),
-            LiteralInputD(defaults, 'tmsl', 'target height mode MSL(True) / AGL(False)', default=False,
-                          data_type='boolean', **mm),
-
-            # angles
-            LiteralInputD(defaults, 'azimuth', 'horizontal azimuth direction', default=0, **dmm),
-            LiteralInputD(defaults, 'h_aperture', 'horizontal aperture', default=360, **dmm),
-            LiteralInputD(defaults, 'elevation', 'vertical elevation direction', default=0, **dmm),
-            LiteralInputD(defaults, 'v_aperture', 'vertical aperture', default=180, **dmm),
-
-            # optional values
-            LiteralInputD(defaults, 'vv', 'visible_value', default=viewshed_defaults['vv'], **mmm),
-            LiteralInputD(defaults, 'iv', 'invisible_value', default=viewshed_defaults['iv'], **mmm),
-            LiteralInputD(defaults, 'ov', 'out_of_bounds_value', default=viewshed_defaults['ov'], **mmm),
-            LiteralInputD(defaults, 'ndv', 'nodata_value', default=viewshed_defaults['ndv'], **mmm),
-
-            LiteralInputD(defaults, 'vps', 'Use only the given slice of input parameters set',
-                          default=None, data_type='string', min_occurs=0, max_occurs=1),
-
-            # advanced parameters
-            LiteralInputD(defaults, 'backend', 'Calculation backend to use',
-                          default=None, data_type='string', **mm0),
-            LiteralInputD(defaults, 'refraction_coeff', 'atmospheric refraction correction coefficient',
-                          default=atmospheric_refraction_coeff, data_type='float', **mm),  # was: 1-cc
-            LiteralInputD(defaults, 'mode', 'viewshed calc mode', default=2, data_type='integer', **mm),
-
-            # color
-            ComplexInputD(defaults, 'color_palette', 'color palette', supported_formats=[FORMATS.TEXT],
-                          min_occurs=0, max_occurs=1, default=None),
-            LiteralInputD(defaults, 'discrete_mode', 'discrete mode', default='interp', data_type='string', **mm),
-
-            # output extent definition
-            LiteralInputD(defaults, 'extent_c', 'extent combine mode 2:union/3:intersection', data_type='integer',
-                          min_occurs=1, max_occurs=1, default=2),  # was: m
-            BoundingBoxInputD(defaults, 'extent', 'extent BoundingBox',
-                              crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
-                              min_occurs=0, max_occurs=1, default=None),
-            ComplexInputD(defaults, 'cutline', 'output vector cutline',
-                          supported_formats=[FORMATS.GML],
-                          # crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
-                          min_occurs=0, max_occurs=1, default=None),
-
-            # combine calc modes
-            LiteralInputD(defaults, 'o', 'operation viewshed/max/count/count_z/unique', data_type='string',
-                          min_occurs=0, max_occurs=1, default=None),
-
-            # Radio: parameters
-            LiteralInputD(defaults, 'frequency', 'radio: Transmitter frequency in MHz. Range: 1.0 to 40000.0 MHz',
-                          data_type='float', **mm0),
-            LiteralInputD(defaults, 'KFactor', 'radio: KFactor',
-                          data_type='float', default=0, **mm0),
-            LiteralInputD(defaults, 'polarity', 'radio: Transmitter antenna polarization (Horizontal or Vertical)',
-                          data_type='string', **mm0),
-            LiteralInputD(defaults, 'calc_type', 'radio: calculation output type',
-                          data_type='string', default=radio_params.RadioCalcType.PathLoss.name, **mm0),
-
-            # Radio: Earth surface parameters
-            LiteralInputD(defaults, 'refractivity', 'radio: Surface refractivity in N-units. Range: 200.0 to 450.0 N',
-                          data_type='float', default=None, **mm0),
-            LiteralInputD(defaults, 'conductivity',
-                          'radio: Conductivity of earth surface Siemans per meter. Range: 0.00001 to 100.0 S/m',
-                          data_type='float', default=None, **mm0),
-            LiteralInputD(defaults, 'permittivity',
-                          'radio: Relative permittivity of earth surface. Range: 1.0 to 100.0',
-                          data_type='float', default=None, **mm0),
-            LiteralInputD(defaults, 'humidity',
-                          'radio: Surface humidity at the transmitter site in grams per cubic meter. '
-                          'Range: 0.0 to 110.0 in g/m^3',
-                          data_type='float', default=None, **mm0),
-
-            LiteralInputD(defaults, 'power_diff',
-                          'radio: power difference = BroadcastPower - MinPower. '
-                          'Only relevant for PowerReminder calculation. '
-                          'PowerReminder = power_diff - path_loss', data_type='float', **mm0),
-            LiteralInputD(defaults, 'fill_center',
-                          'radio: fill missing samples data with FreeSpace calculation, '
-                          'Sometimes when the distance too short the radio calculation returns invalid value. '
-                          'When setting this value to True FreeSpace loss will be calculated instead.',
-                          data_type='boolean', default=True, **mm0),
-            LiteralInputD(defaults, 'profile_extension', 'radio: allow use profile extension whenever is possible',
-                          data_type='boolean', default=True, **mm0),
-
-
-            ComplexInputD(defaults, 'fr', 'fake input rasters (for debugging)', supported_formats=[FORMATS.GEOTIFF],
-                          min_occurs=0, max_occurs=23, default=None),
-
-        ]
-        outputs = [
-            LiteralOutput('r', 'input raster name', data_type='string'),
-            ComplexOutput('output', 'result raster', supported_formats=[FORMATS.GEOTIFF, czml_format]),
-        ]
+        outputs = iog.outputs(is_output_raster=True)
 
         super().__init__(
             self._handler,
@@ -227,46 +113,16 @@ class Viewshed(Process):
                     files.append(ds)
                 else:
                     output_filename = fr_filename
-            bi = vp_arrays_dict = in_coords_srs = out_crs = color_palette = None
+            bi = vp_arrays_dict = in_coords_srs = out_crs = color_palette = backend = raster_filename = ovr_idx = None
 
         else:
-            ovr_idx = request.inputs['ovr'][0].data
-            # raster_filename, input_ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0], ovr_idx=ovr_idx)
-            raster_filename = process_helper.get_request_data(request.inputs, 'r')
-            response.outputs['r'].data = raster_filename
-            bi = request.inputs['bi'][0].data
-
-            in_coords_srs = process_helper.get_request_data(request.inputs, 'in_crs')
-            if in_coords_srs == '':
-                in_coords_srs = None
-            out_crs = process_helper.get_request_data(request.inputs, 'out_crs')
-            if out_crs == '':
-                out_crs = None
-            backend = process_helper.get_request_data(request.inputs, 'backend')
-
-            if 'co' in request.inputs:
-                co = []
-                for coi in request.inputs['co']:
-                    creation_option: str = coi.data
-                    sep_index = creation_option.find('=')
-                    if sep_index == -1:
-                        raise Exception(f'creation option {creation_option} unsupported')
-                    co.append(creation_option)
-
-            vp_arrays_dict = process_helper.get_arrays_dict(request.inputs, util.get_all_slots(ViewshedParams))
-
-            if 'radio' in backend:
-                backend = ViewshedBackend.talos
-                radio_arrays_dict = process_helper.get_arrays_dict(request.inputs, util.get_all_slots(RadioParams))
-                for k, v in radio_arrays_dict.items():
-                    if v is None:
-                        raise MissingParameterValue(k, k)
-                vp_arrays_dict['radio_parameters'] = radio_arrays_dict
+            in_coords_srs, out_crs = iog.get_io_crs(request.inputs)
+            raster_filename, bi, ovr_idx, co = iog.get_input_raster(request.inputs)
+            backend, vp_arrays_dict = iog.get_vp(request.inputs, ViewshedParams)
 
         vp_slice = process_helper.get_request_data(request.inputs, 'vps')
 
-        use_data_selector = True
-        input_file = DataSetSelector(raster_filename) if use_data_selector else raster_filename
+        input_file = iog.get_input_file(raster_filename, use_data_selector=True)
 
         viewshed_calc(input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
                       output_filename=output_filename, co=co, of=of,
@@ -275,6 +131,7 @@ class Viewshed(Process):
                       color_palette=color_palette, discrete_mode=discrete_mode,
                       files=files, vp_slice=vp_slice)
 
+        response.outputs['r'].data = raster_filename
         response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF
         response.outputs['output'].file = output_filename
 
