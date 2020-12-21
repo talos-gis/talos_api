@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25aeaa5a-24b7-497e-8d47-45aac310010c",
+		"_postman_id": "52447cf7-4a40-4b97-b73d-9c7b84dea3b2",
 		"name": "talos_wps",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -215,8 +215,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "hello",
@@ -288,8 +287,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "color_crop",
@@ -317,9 +315,58 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "radio",
+			"item": [
+				{
+					"name": "radio viewshed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"backend\": \"radio\",\n\t\t\"of\": \"tif\",\n        \"color_palette\": {\n\t\t\t\"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/viewshed/count_z.txt\"\n        },\n\t\t\"max_r\": \"2000\",\n\t\t\"ox\": \"35.11\",\n\t\t\"oy\": \"32.06\",\n\t\t\"oz\": \"10.0\",\n\t\t\"tz\": \"10.0\",\n\t\t\"omsl\": \"False\",\n\t\t\"tmsl\": \"False\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "radio los",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"los\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"ox\": [35.11, 35.12, 35.13, 35.14],\n\t\t\"oy\": [32.0, 32.07],\n\t\t\"oz\": [10.0],\n\t\t\"tx\": [35.18, 35.19],\n\t\t\"ty\": [32.08, 32.09],\n\t\t\"tz\": [11.0],\n        \"xy_fill\": \"zip_cycle\",\n        \"ot_fill\": \"product\",\n\t\t\"omsl\": \"False\",\n\t\t\"tmsl\": \"False\",\n        \"mode\": [\"PathLoss\", \"FreeSpaceLoss\"],\n        \"mock\": false\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
