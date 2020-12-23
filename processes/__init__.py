@@ -11,6 +11,7 @@ from .jsonprocess import TestJson
 from .info import GetInfo
 from .ls import ls
 from .invert import Invert
+from .trans import Trans
 from .crop_color import GdalDem
 from .rasval import RasterValue
 from .viewshed import Viewshed
@@ -33,6 +34,7 @@ processes = [
     GetInfo(),
     ls(),
     Invert(),
+    Trans(),
     GdalDem(),
     RasterValue(),
     Viewshed(),
