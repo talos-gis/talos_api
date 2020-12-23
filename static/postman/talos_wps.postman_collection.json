@@ -367,6 +367,34 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "trans",
+			"item": [
+				{
+					"name": "trans 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"trans\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"r\": \"d:\\\\Maps\\\\samples\\\\rgb.tif\",        \n        \"of\": \"xyz\"\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
