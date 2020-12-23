@@ -1,2 +1,2 @@
-gdal
-talosgis
+gdal>=3.0.0
+talosgis>=2.7.3.2
