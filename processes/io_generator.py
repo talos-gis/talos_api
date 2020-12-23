@@ -12,8 +12,8 @@ from pywps.inout import LiteralOutput, ComplexOutput
 from pywps.exceptions import MissingParameterValue
 from gdalos import util
 
-mm = dict(min_occurs=1, max_occurs=1000)
-mm0 = dict(min_occurs=0, max_occurs=1000)
+mm = dict(min_occurs=1, max_occurs=None)
+mm0 = dict(min_occurs=0, max_occurs=None)
 mmm = dict(data_type='float', uoms=[UOM('metre')], **mm)
 mmm0 = dict(data_type='float', uoms=[UOM('metre')], **mm0)
 dmm = dict(data_type='float', uoms=[UOM('degree')], **mm)
