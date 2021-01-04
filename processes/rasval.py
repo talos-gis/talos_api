@@ -1,14 +1,14 @@
 import gdal
+
 from pywps import FORMATS, UOM
 from pywps.app import Process
 from pywps.inout import LiteralOutput
-from .process_defaults import process_defaults, LiteralInputD, ComplexInputD
+from .process_defaults import process_defaults, LiteralInputD
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
 from gdalos.calc import get_pixel_from_raster
 from processes import process_helper
-
-import numpy as np
+import processes.io_generator as iog
 
 # from pywps.inout.literaltypes import LITERAL_DATA_TYPES
 
@@ -17,23 +17,22 @@ class RasterValue(Process):
     def __init__(self):
         process_id = 'ras_val'
         defaults = process_defaults(process_id)
-        inputs = [
-            ComplexInputD(defaults, 'r', 'input_raster', supported_formats=[FORMATS.GEOTIFF]),
-            LiteralInputD(defaults, 'bi', 'band_index', data_type='positiveInteger', min_occurs=0, max_occurs=1, default=1),
 
-            LiteralInputD(defaults, 'x', 'x or longitude or pixel', data_type='float', min_occurs=1, uoms=[UOM('metre')]),
-            LiteralInputD(defaults, 'y', 'y or latitude or line', data_type='float', min_occurs=1, uoms=[UOM('metre')]),
-
-            LiteralInputD(defaults, 'c', 'coordinate kind: ll/xy/pl', data_type='string', min_occurs=1, max_occurs=1, default='ll'),
-            LiteralInputD(defaults, 'interpolate', 'interpolate ', data_type='boolean', min_occurs=1, max_occurs=1, default=True),
-        ]
-        outputs = [LiteralOutput('v', 'raster value at the requested coordinate as float', data_type='float'),
-                   LiteralOutput('output', 'raster value at the requested coordinate (as string)', data_type='string')]
+        inputs = \
+            iog.io_crs(defaults) + \
+            iog.of_pointcloud(defaults) + \
+            iog.raster_input(defaults) + \
+            iog.xy(defaults) + \
+            [
+                LiteralInputD(defaults, 'c', 'coordinate kind: ll/xy/pl', data_type='string', min_occurs=1, max_occurs=1, default='ll'),
+                LiteralInputD(defaults, 'interpolate', 'interpolate ', data_type='boolean', min_occurs=1, max_occurs=1, default=True),
+            ]
+        outputs = [LiteralOutput('output', 'raster values at the requested coordinates', data_type=None)]
 
         super().__init__(
             self._handler,
             identifier=process_id,
-            version='1.0.0',
+            version='1.1.0',
             title='raster values',
             abstract='get raster values at given coordinates',
             profile='',
@@ -70,20 +69,10 @@ class RasterValue(Process):
         if len(x) != len(y):
             raise Exception('length(x)={} is different from length(y)={}'.format(len(x), len(y)))
 
-        if len(x) == 1:
-            value = get_pixel_from_raster.get_pixel_from_raster(ds, x[0], y[0], srs)
-            response.outputs['v'].output_format = FORMATS.TEXT
-            response.outputs['v'].data = value
-            response.outputs['output'].output_format = FORMATS.TEXT
-            response.outputs['output'].data = str(value)
-        elif len(x) > 1:
-            points = np.dstack((x, y))[0]
-            values = get_pixel_from_raster.get_pixel_from_raster_multi(ds, points, srs)
-            if values:
-                response.outputs['v'].output_format = FORMATS.TEXT
-                response.outputs['v'].data = values
-                response.outputs['output'].output_format = FORMATS.TEXT
-                response.outputs['output'].data = str(values)
+        values = get_pixel_from_raster.get_pixel_from_raster(ds, x, y, srs)
         del ds
+
+        response.outputs['output'].output_format = FORMATS.JSON
+        response.outputs['output'].data = values
 
         return response

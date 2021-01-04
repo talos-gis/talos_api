@@ -25,7 +25,6 @@ class LOS(Process):
         process_id = 'los'
         defaults = process_defaults(process_id)
 
-
         inputs = \
             iog.io_crs(defaults) + \
             iog.of_pointcloud(defaults) + \
@@ -36,15 +35,14 @@ class LOS(Process):
             iog.refraction(defaults) + \
             iog.mode(defaults, default=str(RadioCalcType.PathLoss)) + \
             iog.radio(defaults) + \
-            [
-                LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
-                              data_type='string', min_occurs=1, max_occurs=1),
-                LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
-                              data_type='string', min_occurs=1, max_occurs=1),
-                LiteralInputD(defaults, 'mock', 'if set then zeros will be returned instread of actual results',
-                              data_type='boolean', default=False, min_occurs=1, max_occurs=1),
-            ]
-        outputs = iog.outputs(is_output_raster=False)
+            iog.xy_fill(defaults) + \
+            iog.ot_fill(defaults) + \
+            iog.mock(defaults)
+
+        outputs = iog.output_r() + \
+                  iog.output_value(['output'])
+                  # iog.output_output(is_output_raster=False)
+
 
         super().__init__(
             self._handler,
@@ -61,9 +59,13 @@ class LOS(Process):
         )
 
     def _handler(self, request, response: ExecuteResponse):
-        of = str(process_helper.get_request_data(request.inputs, 'of')).lower()
-        ext = gdalos_util.get_ext_by_of(of)
-        output_filename = tempfile.mktemp(suffix=ext)
+        of = process_helper.get_request_data(request.inputs, 'of')
+        if of is None:
+            output_filename = None
+        else:
+            of = str(of).lower()
+            ext = gdalos_util.get_ext_by_of(of)
+            output_filename = tempfile.mktemp(suffix=ext)
 
         raster_filename, bi, ovr_idx, co = iog.get_input_raster(request.inputs)
 
@@ -74,14 +76,18 @@ class LOS(Process):
 
         input_file = iog.get_input_file(raster_filename, use_data_selector=True)
 
-        los_calc(
+        results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
             output_filename=output_filename, co=co, of=of,
             vp=vp_arrays_dict,
             in_coords_srs=in_coords_srs, out_crs=out_crs, mock=mock)
 
         response.outputs['r'].data = raster_filename
-        response.outputs['output'].output_format = FORMATS.TEXT
-        response.outputs['output'].file = output_filename
+        if output_filename is None:
+            response.outputs['output'].output_format = FORMATS.JSON
+            response.outputs['output'].data = results
+        else:
+            response.outputs['output'].output_format = FORMATS.TEXT
+            response.outputs['output'].file = output_filename
 
         return response

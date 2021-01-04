@@ -12,12 +12,14 @@ from .info import GetInfo
 from .ls import ls
 from .invert import Invert
 from .trans import Trans
+from .xyz import XYZ
 from .crop_color import GdalDem
 from .rasval import RasterValue
 from .viewshed import Viewshed
 from .los import LOS
 from .calc import Calc
 from .tester import Tester
+from .sandbox import Sandbox
 
 # For the process list on the home page
 processes = [
@@ -35,12 +37,14 @@ processes = [
     ls(),
     Invert(),
     Trans(),
+    XYZ(),
     GdalDem(),
     RasterValue(),
     Viewshed(),
     LOS(),
     Calc(),
     Tester(),
+    Sandbox(),
 ]
 
 # For the process list on the home page

@@ -1,9 +1,10 @@
 from gdalos.gdalos_selector import DataSetSelector
+from gdalos.util import FillMode
 from gdalos.viewshed.radio_params import RadioParams
 from gdalos.viewshed.viewshed_calc import ViewshedBackend
 from pywps import FORMATS, UOM
 from . import process_helper
-from .process_defaults import  LiteralInputD, ComplexInputD, BoundingBoxInputD
+from .process_defaults import LiteralInputD, ComplexInputD, BoundingBoxInputD
 from pywps.app.Common import Metadata
 from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
 from gdalos.viewshed import radio_params
@@ -17,6 +18,7 @@ mm0 = dict(min_occurs=0, max_occurs=None)
 mmm = dict(data_type='float', uoms=[UOM('metre')], **mm)
 mmm0 = dict(data_type='float', uoms=[UOM('metre')], **mm0)
 dmm = dict(data_type='float', uoms=[UOM('degree')], **mm)
+
 
 # 254 is the max possible values for unique function. for sum it's not really limited
 
@@ -40,7 +42,7 @@ def of_raster(defaults):
 def of_pointcloud(defaults):
     return [
         LiteralInputD(defaults, 'of', 'output vector format (xyz/json)', data_type='string',
-                      min_occurs=0, max_occurs=1, default='json'),
+                      min_occurs=0, max_occurs=1, default=None),
     ]
 
 
@@ -65,6 +67,15 @@ def raster_ranges(defaults):
                       data_type='boolean', **mm),
         LiteralInputD(defaults, 'max_r_slant', 'Use Slant Range as Max Range (instead of ground range)',
                       data_type='boolean', default=True, **mm),
+    ]
+
+
+def xy(defaults):
+    return [
+        LiteralInputD(defaults, 'x', 'x or longitude or pixel', data_type='float', min_occurs=1, max_occurs=None,
+                      uoms=[UOM('metre')]),
+        LiteralInputD(defaults, 'y', 'y or latitude or line', data_type='float', min_occurs=1, max_occurs=None,
+                      uoms=[UOM('metre')]),
     ]
 
 
@@ -137,7 +148,7 @@ def slice(defaults):
 
 def backend(defaults):
     return [
-            # advanced parameters
+        # advanced parameters
         LiteralInputD(defaults, 'backend', 'Calculation backend to use',
                       default=None, data_type='string', **mm0),
     ]
@@ -189,6 +200,28 @@ def operation(defaults):
     ]
 
 
+def xy_fill(defaults):
+    return [
+        LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+                      data_type='string', min_occurs=1, max_occurs=1)
+    ]
+
+
+def ot_fill(defaults):
+    return [
+        LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+                      data_type='string', min_occurs=1, max_occurs=1)
+    ]
+
+
+def mock(defaults):
+    return [
+
+        LiteralInputD(defaults, 'mock', 'if set then zeros will be returned instread of actual results',
+                      data_type='boolean', default=False, min_occurs=1, max_occurs=1),
+    ]
+
+
 def radio(defaults):
     return [
         LiteralInputD(defaults, 'frequency', 'radio: Transmitter frequency in MHz. Range: 1.0 to 40000.0 MHz',
@@ -222,7 +255,7 @@ def radio(defaults):
                       'radio: fill missing samples data with FreeSpace calculation, '
                       'Sometimes when the distance too short the radio calculation returns invalid value. '
                       'When setting this value to True FreeSpace loss will be calculated instead.',
-                      data_type='boolean', default=True, **mm0),
+                      data_type='boolean', default=False, **mm0),
         LiteralInputD(defaults, 'profile_extension', 'radio: allow use profile extension whenever is possible',
                       data_type='boolean', default=True, **mm0),
     ]
@@ -235,10 +268,20 @@ def fake_raster(defaults):
     ]
 
 
-def outputs(is_output_raster):
+def output_r():
     return [
         LiteralOutput('r', 'input raster name', data_type='string'),
-        ComplexOutput('output', 'calculation result', supported_formats=[FORMATS.GEOTIFF, czml_format] if is_output_raster else [FORMATS.TEXT]),
+    ]
+
+
+def output_value(names):
+    return list(LiteralOutput(f'{x}', f'{x} values', data_type=None) for x in names)
+
+
+def output_output(is_output_raster):
+    return [
+        ComplexOutput('output', 'calculation result',
+                      supported_formats=[FORMATS.GEOTIFF, czml_format] if is_output_raster else [FORMATS.TEXT]),
     ]
 
 
@@ -267,14 +310,14 @@ def get_input_raster(request_inputs):
             if sep_index == -1:
                 raise Exception(f'creation option {creation_option} unsupported')
             co.append(creation_option)
-    
+
     return raster_filename, bi, ovr_idx, co
 
 
 def get_vp(request_inputs, vp_class):
     backend = process_helper.get_request_data(request_inputs, 'backend')
     vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, util.get_all_slots(vp_class))
-    
+
     if 'radio' in backend:
         backend = ViewshedBackend.talos
         radio_arrays_dict = process_helper.get_arrays_dict(request_inputs, util.get_all_slots(RadioParams))
@@ -282,7 +325,7 @@ def get_vp(request_inputs, vp_class):
             if v is None:
                 raise MissingParameterValue(k, k)
         vp_arrays_dict['radio_parameters'] = radio_arrays_dict
-    
+
     return backend, vp_arrays_dict
 
 

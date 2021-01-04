@@ -12,23 +12,23 @@ from pywps.response.execute import ExecuteResponse
 from .process_defaults import process_defaults
 
 
-class Trans(Process):
+class XYZ(Process):
     def __init__(self):
-        process_id = 'trans'
+        process_id = 'xyz'
         defaults = process_defaults(process_id)
 
         inputs = \
-            iog.of_raster(defaults) + \
             iog.raster_input(defaults)
 
-        outputs = iog.output_r() + iog.output_output(is_output_raster=True)
+        outputs = iog.output_r() + \
+                  iog.output_value(['x', 'y', 'z'])
 
         super().__init__(
             self._handler,
             identifier=process_id,
             version='1.0',
-            title='transform/wrap a raster',
-            abstract='Transform and/or wrap raster',
+            title='raster to xyz',
+            abstract='returns xy coordinates and band values from a given raster',
             profile='',
             metadata=[Metadata('raster')],
             inputs=inputs,
@@ -38,17 +38,17 @@ class Trans(Process):
         )
 
     def _handler(self, request, response: ExecuteResponse):
-        of = str(process_helper.get_request_data(request.inputs, 'of')).lower()
-        ext = gdalos_util.get_ext_by_of(of)
-        output_filename = tempfile.mktemp(suffix=ext)
         raster_filename = process_helper.get_request_data(request.inputs, 'r')
-        if of == 'xyz':
-            gdal2xyz(raster_filename, output_filename, skip_no_data=True)
-        else:
-            gdalos_trans(raster_filename, of=of, out_filename=output_filename)
+        x, y, z = gdal2xyz(raster_filename, None, return_np_arrays=True, skip_no_data=True)
 
         response.outputs['r'].data = raster_filename
-        response.outputs['output'].output_format = FORMATS.TEXT
-        response.outputs['output'].file = output_filename
+
+        response.outputs['x'].output_format = FORMATS.JSON
+        response.outputs['y'].output_format = FORMATS.JSON
+        response.outputs['z'].output_format = FORMATS.JSON
+
+        response.outputs['x'].data = x
+        response.outputs['y'].data = y
+        response.outputs['z'].data = z
 
         return response

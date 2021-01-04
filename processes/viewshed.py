@@ -43,7 +43,7 @@ class Viewshed(Process):
             iog.radio(defaults) + \
             iog.fake_raster(defaults)
 
-        outputs = iog.outputs(is_output_raster=True)
+        outputs = iog.output_r() + iog.output_output(is_output_raster=True)
 
         super().__init__(
             self._handler,
