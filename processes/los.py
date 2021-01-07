@@ -40,8 +40,8 @@ class LOS(Process):
             iog.mock(defaults)
 
         outputs = iog.output_r() + \
-                  iog.output_value(['output'])
-                  # iog.output_output(is_output_raster=False)
+                  iog.output_value(['values']) + \
+                  iog.output_output(is_output_raster=False)
 
 
         super().__init__(
@@ -84,8 +84,8 @@ class LOS(Process):
 
         response.outputs['r'].data = raster_filename
         if output_filename is None:
-            response.outputs['output'].output_format = FORMATS.JSON
-            response.outputs['output'].data = results
+            response.outputs['values'].output_format = FORMATS.JSON
+            response.outputs['values'].data = results
         else:
             response.outputs['output'].output_format = FORMATS.TEXT
             response.outputs['output'].file = output_filename

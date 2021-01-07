@@ -268,9 +268,9 @@ def fake_raster(defaults):
     ]
 
 
-def output_r():
+def output_r(name='r'):
     return [
-        LiteralOutput('r', 'input raster name', data_type='string'),
+        LiteralOutput(name, 'input raster name', data_type='string'),
     ]
 
 
@@ -278,9 +278,9 @@ def output_value(names):
     return list(LiteralOutput(f'{x}', f'{x} values', data_type=None) for x in names)
 
 
-def output_output(is_output_raster):
+def output_output(is_output_raster, name='output'):
     return [
-        ComplexOutput('output', 'calculation result',
+        ComplexOutput(name, 'calculation result',
                       supported_formats=[FORMATS.GEOTIFF, czml_format] if is_output_raster else [FORMATS.TEXT]),
     ]
 
