@@ -1,17 +1,16 @@
+from backend.formats import czml_format
+from gdalos import util as gdalos_base
 from gdalos.gdalos_selector import DataSetSelector
-from gdalos.util import FillMode
+from gdalos.viewshed import radio_params
 from gdalos.viewshed.radio_params import RadioParams
 from gdalos.viewshed.viewshed_calc import ViewshedBackend
+from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
 from pywps import FORMATS, UOM
+from pywps.app.Common import Metadata
+from pywps.exceptions import MissingParameterValue
+from pywps.inout import LiteralOutput, ComplexOutput
 from . import process_helper
 from .process_defaults import LiteralInputD, ComplexInputD, BoundingBoxInputD
-from pywps.app.Common import Metadata
-from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
-from gdalos.viewshed import radio_params
-from backend.formats import czml_format
-from pywps.inout import LiteralOutput, ComplexOutput
-from pywps.exceptions import MissingParameterValue
-from gdalos import util
 
 mm = dict(min_occurs=1, max_occurs=None)
 mm0 = dict(min_occurs=0, max_occurs=None)
@@ -202,14 +201,14 @@ def operation(defaults):
 
 def xy_fill(defaults):
     return [
-        LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+        LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle,
                       data_type='string', min_occurs=1, max_occurs=1)
     ]
 
 
 def ot_fill(defaults):
     return [
-        LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=FillMode.zip_cycle,
+        LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle,
                       data_type='string', min_occurs=1, max_occurs=1)
     ]
 
@@ -268,6 +267,13 @@ def fake_raster(defaults):
     ]
 
 
+def skip_ndv(defaults):
+    return [
+        LiteralInputD(defaults, 'skip_ndv', 'skip NoData values', data_type='boolean', min_occurs=1, max_occurs=1,
+                      default=True),
+    ]
+
+
 def output_r(name='r'):
     return [
         LiteralOutput(name, 'input raster name', data_type='string'),
@@ -316,11 +322,11 @@ def get_input_raster(request_inputs):
 
 def get_vp(request_inputs, vp_class):
     backend = process_helper.get_request_data(request_inputs, 'backend')
-    vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, util.get_all_slots(vp_class))
+    vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(vp_class))
 
     if 'radio' in backend:
         backend = ViewshedBackend.talos
-        radio_arrays_dict = process_helper.get_arrays_dict(request_inputs, util.get_all_slots(RadioParams))
+        radio_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(RadioParams))
         for k, v in radio_arrays_dict.items():
             if v is None:
                 raise MissingParameterValue(k, k)

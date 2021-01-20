@@ -1,22 +1,17 @@
 import tempfile
 
+import processes.io_generator as iog
+from backend.formats import czml_format
+from gdalos.gdalos_color import ColorPalette
+from gdalos.gdalos_main import GeoRectangle, gdalos_util
+from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation
+from gdalos.viewshed.viewshed_params import ViewshedParams
+from processes import process_helper
 from pywps import FORMATS
 from pywps.app import Process
-
-from gdalos.gdalos_selector import DataSetSelector
-from gdalos.viewshed.radio_params import RadioParams
-
-from .process_defaults import process_defaults, LiteralInputD, ComplexInputD, BoundingBoxInputD
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
-from processes import process_helper
-from backend.formats import czml_format
-from gdalos.gdalos_main import GeoRectangle, gdalos_util
-from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation, ViewshedBackend
-from gdalos.viewshed.viewshed_params import ViewshedParams
-from gdalos.gdalos_color import ColorPalette
-from gdalos import util
-import processes.io_generator as iog
+from .process_defaults import process_defaults
 
 
 class Viewshed(Process):

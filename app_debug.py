@@ -29,6 +29,7 @@ import os
 
 
 my_modules = [
+    r'D:\dev\gis\gdal\gdal\swig\python\gdal-utils',
     r'D:\dev\gis\pywps',
     r'D:\dev\gis\gdalos\src',
     r'D:\dev\gis\TaLoS\1\p\talos\src',

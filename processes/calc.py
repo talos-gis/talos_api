@@ -1,17 +1,17 @@
 import tempfile
+
+from backend.formats import czml_format
+from gdalos import gdalos_util
+from gdalos.calc import gdal_calc, gdal_to_czml, gdalos_combine
+from gdalos import gdalos_main
+from gdalos.rectangle import GeoRectangle
+from processes import process_helper
 from pywps import FORMATS
 from pywps.app import Process
 from pywps.app.Common import Metadata
 from pywps.inout import ComplexOutput
 from pywps.response.execute import ExecuteResponse
-
 from .process_defaults import process_defaults, LiteralInputD, ComplexInputD, BoundingBoxInputD
-from processes import process_helper
-
-from gdalos.rectangle import GeoRectangle
-from gdalos.calc import gdal_calc, gdal_to_czml, gdalos_combine
-from backend.formats import czml_format
-from gdalos import gdalos_util
 
 
 class Calc(Process):
@@ -110,9 +110,11 @@ class Calc(Process):
             else:
                 calc, kwargs = gdalos_combine.make_calc_with_operand(files, alpha_pattern, operand, **kwargs)
         color_table = process_helper.get_color_table(request.inputs, 'color_palette')
+        if 'gdalos_version' not in dir(gdalos_main) or gdalos_main.gdalos_version < (0, 50):
+            kwargs['return_ds'] = gdal_out_format == 'MEM'
         dst_ds = gdal_calc.Calc(
             calc, outfile=output_filename, extent=extent, format=gdal_out_format,
-            color_table=color_table, hideNodata=hide_nodata, return_ds=gdal_out_format == 'MEM', **kwargs)
+            color_table=color_table, hideNodata=hide_nodata, **kwargs)
 
         if output_filename is not None and dst_ds is not None:
             gdal_to_czml.gdal_to_czml(dst_ds, name=output_filename, out_filename=output_filename)

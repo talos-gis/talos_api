@@ -1,22 +1,15 @@
 import tempfile
 
-from gdalos.util import FillMode
-from pywps import FORMATS, UOM
+from pywps import FORMATS
 from pywps.app import Process
-from pywps.inout import LiteralOutput, ComplexOutput
-
-from gdalos.gdalos_selector import DataSetSelector
-from gdalos.viewshed.radio_params import RadioParams, RadioCalcType
-from pywps.exceptions import MissingParameterValue
-from .process_defaults import process_defaults, LiteralInputD
+from gdalos.viewshed.radio_params import RadioCalcType
+from .process_defaults import process_defaults
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
 from processes import process_helper
-from gdalos.viewshed.viewshed_params import atmospheric_refraction_coeff, MultiPointParams
+from gdalos.viewshed.viewshed_params import MultiPointParams
 from gdalos.gdalos_main import gdalos_util
-from gdalos.viewshed.viewshed_calc import los_calc, ViewshedBackend
-from gdalos.viewshed import radio_params
-from gdalos import util
+from gdalos.viewshed.viewshed_calc import los_calc
 import processes.io_generator as iog
 
 

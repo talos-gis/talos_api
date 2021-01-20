@@ -18,7 +18,8 @@ class XYZ(Process):
         defaults = process_defaults(process_id)
 
         inputs = \
-            iog.raster_input(defaults)
+            iog.raster_input(defaults) + \
+            iog.skip_ndv(defaults)
 
         outputs = iog.output_r() + \
                   iog.output_value(['x', 'y', 'z'])
@@ -39,7 +40,8 @@ class XYZ(Process):
 
     def _handler(self, request, response: ExecuteResponse):
         raster_filename = process_helper.get_request_data(request.inputs, 'r')
-        x, y, z = gdal2xyz(raster_filename, None, return_np_arrays=True, skip_no_data=True)
+        skip_ndv = request.inputs['skip_ndv'][0].data
+        x, y, z = gdal2xyz(raster_filename, None, return_np_arrays=True, skip_no_data=skip_ndv)
 
         response.outputs['r'].data = raster_filename
 
