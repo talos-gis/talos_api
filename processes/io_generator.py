@@ -58,6 +58,12 @@ def raster_input(defaults):
     ]
 
 
+def resolution_output(defaults):
+    return [
+        LiteralInputD(defaults, 'out_res', 'requested resolution of the output', **mmm0)
+    ]
+
+
 def raster_ranges(defaults):
     return [
         LiteralInputD(defaults, 'min_r', 'Minimum visibility range/radius/distance', default=0, **mmm),

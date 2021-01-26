@@ -35,6 +35,7 @@ class Viewshed(Process):
             iog.color_palette(defaults) + \
             iog.extent(defaults) + \
             iog.operation(defaults) + \
+            iog.resolution_output(defaults) + \
             iog.radio(defaults) + \
             iog.fake_raster(defaults)
 
