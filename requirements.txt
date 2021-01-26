@@ -13,5 +13,5 @@ pyyaml
 numpy<=1.19.3
 pywps-json>=4.2.9.6
 czml3>=0.5.4
-gdalos>=0.47.8
+gdalos>=0.50.0
 gdal>=3.0.0
