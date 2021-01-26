@@ -8,8 +8,7 @@ ls:
 
 ras_val:
 #  r: './static/data/maps/SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
-  r: 'd:\Maps\w84geo\dtm_SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
-#  r: './static/data/maps/srtm1_x35_y32.tif'
+  r: './static/data/maps/srtm1_x35_y32.tif'
 #  r: '@xlink:href=file:./static/data/maps/srtm1_x35_y32.tif'
 
 crop_color:
@@ -21,10 +20,8 @@ crop_color:
 
 viewshed:
 #  r: './static/data/maps/SRTM1_hgt.x[27.97,37.98]_y[27.43,37.59].cog.tif'
-#  r: 'd:\Maps\srtm3.tif\utm.cog2\*.tif'
-  r: 'd:\Maps\w84u36\dtm_SRTM1_hgt_ndv0.w84u36.[31.0, -31.0].x[26.84,40.05]_y[21.8,40.48].scale_0.1.cog.tif'
+  r: 'd:\maps\srtm3\utm\*.tif'
 #  r: './static/data/maps/srtm1_w84u36.tif'
-#  r: 'd:\Maps\w84geo\dtm_SRTM1_hgt.tif.x20-80_y20-40.cog.tif'
   of: 'czml'
   in_crs: '0'
   out_crs: '0'
@@ -50,7 +47,7 @@ tester:
 
 los:
   of: 'json'
-  r: 'd:\Maps\w84u36\dtm_SRTM1_hgt_ndv0.w84u36.[31.0, -31.0].x[26.84,40.05]_y[21.8,40.48].scale_0.1.cog.tif'
+  r: 'd:\maps\srtm3\utm\*.tif'
   in_crs: '0'
   out_crs: '0'
   backend: 'radio'
@@ -66,5 +63,5 @@ los:
   humidity: 33.0
 
   power_diff: 100
-  fill_center: True
+  fill_center: False
   profile_extension: True
