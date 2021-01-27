@@ -273,10 +273,14 @@ def fake_raster(defaults):
     ]
 
 
-def skip_ndv(defaults):
+def skip_src_dst_nodata(defaults):
     return [
-        LiteralInputD(defaults, 'skip_ndv', 'skip NoData values', data_type='boolean', min_occurs=1, max_occurs=1,
-                      default=True),
+        LiteralInputD(defaults, 'skip_nodata', 'skip NoData values',
+                      data_type='boolean', min_occurs=1, max_occurs=1, default=True),
+        LiteralInputD(defaults, 'src_nodata', 'override source NoData values',
+                      data_type='float', min_occurs=0, max_occurs=1),
+        LiteralInputD(defaults, 'dst_nodata', 'replace source NoData values with the given destination NoData values',
+                      data_type='float', min_occurs=0, max_occurs=1),
     ]
 
 

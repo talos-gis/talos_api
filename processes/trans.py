@@ -43,7 +43,7 @@ class Trans(Process):
         output_filename = tempfile.mktemp(suffix=ext)
         raster_filename = process_helper.get_request_data(request.inputs, 'r')
         if of == 'xyz':
-            gdal2xyz(raster_filename, output_filename, skip_no_data=True)
+            gdal2xyz(raster_filename, output_filename, skip_nodata=True)
         else:
             gdalos_trans(raster_filename, of=of, out_filename=output_filename)
 
