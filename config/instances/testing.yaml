@@ -1,0 +1,25 @@
+url: 'http://localhost:5000/wps'
+allowedinputpaths:
+  - './static/'
+  - 'd:\Maps'
+  - 'd:\MRR'
+default_mimetype: 'text/xml'
+#default_mimetype: 'application/json'
+#json_indent: -1
+json_indent: 2
+
+#root: './static/data/maps'
+root: 'd:\Maps'
+
+dtm_color_palette: './static/data/color_files/color_file_1.txt'
+
+dtm_geo: './static/data/maps/srtm1_x35_y32.tif'
+#dtm_geo: '@xlink:href=file:./static/data/maps/srtm1_x35_y32.tif'
+
+dtm_utm: 'd:\maps\srtm3\utm\*.tif'
+#dtm_utm: './static/data/maps/srtm1_w84u36.tif'
+
+radio_refractivity: 333.0
+radio_conductivity: 3.0
+radio_permittivity: 33.0
+radio_humidity: 33.0

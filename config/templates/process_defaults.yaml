@@ -1,0 +1,48 @@
+say_hello:
+  name: "default-config"
+
+ls:
+  dir: '{{ root }}'
+  pattern: '*.tif'
+
+ras_val:
+  r: '{{ dtm_geo }}'
+
+crop_color:
+  r: '{{ dtm_geo }}'
+  of: 'czml'
+#  color_palette: '{{ dtm_color_palette }}'
+
+viewshed:
+  r: '{{ dtm_utm }}'
+  of: 'czml'
+  in_crs: '0'
+  out_crs: '0'
+  backend: 'talos'
+
+  refractivity: {{ radio_refractivity }}
+  conductivity: {{ radio_conductivity }}
+  permittivity: {{ radio_permittivity }}
+  humidity: {{ radio_humidity }}
+
+  fill_center: False
+  profile_extension: True
+
+tester:
+  r: '{{ dtm_geo }}'
+  name: 'Tester'
+
+los:
+  of: 'json'
+  r: '{{ dtm_utm }}'
+  in_crs: '0'
+  out_crs: '0'
+  backend: 'radio'
+
+  refractivity: {{ radio_refractivity }}
+  conductivity: {{ radio_conductivity }}
+  permittivity: {{ radio_permittivity }}
+  humidity: {{ radio_humidity }}
+
+  fill_center: False
+  profile_extension: True
