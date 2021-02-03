@@ -10,9 +10,9 @@ Werkzeug
 SQLAlchemy
 psutil
 pyyaml
-numpy<=1.19.3
+numpy!=1.19.4
 pywps-json>=4.2.9.6
 czml3>=0.5.4
-gdalos>=0.50.1
+gdalos>=0.50.2
 gdal-utils>=3.3.0.5
 gdal>=3.0.0
