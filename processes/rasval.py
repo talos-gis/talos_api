@@ -1,4 +1,4 @@
-import gdal
+from osgeo import gdal
 
 from pywps import FORMATS, UOM
 from pywps.app import Process
@@ -9,8 +9,6 @@ from pywps.response.execute import ExecuteResponse
 from gdalos.calc import get_pixel_from_raster
 from processes import process_helper
 import processes.io_generator as iog
-
-# from pywps.inout.literaltypes import LITERAL_DATA_TYPES
 
 
 class RasterValue(Process):
