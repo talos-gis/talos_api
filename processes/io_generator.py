@@ -45,6 +45,11 @@ def of_pointcloud(defaults):
     ]
 
 
+def p(defaults, default):
+    return [
+        LiteralInputD(defaults, 'p', 'parameters', data_type='string', min_occurs=1, max_occurs=None, default=default),
+    ]
+
 def raster_input(defaults):
     return [
         # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),

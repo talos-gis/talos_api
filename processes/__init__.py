@@ -19,6 +19,7 @@ from .viewshed import Viewshed
 from .los import LOS
 from .calc import Calc
 from .tester import Tester
+from .gdalinfo import GdalInfo
 from .sandbox import Sandbox
 
 # For the process list on the home page
@@ -45,6 +46,7 @@ processes = [
     Calc(),
     Tester(),
     Sandbox(),
+    GdalInfo(),
 ]
 
 # For the process list on the home page
