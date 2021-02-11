@@ -1,0 +1,18 @@
+Open IIS (Start - IIS)
+Select the site name from the left name and open the “Handler Mappings” feature from the middle pane.
+Click on “Add Module Mapping” from the right pane
+	1.	Request path:
+			*
+	2.	Module:
+			FastCgiModule
+	3.	Executable - Insert the following line, modify it if your Python is on a different path:
+			C:\Python39\python.exe|C:\Python39\Lib\site-packages\wfastcgi.py
+	4.	Name:
+			talos_wps
+	5.	Click “Request Restrictions”
+			Make sure “Invoke handler only if request is mapped to:” checkbox is unchecked
+			OK
+	6.	OK
+	7.	Do you want to create FastCGI…
+		Yes
+Done.

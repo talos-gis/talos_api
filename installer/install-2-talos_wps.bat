@@ -1,3 +1,4 @@
+@echo off
 ::AT > NUL
 @NET SESSION >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
@@ -12,8 +13,12 @@
 pushd "%~dp0"
 
 @echo installation paths
-set PYTHONHOME=C:\Python38\
-if not exist "%PYTHONHOME%" set PYTHONHOME=
+SET PYTHON_HOME=C:\Python39\
+SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+IF NOT EXIST %PYTHON_EXE% (
+    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
+    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+)
 
 set talos_wps=c:\talos_wps
 set wheels=%~dp0\wheels\
@@ -41,9 +46,7 @@ set pip_offline=
 if %online%x==x set pip_offline=--upgrade --no-index --find-links %wheels%
 
 @echo step 3: install talos_wps python package requirements
-::%PYTHONHOME%python -m pip install %pip_offline% -r %talos_wps%\requirements-iis.txt
-%PYTHONHOME%python -m pip install --force-reinstall %pip_offline% -r %talos_wps%\requirements.txt
-%PYTHONHOME%python -m pip install --force-reinstall %pip_offline% -r %talos_wps%\requirements-opt.txt
+%PYTHON_EXE% -m pip install --force-reinstall %pip_offline% -r %talos_wps%\requirements.txt
 
 popd
 
