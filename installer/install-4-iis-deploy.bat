@@ -31,8 +31,6 @@ IF NOT EXIST %windir%\system32\inetsrv\appcmd.exe (
 :install
 
 :: Default settings
-SET PYTHON_HOME=c:\Python39
-SET PYTHON_EXE=%PYTHON_HOME%\python.exe
 :: root app is in the parent folder
 SET ROOT_RELATIVE_PATH=..
 for %%i in ("%~dp0%ROOT_RELATIVE_PATH%") do SET "ROOT_DIR_PATH=%%~fi"
@@ -48,10 +46,17 @@ SET SITE_HOST_NAME=
 SET SITE_PROTOCOL=http
 SET WSGI_HANDLER=app.app
 
+SET PYTHON_HOME=%ROOT_DIR_PATH%\Python39
+SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+IF NOT EXIST %PYTHON_EXE% (
+	SET PYTHON_HOME=c:\Python39
+	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+)
 IF NOT EXIST %PYTHON_EXE% (
     SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
     SET PYTHON_EXE=%PYTHON_HOME%\python.exe
 )
+ECHO Using Python: %PYTHON_EXE%
 
 :: Gathering information
 IF [%1] == [v] (

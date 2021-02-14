@@ -7,6 +7,10 @@ import yaml
 
 
 def generate_configs(parameter_file, output_directory, template_root):
+    print(f'parameters file: {parameter_file}')
+    print(f'output directory: {output_directory}')
+    print(f'template root: {template_root}')
+
     output_directory = Path(output_directory)
     template_root = Path(template_root)
     parameter_file = Path(parameter_file)
