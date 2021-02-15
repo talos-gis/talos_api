@@ -1,3 +1,4 @@
+*.exe
 Python3?/**/*
 *.pyc
 workdir/*

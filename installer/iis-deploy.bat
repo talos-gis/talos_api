@@ -16,7 +16,7 @@ ECHO.
 ::AT > NUL
 @NET SESSION >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
-    goto install
+    goto doit
 ) ELSE (
     @ECHO you are NOT Administrator. Please run this script as Administrator. Exiting...
     goto finish
@@ -28,35 +28,27 @@ IF NOT EXIST %windir%\system32\inetsrv\appcmd.exe (
     GOTO END
 )
 
-:install
+:doit
 
 :: Default settings
 :: root app is in the parent folder
-SET ROOT_RELATIVE_PATH=..
-for %%i in ("%~dp0%ROOT_RELATIVE_PATH%") do SET "ROOT_DIR_PATH=%%~fi"
-for %%I in (%ROOT_RELATIVE_PATH%) do set ROOT_DIR_NAME=%%~nxI
-ECHO Root dir name: "%ROOT_DIR_NAME%", full path: "%ROOT_DIR_PATH%"
+SET APP_BASE_RELATIVE_PATH=..\..
+SET APP_ROOT_RELATIVE_PATH=..
+for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
+ECHO app base path: "%APP_BASE_PATH%"
+for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
+ECHO full path: "%APP_ROOT_PATH%"
+for %%I in (%APP_BASE_RELATIVE_PATH%) do set APP_NAME=%%~nxI
+ECHO App Name: "%APP_NAME%"
 
-SET PROJECT_NAME=%ROOT_DIR_NAME%
+SET PROJECT_NAME=%APP_NAME%
 SET SITE_NAME=%PROJECT_NAME%
-SET SITE_PHYSIC_PATH=%ROOT_DIR_PATH%
+SET SITE_PHYSIC_PATH=%APP_ROOT_PATH%
 SET SITE_URL=*
 SET SITE_PORT=5000
 SET SITE_HOST_NAME=
 SET SITE_PROTOCOL=http
 SET WSGI_HANDLER=app.app
-
-SET PYTHON_HOME=%ROOT_DIR_PATH%\Python39
-SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-IF NOT EXIST %PYTHON_EXE% (
-	SET PYTHON_HOME=c:\Python39
-	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-IF NOT EXIST %PYTHON_EXE% (
-    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
-    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-ECHO Using Python: %PYTHON_EXE%
 
 :: Gathering information
 IF [%1] == [v] (
@@ -75,6 +67,19 @@ IF %SITE_URL%==localhost (
 )
 SET PYHANDLE=PyFastCGI_%SITE_NAME%
 
+:PYTHON
+SET PYTHON_HOME=%APP_BASE_PATH%\Python39
+SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+IF NOT EXIST %PYTHON_EXE% (
+	SET PYTHON_HOME=c:\Python39
+	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+)
+IF NOT EXIST %PYTHON_EXE% (
+    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
+    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+)
+ECHO Using Python: %PYTHON_EXE%
+
 ECHO press Ctrl+C to break or any key to start installation...
 pause
 ::goto env
@@ -84,7 +89,7 @@ ECHO .
 SET WFASTCGI_TGZ=wfastcgi-3.0.0.tar.gz
 IF NOT EXIST %WFASTCGI_TGZ% SET WFASTCGI_TGZ=wfastcgi
 ECHO ... Install %WFASTCGI_TGZ%
-%PYTHON_HOME%\python -m pip install %WFASTCGI_TGZ%
+%PYTHON_EXE% -m pip install %WFASTCGI_TGZ%
 
 ::SET WFCGI_FILE=%SITE_PHYSIC_PATH%wfastcgi.py
 SET WFCGI_FILE=%PYTHON_HOME%\Lib\site-packages\wfastcgi.py

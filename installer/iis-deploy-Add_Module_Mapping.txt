@@ -6,9 +6,9 @@ Click on “Add Module Mapping” from the right pane
 	2.	Module:
 			FastCgiModule
 	3.	Executable - Insert the following line, modify it if your Python is on a different path:
-			C:\Python39\python.exe|C:\Python39\Lib\site-packages\wfastcgi.py
+			C:\talos_wps\Python39\python.exe|C:\talos_wps\Python39\Lib\site-packages\wfastcgi.py
 	4.	Name:
-			talos_wps
+			PyFastCGI
 	5.	Click “Request Restrictions”
 			Make sure “Invoke handler only if request is mapped to:” checkbox is unchecked
 			OK
