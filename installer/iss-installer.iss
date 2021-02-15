@@ -30,7 +30,7 @@ Source: "d:\iss\{#PythonName}\*.*";  DestDir: "{app}\{#PythonName}";  Flags: rec
 [Run]
 Filename: "{app}\app\installer\configure.bat";  Parameters: ""; Components: config
 Filename: "{app}\app\installer\iis-deploy.bat"; Parameters: ""; Components: iis
-Filename: "{app}\app\installer\iis-deploy-Add_Module_Mapping.png"; Components: iis
+; Filename: "{app}\app\installer\iis-deploy-Add_Module_Mapping.png"; Components: iis
 
 [UninstallRun]
 Filename: "{app}\app\installer\iis-undeploy.bat"; Parameters: ""; Components: iis

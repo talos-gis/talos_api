@@ -141,13 +141,19 @@ echo You probably got an error at the stage "Register the handler for %SITE_NAME
 echo follow the following instructions (also documented as step 7 in the attached document)
 echo goto: https://docs.microsoft.com/en-us/iis/configuration/system.webserver/handlers/
 echo look for: How create a handler mapping for an ASP.NET handler in an IIS 7 application running in Integrated mode
-echo Request Path: "*"
-echo Type: "FastCgiModule"
-echo Executable: "%PYTHON_EXE%|%WFCGI_FILE%"
-echo Name: %PYHANDLE%
+echo Or follow the following instructions:
+echo ======================================
+echo Open IIS (Start - IIS)
+echo Select the site %SITE_NAME% from the left name and open the “Handler Mappings” feature from the middle pane.
+echo Click on “Add Module Mapping” from the right pane
+echo * Request Path: "*"
+echo * Type: "FastCgiModule"
+echo * Executable: "%PYTHON_EXE%|%WFCGI_FILE%"
+echo * Name: %PYHANDLE%
 echo Click Request Restrictions
-echo Uncheck "Invoke handler only if request is mapped to:"
-echo OK, OK, Yes
+echo * Uncheck "Invoke handler only if request is mapped to:"
+echo OK, OK
+echo Do you want to create FastCGI...: Yes
 echo ...
 echo When you are done press enter to restart IIS and finish setup...
 pause

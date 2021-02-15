@@ -57,7 +57,7 @@ ECHO press Ctrl+C to break or any key to start uninstallation...
 pause
 
 ECHO ... Uninstall %WFASTCGI_TGZ%
-%PYTHON_EXE% -m pip uninstall wfastcgi
+%PYTHON_EXE% -m pip uninstall -y wfastcgi
 
 ECHO.
 ECHO ... Delete IIS Site: %SITE_NAME%
