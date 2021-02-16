@@ -43,6 +43,7 @@ ECHO App Name: "%APP_NAME%"
 
 SET PROJECT_NAME=%APP_NAME%
 SET SITE_NAME=%PROJECT_NAME%
+SET APP_POOL_NAME=%SITE_NAME%
 SET SITE_PHYSIC_PATH=%APP_ROOT_PATH%
 SET SITE_URL=*
 SET SITE_PORT=5000
@@ -56,6 +57,7 @@ IF [%1] == [v] (
 	SET SITE_NAME=%PROJECT_NAME%
 	SET /p SITE_PHYSIC_PATH="Enter project directory, which contain manage.py (%SITE_PHYSIC_PATH%): " %=%
 	SET /p SITE_NAME="Enter IIS site name (%PROJECT_NAME%):" %=%
+	SET /p APP_POOL_NAME="Enter IIS App Pool name (%APP_POOL_NAME%):" %=%
 	SET /p SITE_PROTOCOL="Enter http|https for protocol (%SITE_PROTOCOL%): " %=%
 	SET /p SITE_URL="Enter site url (%SITE_URL%):" %=%
 	SET /p WSGI_HANDLER="Enter WSGI Handler (%WSGI_HANDLER%):" %=%
@@ -118,6 +120,12 @@ ECHO.
 ECHO ... Create IIS Site: %SITE_NAME%
 %windir%\system32\inetsrv\appcmd add site /name:%SITE_NAME% /physicalPath:%SITE_PHYSIC_PATH% /bindings:%SITE_PROTOCOL%/%SITE_URL%:%SITE_PORT%:%SITE_HOST_NAME%
 %windir%\system32\inetsrv\appcmd start site /site.name:%SITE_NAME%
+
+ECHO.
+ECHO ... Create IIS App Pool: %APP_POOL_NAME%
+%windir%\system32\inetsrv\appcmd add apppool /name:%APP_POOL_NAME%
+%windir%\system32\inetsrv\appcmd set app "%SITE_NAME%/" /applicationPool:%APP_POOL_NAME%
+
 
 ECHO.
 ECHO ... Setup Python FastCGI Handler
