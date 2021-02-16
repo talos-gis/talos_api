@@ -28,7 +28,7 @@ for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
 ECHO app base path: "%APP_BASE_PATH%"
 for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
 ECHO full path: "%APP_ROOT_PATH%"
-for %%I in (%APP_BASE_RELATIVE_PATH%) do set APP_NAME=%%~nxI
+for %%I in (%APP_ROOT_RELATIVE_PATH%) do set APP_NAME=%%~nxI
 ECHO App Name: "%APP_NAME%"
 
 SET PROJECT_NAME=%APP_NAME%
@@ -65,6 +65,6 @@ ECHO ... Delete IIS Site: %SITE_NAME%
 
 ECHO.
 ECHO ... Clear Python FastCGI Handler
-%windir%\system32\inetsrv\appcmd delete clear /section:system.webServer/fastCGI
+%windir%\system32\inetsrv\appcmd clear config /section:system.webServer/fastCGI
 
 pause

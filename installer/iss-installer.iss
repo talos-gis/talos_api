@@ -1,4 +1,5 @@
 #include <./iss-app_consts.iss>
+#define public InOutDir "d:\iss"
 
 [Setup]
 AppName={#AppName}
@@ -8,7 +9,7 @@ DefaultDirName=C:\{#AppName}
 DefaultGroupName={#AppName}
 Compression=lzma2
 SolidCompression=yes
-OutputDir=.\
+OutputDir={#InOutDir}
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 
@@ -24,13 +25,13 @@ Name: config; Description: {#AppName} Configuration;          Types: full app_py
 Name: iis;    Description: IIS Deployment;                    Types: full custom;
 
 [Files]
-Source: "d:\iss\{#AppName}\*.*"; DestDir: "{app}\app";                Flags: recursesubdirs; Components: app;
-Source: "d:\iss\{#PythonName}\*.*";  DestDir: "{app}\{#PythonName}";  Flags: recursesubdirs; Components: py;
+Source: "{#InOutDir}\{#AppName}\*.*"; DestDir: "{app}\{#AppName}";                Flags: recursesubdirs; Components: app;
+Source: "{#InOutDir}\{#PythonName}\*.*";  DestDir: "{app}\{#PythonName}";  Flags: recursesubdirs; Components: py;
 
 [Run]
-Filename: "{app}\app\installer\configure.bat";  Parameters: ""; Components: config
-Filename: "{app}\app\installer\iis-deploy.bat"; Parameters: ""; Components: iis
-; Filename: "{app}\app\installer\iis-deploy-Add_Module_Mapping.png"; Components: iis
+Filename: "{app}\{#AppName}\installer\configure.bat";  Parameters: ""; Components: config
+Filename: "{app}\{#AppName}\installer\iis-deploy.bat"; Parameters: ""; Components: iis
+; Filename: "{app}\{#AppName}\installer\iis-deploy-Add_Module_Mapping.png"; Components: iis
 
 [UninstallRun]
-Filename: "{app}\app\installer\iis-undeploy.bat"; Parameters: ""; Components: iis
+Filename: "{app}\{#AppName}\installer\iis-undeploy.bat"; Parameters: ""; Components: iis

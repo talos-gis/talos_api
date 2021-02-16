@@ -19,7 +19,7 @@ set APP_REPO=https://github.com/talos-gis/pywps-flask.git
 SET APP_BASE_PATH=c:\%APP_NAME%
 SET /p APP_BASE_PATH="Enter app base path (%APP_BASE_PATH%):" %=%
 
-SET APP_ROOT_PATH=%APP_BASE_PATH%\app
+SET APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 set APP_NAME_ZIP=%~dp0\app_install\%APP_NAME%.7z
 
 :PYTHON

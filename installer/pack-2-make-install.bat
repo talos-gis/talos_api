@@ -7,13 +7,13 @@ for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
 ECHO app base path: "%APP_BASE_PATH%"
 for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
 ECHO full path: "%APP_ROOT_PATH%"
-for %%I in (%APP_BASE_RELATIVE_PATH%) do set APP_NAME=%%~nxI
+for %%I in (%APP_ROOT_RELATIVE_PATH%) do set APP_NAME=%%~nxI
 ECHO App Name: "%APP_NAME%"
 ::set APP_BASE_PATH=%~dp0
 
 set APP_REPO=https://github.com/talos-gis/pywps-flask.git
 
-set APP_ROOT_PATH=%APP_BASE_PATH%\app
+set APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 set APP_NAME_ZIP=%~dp0\app_install\%APP_NAME%.7z
 set WHEELS=%~dp0\wheels\
 

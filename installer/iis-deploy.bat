@@ -38,7 +38,7 @@ for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
 ECHO app base path: "%APP_BASE_PATH%"
 for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
 ECHO full path: "%APP_ROOT_PATH%"
-for %%I in (%APP_BASE_RELATIVE_PATH%) do set APP_NAME=%%~nxI
+for %%I in (%APP_ROOT_RELATIVE_PATH%) do set APP_NAME=%%~nxI
 ECHO App Name: "%APP_NAME%"
 
 SET PROJECT_NAME=%APP_NAME%
@@ -107,7 +107,7 @@ ECHO ... Install FASTCGI for IIS. Please wait.
 dism.exe /online /enable-feature /all /featurename:IIS-CGI
 ::start /wait %windir%\System32\PkgMgr.exe /iu:IIS-WebServerRole;IIS-WebServer;IIS-CommonHttpFeatures;IIS-StaticContent;IIS-DefaultDocument;IIS-DirectoryBrowsing;IIS-HttpErrors;IIS-HealthAndDiagnostics;IIS-HttpLogging;IIS-LoggingLibraries;IIS-RequestMonitor;IIS-Security;IIS-RequestFiltering;IIS-HttpCompressionStatic;IIS-WebServerManagementTools;IIS-ManagementConsole;WAS-WindowsActivationService;WAS-ProcessModel;WAS-NetFxEnvironment;WAS-ConfigurationAPI;IIS-CGI
 
-::goto site
+IF [%1] == [p] goto site
 :permissions
 ECHO .
 ECHO ... Give permmissions for iusr,iis_iusrs groups to the dirs "%SITE_PHYSIC_PATH%", "%PYTHON_HOME%"
