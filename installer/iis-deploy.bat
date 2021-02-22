@@ -31,15 +31,8 @@ IF NOT EXIST %windir%\system32\inetsrv\appcmd.exe (
 :doit
 
 :: Default settings
-:: root app is in the parent folder
-SET APP_BASE_RELATIVE_PATH=..\..
-SET APP_ROOT_RELATIVE_PATH=..
-for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
-ECHO app base path: "%APP_BASE_PATH%"
-for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
-ECHO full path: "%APP_ROOT_PATH%"
-for %%I in (%APP_ROOT_RELATIVE_PATH%) do set APP_NAME=%%~nxI
-ECHO App Name: "%APP_NAME%"
+call set_root_env.bat
+call python_env.bat
 
 SET PROJECT_NAME=%APP_NAME%
 SET SITE_NAME=%PROJECT_NAME%
@@ -50,6 +43,7 @@ SET SITE_PORT=5000
 SET SITE_HOST_NAME=
 SET SITE_PROTOCOL=http
 SET WSGI_HANDLER=app.app
+SET IIS_PREMISSIONS=y
 
 :: Gathering information
 IF [%1] == [v] (
@@ -61,6 +55,7 @@ IF [%1] == [v] (
 	SET /p SITE_PROTOCOL="Enter http|https for protocol (%SITE_PROTOCOL%): " %=%
 	SET /p SITE_URL="Enter site url (%SITE_URL%):" %=%
 	SET /p WSGI_HANDLER="Enter WSGI Handler (%WSGI_HANDLER%):" %=%
+	SET /p IIS_PREMISSIONS="Enter Set IIS Permissions (%IIS_PREMISSIONS%):" %=%
 )
 SET /p SITE_PORT="Enter port (%SITE_PORT%):" %=%
 
@@ -68,19 +63,6 @@ IF %SITE_URL%==localhost (
     SET SITE_URL=*
 )
 SET PYHANDLE=PyFastCGI_%SITE_NAME%
-
-:PYTHON
-SET PYTHON_HOME=%APP_BASE_PATH%\Python39
-SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-IF NOT EXIST %PYTHON_EXE% (
-	SET PYTHON_HOME=c:\Python39
-	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-IF NOT EXIST %PYTHON_EXE% (
-    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
-    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-ECHO Using Python: %PYTHON_EXE%
 
 ECHO press Ctrl+C to break or any key to start installation...
 pause
@@ -109,7 +91,7 @@ ECHO ... Install FASTCGI for IIS. Please wait.
 dism.exe /online /enable-feature /all /featurename:IIS-CGI
 ::start /wait %windir%\System32\PkgMgr.exe /iu:IIS-WebServerRole;IIS-WebServer;IIS-CommonHttpFeatures;IIS-StaticContent;IIS-DefaultDocument;IIS-DirectoryBrowsing;IIS-HttpErrors;IIS-HealthAndDiagnostics;IIS-HttpLogging;IIS-LoggingLibraries;IIS-RequestMonitor;IIS-Security;IIS-RequestFiltering;IIS-HttpCompressionStatic;IIS-WebServerManagementTools;IIS-ManagementConsole;WAS-WindowsActivationService;WAS-ProcessModel;WAS-NetFxEnvironment;WAS-ConfigurationAPI;IIS-CGI
 
-IF [%1] == [p] goto site
+IF [%IIS_PREMISSIONS%] neq [y] goto site
 :permissions
 ECHO .
 ECHO ... Give permmissions for iusr,iis_iusrs groups to the dirs "%SITE_PHYSIC_PATH%", "%PYTHON_HOME%"
@@ -165,6 +147,9 @@ echo Do you want to create FastCGI...: Yes
 echo ...
 echo When you are done press enter to restart IIS and finish setup...
 pause
+
+::%windir%\system32\inetsrv\appcmd list site /name:%SITE_NAME%
+::%windir%\system32\inetsrv\appcmd list config %SITE_NAME%
 
 ECHO.
 ECHO ... Restart IIS

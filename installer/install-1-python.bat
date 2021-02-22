@@ -14,8 +14,10 @@ set online=%1
 pushd "%~dp0"
 
 @echo installation paths
-set PYTHONHOME=C:\Python39
-set python_inst=python-3.9.1-amd64.exe
+set PYTHONHOME=C:\Python38
+set python_inst=python-3.8.6-amd64.exe
+::set PYTHONHOME=C:\Python39
+::set python_inst=python-3.9.1-amd64.exe
 
 @echo step 1: installing python
 if %1x==x (

@@ -1,34 +1,14 @@
 pushd "%~dp0"
 
 ::Installation paths
-SET APP_BASE_RELATIVE_PATH=.
-SET APP_ROOT_RELATIVE_PATH=.
-for %%i in ("%~dp0%APP_BASE_RELATIVE_PATH%") do SET "APP_BASE_PATH=%%~fi"
-ECHO app base path: "%APP_BASE_PATH%"
-for %%i in ("%~dp0%APP_ROOT_RELATIVE_PATH%") do SET "APP_ROOT_PATH=%%~fi"
-ECHO full path: "%APP_ROOT_PATH%"
-for %%I in (%APP_ROOT_RELATIVE_PATH%) do set APP_NAME=%%~nxI
-ECHO App Name: "%APP_NAME%"
-::set APP_BASE_PATH=%~dp0
+call set_root_env.bat
+call python_env.bat
 
 set APP_REPO=https://github.com/talos-gis/pywps-flask.git
 
 set APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 set APP_NAME_ZIP=%~dp0\app_install\%APP_NAME%.7z
 set WHEELS=%~dp0\wheels\
-
-:PYTHON
-SET PYTHON_HOME=%APP_BASE_PATH%\Python39
-SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-IF NOT EXIST %PYTHON_EXE% (
-	SET PYTHON_HOME=c:\Python39
-	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-IF NOT EXIST %PYTHON_EXE% (
-    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
-    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-ECHO Using Python: %PYTHON_EXE%
 
 @echo git clone %APP_NAME%
 rmdir /s/q %APP_ROOT_PATH%

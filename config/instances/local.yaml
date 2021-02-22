@@ -3,7 +3,6 @@ allowedinputpaths:
   - './static/'
   - 'd:\Maps'
   - 'd:\MRR'
-default_mimetype: 'text/xml'
 #default_mimetype: 'application/json'
 #json_indent: -1
 json_indent: 2

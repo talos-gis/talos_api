@@ -18,18 +18,7 @@ SET APP_BASE_PATH=c:\%APP_NAME%
 SET /p APP_BASE_PATH="Enter app base path (%APP_BASE_PATH%):" %=%
 SET APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 
-:PYTHON
-SET PYTHON_HOME=%APP_BASE_PATH%\Python39
-SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-IF NOT EXIST %PYTHON_EXE% (
-	SET PYTHON_HOME=c:\Python39
-	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-IF NOT EXIST %PYTHON_EXE% (
-    SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
-    SET PYTHON_EXE=%PYTHON_HOME%\python.exe
-)
-ECHO Using Python: %PYTHON_EXE%
+call python_env.bat
 
 SET WHEELS=%~dp0\wheels\
 
