@@ -1,6 +1,6 @@
 @echo Replacing some wheels...
 
-call env_installer.bat
+call "%~dp0\env_installer.bat"
 
 set WHEELS_SOURCE=d:\dev\wheels
 set WHEELS_ARCH=win_amd64

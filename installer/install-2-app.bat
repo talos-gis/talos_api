@@ -21,11 +21,11 @@ SET /p APP_BASE_PATH="Enter app base path (%APP_BASE_PATH%):" %=%
 
 SET APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 
-call env_installer.bat
+call "%~dp0\env_installer.bat"
 
 set APP_NAME_ZIP=%INSTALLER_ROOT%\%APP_NAME%.7z
 
-call env_python.bat
+call "%~dp0\env_python.bat"
 
 if exist %APP_NAME_ZIP% (
     @echo extract %APP_NAME%...

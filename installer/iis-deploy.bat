@@ -31,8 +31,8 @@ IF NOT EXIST %windir%\system32\inetsrv\appcmd.exe (
 :doit
 
 :: Default settings
-call env_set_root.bat
-call env_python.bat
+call "%~dp0\env_set_root.bat"
+call "%~dp0\env_python.bat"
 
 SET PROJECT_NAME=%APP_NAME%
 SET SITE_NAME=%PROJECT_NAME%

@@ -14,8 +14,8 @@ set online=%1
 pushd "%~dp0"
 
 @echo installation paths
-call env_installer.bat
-call env_python_ver.bat
+call "%~dp0\env_installer.bat"
+call "%~dp0\env_python_ver.bat"
 
 SET PYTHON_INST_PATH=%INSTALLER_ROOT%\%PYTHON_INST%
 IF NOT EXIST %PYTHON_INST_PATH% (

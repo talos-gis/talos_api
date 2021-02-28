@@ -1,9 +1,9 @@
 pushd "%~dp0"
 
 ::Installation paths
-call env_set_root.bat
-call env_installer.bat
-call env_python.bat
+call "%~dp0\env_set_root.bat"
+call "%~dp0\env_installer.bat"
+call "%~dp0\env_python.bat"
 
 set APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 

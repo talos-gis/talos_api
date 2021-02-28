@@ -11,8 +11,8 @@
 :doit
 
 ::Installation paths
-call env_set_root.bat
-call env_python.bat
+call "%~dp0\env_set_root.bat"
+call "%~dp0\env_python.bat"
 
 %PYTHON_EXE% -m pip uninstall -y -r %APP_ROOT_PATH%\requirements.txt
 

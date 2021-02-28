@@ -1,4 +1,4 @@
-call env_python_ver.bat
+call "%~dp0\env_python_ver.bat"
 
 SET PYTHON_HOME=%APP_BASE_PATH%\%PYTHON_NAME%
 IF [%INSTALLER_ROOT%] NEQ [] SET PYTHON_HOME=%INSTALLER_ROOT%\%PYTHON_NAME%
