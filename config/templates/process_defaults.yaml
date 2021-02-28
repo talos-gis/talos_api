@@ -5,6 +5,10 @@ ls:
   dir: '{{ root }}'
   pattern: '*.tif'
 
+tester:
+  r: '{{ dtm_geo }}'
+  name: 'Tester'
+
 ras_val:
   r: '{{ dtm_geo }}'
 
@@ -26,11 +30,8 @@ viewshed:
   humidity: {{ radio_humidity }}
 
   fill_center: False
+  power_diff: 0
   profile_extension: True
-
-tester:
-  r: '{{ dtm_geo }}'
-  name: 'Tester'
 
 los:
   of: 'json'
@@ -45,4 +46,5 @@ los:
   humidity: {{ radio_humidity }}
 
   fill_center: False
+  power_diff: 0
   profile_extension: True
