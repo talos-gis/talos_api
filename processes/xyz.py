@@ -1,8 +1,4 @@
-import tempfile
-
 import processes.io_generator as iog
-from gdalos.gdalos_main import gdalos_trans
-from gdalos.gdalos_main import gdalos_util
 from gdalos.gdal2xyz import gdal2xyz
 from processes import process_helper
 from pywps import FORMATS

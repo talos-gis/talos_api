@@ -3,7 +3,8 @@ import tempfile
 import processes.io_generator as iog
 from backend.formats import czml_format
 from gdalos.gdalos_color import ColorPalette
-from gdalos.gdalos_main import GeoRectangle, gdalos_util
+from gdalos import gdalos_util
+from gdalos.rectangle import GeoRectangle
 from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation
 from gdalos.viewshed.viewshed_params import ViewshedParams
 from processes import process_helper
