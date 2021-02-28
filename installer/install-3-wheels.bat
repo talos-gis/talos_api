@@ -1,4 +1,4 @@
-@echo off
+::@echo off
 ::AT > NUL
 @NET SESSION >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
@@ -13,24 +13,19 @@
 pushd "%~dp0"
 
 ::Installation paths
-SET APP_NAME=talos_wps
-SET APP_BASE_PATH=c:\%APP_NAME%
-SET /p APP_BASE_PATH="Enter app base path (%APP_BASE_PATH%):" %=%
-SET APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
-
-call python_env.bat
-
-SET WHEELS=%~dp0\wheels\
+call env_set_root.bat
+call env_installer.bat
+call env_python.bat
 
 SET online=
 if "%1x" neq "x" SET online=y
-if not exist %WHEELS% SET online=y
+if not exist %WHEELS_TARGET% SET online=y
 
 SET pip_offline=
-if %online%x==x SET pip_offline=--upgrade --no-index --find-links %WHEELS%
+if %online%x==x SET pip_offline=--upgrade --no-index --find-links %WHEELS_TARGET%
 
 @echo Install %APP_NAME% python package requirements
-%PYTHON_EXE% -m pip install --force-reinstall %pip_offline% -r %APP_ROOT_PATH%\requirements.txt
+FOR %%R IN (requirements.txt,requirements-opt.txt,requirements-ext.txt) DO %PYTHON_EXE% -m pip install --force-reinstall %pip_offline% -r %APP_ROOT_PATH%\%%R
 
 popd
 

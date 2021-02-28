@@ -14,20 +14,21 @@ set online=%1
 pushd "%~dp0"
 
 @echo installation paths
-set PYTHONHOME=C:\Python38
-set python_inst=python-3.8.6-amd64.exe
-::set PYTHONHOME=C:\Python39
-::set python_inst=python-3.9.1-amd64.exe
+call env_installer.bat
+call env_python_ver.bat
 
-@echo step 1: installing python
-if %1x==x (
-	@echo to skip python installation run this installer with any argument for installing python as well, i.e.:
-	@echo %~nx0 x
-	%python_inst% /passive InstallAllUsers=1 PrependPath=1 TargetDir=%PYTHONHOME%
-) else (
-	@echo skipping python installtion
+SET PYTHON_INST_PATH=%INSTALLER_ROOT%\%PYTHON_INST%
+IF NOT EXIST %PYTHON_INST_PATH% (
+    SET /p PYTHON_INST_PATH="Enter full path for the installer file of (%PYTHON_NAME%):" %=%
 )
 
+SET PYTHON_HOME=%INSTALLER_ROOT%\%PYTHON_NAME%
+SET /p PYTHON_HOME="Enter path to install %PYTHON_INST% (%PYTHON_HOME%):" %=%
+
+@echo ready to install %PYTHON_INST_PATH% to %PYTHON_HOME%?
+@echo press ctrl+c to cancel
+pause
+%PYTHON_INST_PATH% /passive InstallAllUsers=1 PrependPath=1 TargetDir=%PYTHON_HOME%
 
 :finish
 pause

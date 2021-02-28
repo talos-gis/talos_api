@@ -1,7 +1,7 @@
 @echo off
 
-call set_root_env.bat
-call python_env.bat
+call env_set_root.bat
+call env_python.bat
 
 SET CONFIG=%1
 SET /p CONFIG="Enter path for config file (%config%):" %=%

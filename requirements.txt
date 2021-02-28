@@ -13,9 +13,6 @@ pyyaml
 numpy!=1.19.4
 
 pywps-json>=4.2.9.7
-czml3>=0.5.4
 gdalos>=0.50.4
 gdal-utils>=3.3.0.5
 gdal>=3.0.0
-
-talosgis>=2.7.6.3

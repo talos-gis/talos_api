@@ -1,0 +1,5 @@
+::set INSTALLER_ROOT=%~dp0
+SET INSTALLER_ROOT=d:\iss
+SET /p INSTALLER_ROOT="Enter installer root (%INSTALLER_ROOT%):" %=%
+
+set WHEELS_TARGET=%INSTALLER_ROOT%\wheels

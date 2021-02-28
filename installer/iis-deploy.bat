@@ -31,8 +31,8 @@ IF NOT EXIST %windir%\system32\inetsrv\appcmd.exe (
 :doit
 
 :: Default settings
-call set_root_env.bat
-call python_env.bat
+call env_set_root.bat
+call env_python.bat
 
 SET PROJECT_NAME=%APP_NAME%
 SET SITE_NAME=%PROJECT_NAME%
@@ -55,8 +55,8 @@ IF [%1] == [v] (
 	SET /p SITE_PROTOCOL="Enter http|https for protocol (%SITE_PROTOCOL%): " %=%
 	SET /p SITE_URL="Enter site url (%SITE_URL%):" %=%
 	SET /p WSGI_HANDLER="Enter WSGI Handler (%WSGI_HANDLER%):" %=%
-	SET /p IIS_PREMISSIONS="Enter Set IIS Permissions (%IIS_PREMISSIONS%):" %=%
 )
+SET /p IIS_PREMISSIONS="Enter Set IIS Permissions (%IIS_PREMISSIONS%):" %=%
 SET /p SITE_PORT="Enter port (%SITE_PORT%):" %=%
 
 IF %SITE_URL%==localhost (

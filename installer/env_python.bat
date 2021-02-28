@@ -1,12 +1,22 @@
-SET PYTHON_NAME=Python38
+call env_python_ver.bat
+
 SET PYTHON_HOME=%APP_BASE_PATH%\%PYTHON_NAME%
+IF [%INSTALLER_ROOT%] NEQ [] SET PYTHON_HOME=%INSTALLER_ROOT%\%PYTHON_NAME%
+
 SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+
 IF NOT EXIST %PYTHON_EXE% (
 	SET PYTHON_HOME=c:\%PYTHON_NAME%
 	SET PYTHON_EXE=%PYTHON_HOME%\python.exe
 )
+
+SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
+SET PYTHON_EXE=%PYTHON_HOME%\python.exe
+
 IF NOT EXIST %PYTHON_EXE% (
     SET /p PYTHON_HOME="Enter python.exe path (%PYTHON_HOME%):" %=%
     SET PYTHON_EXE=%PYTHON_HOME%\python.exe
 )
-ECHO Using Python: %PYTHON_EXE%
+@ECHO Using Python: %PYTHON_EXE%
+
+pause

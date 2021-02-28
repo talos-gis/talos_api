@@ -11,13 +11,14 @@
 :doit
 
 ::Installation paths
-call set_root_env.bat
-call python_env.bat
+call env_set_root.bat
+call env_python.bat
 
 %PYTHON_EXE% -m pip uninstall -y -r %APP_ROOT_PATH%\requirements.txt
 
 echo Would you like to delete %APP_BASE_PATH%?
 echo You might want to backup %APP_ROOT_PATH%\config before...
+pause
 rmdir /s %APP_BASE_PATH%
 
 @echo done!
