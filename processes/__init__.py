@@ -22,6 +22,8 @@ from .tester import Tester
 from .gdalinfo import GdalInfo
 from .sandbox import Sandbox
 
+from .p2p_loss import pre_request_p2p_loss, pre_response_p2p_loss
+
 # For the process list on the home page
 processes = [
     SayHello(),
@@ -48,6 +50,10 @@ processes = [
     Sandbox(),
     GdalInfo(),
 ]
+
+preprocessosrs = {
+    'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss)
+}
 
 # For the process list on the home page
 process_descriptor = {}

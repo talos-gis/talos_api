@@ -20,7 +20,6 @@ class LOS(Process):
 
         inputs = \
             iog.io_crs(defaults) + \
-            iog.of_pointcloud(defaults) + \
             iog.raster_input(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \
             iog.target(defaults, xy=True, z=True, msl=True) + \
@@ -33,8 +32,7 @@ class LOS(Process):
             iog.mock(defaults)
 
         outputs = iog.output_r() + \
-                  iog.output_value(['values']) + \
-                  iog.output_output(is_output_raster=False)
+                  iog.output_value(['output'])
 
 
         super().__init__(
@@ -52,14 +50,6 @@ class LOS(Process):
         )
 
     def _handler(self, request, response: ExecuteResponse):
-        of = process_helper.get_request_data(request.inputs, 'of')
-        if of is None:
-            output_filename = None
-        else:
-            of = str(of).lower()
-            ext = gdalos_util.get_ext_by_of(of)
-            output_filename = tempfile.mktemp(suffix=ext)
-
         raster_filename, bi, ovr_idx, co = iog.get_input_raster(request.inputs)
 
         in_coords_srs, out_crs = iog.get_io_crs(request.inputs)
@@ -71,16 +61,12 @@ class LOS(Process):
 
         results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
-            output_filename=output_filename, co=co, of=of,
+            output_filename=None, co=co, of=None,
             vp=vp_arrays_dict,
             in_coords_srs=in_coords_srs, out_crs=out_crs, mock=mock)
 
         response.outputs['r'].data = raster_filename
-        if output_filename is None:
-            response.outputs['values'].output_format = FORMATS.JSON
-            response.outputs['values'].data = results
-        else:
-            response.outputs['output'].output_format = FORMATS.TEXT
-            response.outputs['output'].file = output_filename
+        response.outputs['output'].output_format = FORMATS.JSON
+        response.outputs['output'].data = results
 
         return response

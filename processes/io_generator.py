@@ -212,14 +212,14 @@ def operation(defaults):
 
 def xy_fill(defaults):
     return [
-        LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle,
+        LiteralInputD(defaults, 'xy_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle.name,
                       data_type='string', min_occurs=1, max_occurs=1)
     ]
 
 
 def ot_fill(defaults):
     return [
-        LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle,
+        LiteralInputD(defaults, 'ot_fill', 'zip/zip_cycle/product', default=gdalos_base.FillMode.zip_cycle.name,
                       data_type='string', min_occurs=1, max_occurs=1)
     ]
 

@@ -6,7 +6,7 @@ import processes
 import app_config
 
 # This is, how you start PyWPS instance
-service = pywps.Service(processes=processes.processes)
+service = pywps.Service(processes=processes.processes, preprocessors=processes.preprocessosrs)
 # config is read in app_config so we don't need to pass it to Service as well
 # service = pywps.Service(processes=processes.processes, cfgfiles=cfgfiles)
 
@@ -27,6 +27,11 @@ def sys_path():
 @main_page.route('/wps', methods=['GET', 'POST'])
 def wps():
     return service
+
+
+@main_page.route('/api/<path:api_version>/<path:process_name>', methods=['GET', 'POST'])
+def adapter(api_version, process_name):
+    return wps()
 
 
 @main_page.route("/")
