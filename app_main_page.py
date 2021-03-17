@@ -23,15 +23,32 @@ def sys_path():
     return str(sys.path)
 
 
-# returns 'hello to the WPS server root'
+# GET format parameter: ?f=json
+
+# default mimetype = 'XML' if base='/wps' else 'JSON'
 @main_page.route('/wps', methods=['GET', 'POST'])
+@main_page.route('/wps/', methods=['GET', 'POST'])
+# POST /jobs - Process execution ({id} and {inputs} in body)
+# GET /jobs - Process execution ({id} and {inputs} in URL)
+@main_page.route('/jobs', methods=['GET', 'POST'])
+@main_page.route('/jobs/', methods=['GET', 'POST'])
+# GET /processes - returns process list capabilities (GetCapabilities)
+@main_page.route('/processes', methods=['GET', 'POST'])
+@main_page.route('/processes/', methods=['GET', 'POST'])
+@main_page.route('/api', methods=['GET', 'POST'])
+@main_page.route('/api/', methods=['GET', 'POST'])
 def wps():
     return service
 
 
-@main_page.route('/api/<path:api_version>/<path:process_name>', methods=['GET', 'POST'])
-def adapter(api_version, process_name):
-    return wps()
+@main_page.route('/wps/<path:path>', methods=['GET', 'POST'])
+# POST /jobs/{id} - Process {id} execution (only {inputs} in body)
+@main_page.route('/jobs/<path:path>', methods=['GET', 'POST'])
+# GET /processes/{id} - returns process {id} metadata (Describe Process)
+@main_page.route('/processes/<path:path>', methods=['GET', 'POST'])
+@main_page.route('/api/<path:path>', methods=['GET', 'POST'])
+def wps2(path):
+    return service
 
 
 @main_page.route("/")
