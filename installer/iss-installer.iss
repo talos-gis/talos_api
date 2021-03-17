@@ -1,5 +1,5 @@
 #include <./iss-app_consts.iss>
-#define public InOutDir "..\.."
+#define public InOutDir "d:\iss"
 
 [Setup]
 AppName={#AppName}
