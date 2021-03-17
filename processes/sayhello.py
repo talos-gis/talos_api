@@ -13,8 +13,7 @@ class SayHello(Process):
             self._handler,
             identifier=process_id,
             title='Process Say Hello',
-            abstract='Returns a literal string output\
-             with Hello plus the inputed name',
+            abstract='Returns a literal string output with Hello plus the inputed name',
             version='1.3.3.8',
             inputs=inputs,
             outputs=outputs,
