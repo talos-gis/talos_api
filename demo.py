@@ -56,13 +56,14 @@ def main():
         except OSError as e:
             print("%s [%d]" % (e.strerror, e.errno))
 
-        if (pid == 0):
+        if pid == 0:
             os.setsid()
             app.run(threaded=True, host=bind_host, port=server_port)
         else:
             os._exit(0)
     else:
         app.run(threaded=True, host=bind_host, port=server_port)
+
 
 if __name__ == "__main__":
     main()

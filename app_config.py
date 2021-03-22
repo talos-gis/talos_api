@@ -17,3 +17,5 @@ except:
     server_base_url = '{}:{}'.format(server_hostname, server_port)
     server_wps_url = server_base_url + '/wps'
 
+server_processes = server_base_url + '/processes'
+

@@ -16,8 +16,7 @@ class UltimateQuestion(Process):
             identifier='ultimate_question',
             version='1.3.3.7',
             title='Answer to the ultimate question',
-            abstract='The process gives the answer to the ultimate question\
-             of "What is the meaning of life?',
+            abstract='The process gives the answer to the ultimate question of "What is the meaning of life?',
             profile='',
             metadata=[Metadata('Ultimate Question'), Metadata('What is the meaning of life')],
             inputs=inputs,

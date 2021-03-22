@@ -36,6 +36,3 @@ app = flask.Flask(__name__)
 app.register_blueprint(main_page)
 
 application = app  # application is the default name for mod_wsgi
-
-if __name__ == "__main__":
-    app.run()

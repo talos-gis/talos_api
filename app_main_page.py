@@ -54,8 +54,13 @@ def wps2(path):
 @main_page.route("/")
 def hello():
     request_url = flask.request.url
-    return flask.render_template('home.html', request_url=request_url,
-                                 server_url=app_config.server_wps_url,
+    server_url = app_config.server_wps_url
+    prefix = 'http://'
+    if not server_url.startswith(prefix):
+        server_url = prefix + server_url
+    return flask.render_template('home.html',
+                                 request_url=request_url,
+                                 server_url=server_url,
                                  process_descriptor=processes.process_descriptor)
 
 
