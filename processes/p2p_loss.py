@@ -36,26 +36,34 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
     lower_case_keys(inputs)
     requests = inputs['requests']
     requests = list_of_dict_to_dict_of_lists(requests)
+
     key_conv = {
         'TxLatitude': 'ox',
         'TxLongitude': 'oy',
         'TxHeight': 'oz',
-        'IsTxHeightAboveTerrain': 'oagl',
+        'IsTxHeightAboveTerrain': 'omsl',
         'TxFrequency': 'frequency',
         'RxLatitude': 'tx',
         'RxLongitude': 'ty',
         'RxHeight': 'tz',
-        'IsRxHeightAboveTerrain': 'tagl',
+        'IsRxHeightAboveTerrain': 'tmsl',
         'Polarization': 'polarity',
     }
     for k, v in requests.items():
-        inputs[key_conv[k]] = v
+        if k in key_conv:
+            k = key_conv[k]
+            inputs[k] = v
+
+    # the following keys are redundant
     unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'dtmonly']
     for k in unused_keys:
         del inputs[k]
-    inputs['omsl'] = inverse_list_items(inputs.pop('oagl'))
-    inputs['tmsl'] = inverse_list_items(inputs.pop('tagl'))
-    inputs['polarity'] = inverse_list_items_int(inputs.pop('polarity'))
+
+    # the values of the following keys will be inverted as their meaning is inverted
+    for k in ['omsl', 'tmsl', 'polarity']:
+        inputs[k] = inverse_list_items(inputs[k])
+
+    # these are the outputs we want to create
     inputs['mode'] = ['PathLoss', 'FreeSpaceLoss']
     return inputs
 
