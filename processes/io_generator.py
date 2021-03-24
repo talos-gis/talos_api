@@ -50,6 +50,7 @@ def p(defaults, default):
         LiteralInputD(defaults, 'p', 'parameters', data_type='string', min_occurs=1, max_occurs=None, default=default),
     ]
 
+
 def raster_input(defaults):
     return [
         # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
@@ -57,6 +58,8 @@ def raster_input(defaults):
         LiteralInputD(defaults, 'bi', 'band index', data_type='positiveInteger', default=1, min_occurs=0,
                       max_occurs=1),
         LiteralInputD(defaults, 'ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0,
+                      max_occurs=1),
+        LiteralInputD(defaults, 'res', 'input raster resolution', data_type='float', default=0, min_occurs=0,
                       max_occurs=1),
         LiteralInputD(defaults, 'co', 'input raster creation options', data_type='string', min_occurs=0,
                       max_occurs=1),
@@ -318,6 +321,9 @@ def get_io_crs(request_inputs):
 
 def get_input_raster(request_inputs):
     ovr_idx = request_inputs['ovr'][0].data
+    res = request_inputs['res'][0].data
+    if res:
+        ovr_idx = float(res)
     # raster_filename, input_ds = process_helper.open_ds_from_wps_input(request_inputs['r'][0], ovr_idx=ovr_idx)
     raster_filename = process_helper.get_request_data(request_inputs, 'r')
     bi = request_inputs['bi'][0].data

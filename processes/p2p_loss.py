@@ -37,6 +37,15 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
     requests = inputs['requests']
     requests = list_of_dict_to_dict_of_lists(requests)
 
+    # convert main section keys
+    key_conv = {
+        'resolution': 'res',
+    }
+    for k, v in key_conv.items():
+        if k in inputs:
+            inputs[v] = inputs.pop(k)
+
+    # convert per-request keys
     key_conv = {
         'TxLatitude': 'ox',
         'TxLongitude': 'oy',
