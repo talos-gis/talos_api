@@ -2,14 +2,12 @@ import importlib
 
 from osgeo import gdal
 from pywps import Process, LiteralOutput
-from .process_defaults import process_defaults
 
 
 class GetInfo(Process):
     def __init__(self):
         process_id = 'info'
-        defaults = process_defaults(process_id)
-        self.modules = ('processes.__data__', 'talosgis', 'gdalos', 'osgeo.gdal')
+        self.modules = ('processes.__data__', 'talosgis', 'gdalos', 'osgeo.gdal', 'osgeo_utils')
         outputs = [
             LiteralOutput('output', 'service version', data_type='string'),
             LiteralOutput('gdal_drv', 'gdal drivers', data_type='string'),
@@ -32,10 +30,13 @@ class GetInfo(Process):
     def _handler(self, request, response):
         versions = {}
         for m in self.modules:
-            version = importlib.import_module(m).__version__
-            versions[m] = version
-            response.outputs[m].data = version
-        response.outputs['output'].data = '; '.join([f'{m}: {versions[m]}' for m in self.modules])
+            try:
+                version = importlib.import_module(m).__version__
+                versions[m] = version
+                response.outputs[m].data = version
+            except Exception:
+                pass
+        response.outputs['output'].data = str(versions)
         response.outputs['gdal_drv'].data, response.outputs['gdal_desc'].data = gdal_formats()
         return response
 
