@@ -57,6 +57,7 @@ class XYZ(Process):
             response.outputs['x'].output_format = FORMATS.JSON
             response.outputs['y'].output_format = FORMATS.JSON
             response.outputs['z'].output_format = FORMATS.JSON
+            response.outputs['categories'].output_format = FORMATS.JSON
 
             response.outputs['x'].data = x
             response.outputs['y'].data = y
