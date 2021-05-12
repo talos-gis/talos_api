@@ -46,3 +46,33 @@ rm ./logs/pywps-logs.sqlite3
 
 # sleep
 curl "%server%?service=wps&version=1.0.0&request=execute&Identifier=sleep&storeExecuteResponse=true&DataInputs=seconds=2&RawDataOutput=output"
+
+
+http://localhost:5000/wps?request=DescribeProcess&service=WPS&identifier=all&version=1.0.0
+http://localhost:5000/wps?service=wps&version=1.0.0&request=execute&Identifier=say_hello&storeExecuteResponse=true&DataInputs=name=Idan&RawDataOutput=output
+http://localhost:5000/wps/say_hello?service=wps&version=1.0.0&request=execute&storeExecuteResponse=true&DataInputs=name=Idan
+http://localhost:5000/processes/say_hello?DataInputs=name=Idan&RawDataOutput=output
+
+http://localhost:5000/wps/
+http://localhost:5000/processes
+http://localhost:5000/processes/say_hello
+http://localhost:5000/jobs/
+http://localhost:5000/jobs/say_hello
+http://localhost:5000/jobs/say_hello/output
+http://localhost:5000/jobs/say_hello?DataInputs=name=Idan&RawDataOutput=output
+http://localhost:5000/jobs/say_hello/output?DataInputs=name=Idan
+http://localhost:5000/jobs/say_hello?DataInputs=name=Idan&f=xml
+
+https://github.com/opengeospatial/ogcapi-processes
+https://github.com/opengeospatial/ogcapi-processes/blob/master/implementations.adoc
+https://app.swaggerhub.com/apis/geoprocessing/ogcapi-processes/1.0-draft.6-SNAPSHOT#/ProcessDescription/getProcessDescription
+https://demo.pygeoapi.io/master/openapi?f=html#/hello-world/describeHello-worldProcess
+
+
+https://demo.pygeoapi.io/master/processes?f=json
+https://demo.pygeoapi.io/master/processes?f=html
+
+https://app.swaggerhub.com/apis/geoprocessing/ogcapi-processes/1.0-draft.6-SNAPSHOT#/ConformanceDeclaration/getConformanceClasses
+http://geoprocessing.demo.52north.org:8080/javaps/rest/
+http://geoprocessing.demo.52north.org:8080/javaps/rest/processes
+http://geoprocessing.demo.52north.org:8080/javaps/rest/processes/org.n52.javaps.test.EchoProcess
