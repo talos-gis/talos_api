@@ -1,0 +1,7 @@
+call pack-2-app.bat
+unpack python38 to d:\iss
+call pack-3-wheels.bat
+call pack-4-wheels_replace.bat
+call install-3-wheels.bat
+update version info: VERSION.txt, iss-app_consts.iss
+iss-installer.iss
