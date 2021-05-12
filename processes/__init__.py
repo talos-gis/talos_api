@@ -15,6 +15,7 @@ from .trans import Trans
 from .xyz import XYZ
 from .crop_color import GdalDem
 from .rasval import RasterValue
+from .profile import GeodProfile
 from .viewshed import Viewshed
 from .los import LOS
 from .calc import Calc
@@ -43,6 +44,7 @@ processes = [
     XYZ(),
     GdalDem(),
     RasterValue(),
+    GeodProfile(),
     Viewshed(),
     LOS(),
     Calc(),

@@ -13,6 +13,6 @@ pyyaml
 numpy!=1.19.4
 
 pywps-json>=4.2.9.8
-gdalos>=0.50.4
-gdal-utils>=3.3.0.6
+gdalos>=0.55.1
+gdal-utils>=3.3.0.7.1
 gdal>=3.0.0

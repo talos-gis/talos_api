@@ -12,6 +12,9 @@ tester:
 ras_val:
   r: '{{ dtm_geo }}'
 
+geod_profile:
+  r: '{{ dtm_geo }}'
+
 crop_color:
   r: '{{ dtm_geo }}'
   of: 'czml'

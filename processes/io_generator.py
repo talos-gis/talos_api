@@ -83,14 +83,17 @@ def raster_ranges(defaults):
     ]
 
 
-def xy(defaults):
-    return [
-        LiteralInputD(defaults, 'x', 'x or longitude or pixel', data_type='float', min_occurs=1, max_occurs=None,
-                      uoms=[UOM('metre')]),
-        LiteralInputD(defaults, 'y', 'y or latitude or line', data_type='float', min_occurs=1, max_occurs=None,
-                      uoms=[UOM('metre')]),
-    ]
-
+def xy(defaults, suffixes=('',)):
+    res = []
+    for i in suffixes:
+        a = [
+            LiteralInputD(defaults, f'x{i}', f'x{i} or longitude or pixel', data_type='float', min_occurs=1, max_occurs=None,
+                          uoms=[UOM('metre')]),
+            LiteralInputD(defaults, f'y{i}', f'y{i} or latitude or line', data_type='float', min_occurs=1, max_occurs=None,
+                          uoms=[UOM('metre')]),
+        ]
+        res.extend(a)
+    return res
 
 # https://en.wikipedia.org/wiki/Height_above_ground_level MSL/AGL
 def observer(defaults, xy, z, msl):
