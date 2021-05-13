@@ -14,8 +14,8 @@ from .invert import Invert
 from .trans import Trans
 from .xyz import XYZ
 from .crop_color import GdalDem
-from .rasval import RasterValue
-from .profile import GeodProfile
+from .ras_val import RasterValue
+from .geod_profile import GeodProfile
 from .viewshed import Viewshed
 from .los import LOS
 from .calc import Calc
@@ -23,7 +23,9 @@ from .tester import Tester
 from .gdalinfo import GdalInfo
 from .sandbox import Sandbox
 
-from .p2p_loss import pre_request_p2p_loss, pre_response_p2p_loss
+from .p2p_loss_adapter import pre_request_p2p_loss, pre_response_p2p_loss
+from .elevation_point_adapter import pre_request_elevation_point, pre_response_elevation_point
+from .geod_profile_adapter import pre_request_profile, pre_response_profile
 
 # For the process list on the home page
 processes = [
@@ -54,7 +56,9 @@ processes = [
 ]
 
 preprocessosrs = {
-    'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss)
+    'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
+    'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
+    'Profile': ('geod_profile', pre_request_profile, pre_response_profile),
 }
 
 # For the process list on the home page

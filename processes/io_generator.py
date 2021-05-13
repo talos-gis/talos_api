@@ -31,6 +31,13 @@ def io_crs(defaults):
     ]
 
 
+def input_srs(defaults):
+    return [
+        LiteralInputD(defaults, 'srs', 'SRS or coordinate kind: [4326|ll|xy|pl|epsg code]', data_type='string', min_occurs=1,
+                      max_occurs=1, default=4326),
+    ]
+
+
 def of_raster(defaults):
     return [
         LiteralInputD(defaults, 'of', 'output raster format (czml, gtiff)', data_type='string',
@@ -54,15 +61,18 @@ def p(defaults, default):
 def raster_input(defaults):
     return [
         # ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF], min_occurs=1, max_occurs=1),
-        LiteralInputD(defaults, 'r', 'input raster', data_type='string', min_occurs=1, max_occurs=1),
-        LiteralInputD(defaults, 'bi', 'band index', data_type='positiveInteger', default=1, min_occurs=0,
-                      max_occurs=1),
-        LiteralInputD(defaults, 'ovr', 'input raster ovr', data_type='integer', default=0, min_occurs=0,
-                      max_occurs=1),
-        LiteralInputD(defaults, 'res', 'input raster resolution', data_type='float', default=0, min_occurs=0,
-                      max_occurs=1),
-        LiteralInputD(defaults, 'co', 'input raster creation options', data_type='string', min_occurs=0,
-                      max_occurs=1),
+        LiteralInputD(defaults, 'r', 'input raster',
+                      data_type='string', min_occurs=1, max_occurs=1),
+        LiteralInputD(defaults, 'bi', 'band index',
+                      data_type='positiveInteger', default=1, min_occurs=0, max_occurs=1),
+        LiteralInputD(defaults, 'ovr', 'input raster ovr',
+                      data_type='integer', min_occurs=0, max_occurs=1),
+        LiteralInputD(defaults, 'res', 'input raster resolution',
+                      data_type='float', min_occurs=0, max_occurs=1),
+        LiteralInputD(defaults, 'res_m', 'input raster resolution [meter]',
+                      data_type='float', min_occurs=0, max_occurs=1, uoms=[UOM('metre')]),
+        LiteralInputD(defaults, 'co', 'input raster creation options',
+                      data_type='string', min_occurs=0, max_occurs=1),
     ]
 
 

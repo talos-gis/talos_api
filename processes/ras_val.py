@@ -1,10 +1,8 @@
-from osgeo import gdal
 from osgeo.osr import OAMS_TRADITIONAL_GIS_ORDER
 
-from osgeo_utils.samples.gdallocationinfo import gdallocationinfo, LocationInfoSRS
+from osgeo_utils.samples.gdallocationinfo import gdallocationinfo
 from pywps import FORMATS
 from pywps.app import Process
-from pywps.inout import LiteralOutput
 from .process_defaults import process_defaults, LiteralInputD
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
@@ -18,15 +16,14 @@ class RasterValue(Process):
         defaults = process_defaults(process_id)
 
         inputs = \
-            iog.io_crs(defaults) + \
-            iog.of_pointcloud(defaults) + \
+            iog.input_srs(defaults) + \
             iog.raster_input(defaults) + \
             iog.xy(defaults) + \
             [
-                LiteralInputD(defaults, 'srs', 'SRS or coordinate kind: [4326|ll|xy|pl|epsg code]', data_type='string', min_occurs=1, max_occurs=1, default=4326),
                 LiteralInputD(defaults, 'interpolate', 'interpolate ', data_type='boolean', min_occurs=1, max_occurs=1, default=True),
             ]
-        outputs = [LiteralOutput('output', 'raster values at the requested coordinates', data_type=None)]
+        outputs = iog.output_r() + \
+                  iog.output_value(['x', 'y', 'output'])
 
         super().__init__(
             self._handler,
@@ -45,33 +42,31 @@ class RasterValue(Process):
     def _handler(self, request, response: ExecuteResponse):
         raster_filename, ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0])
 
-        band: gdal.Band = ds.GetRasterBand(request.inputs['bi'][0].data)
-        if band is None:
-            raise Exception('band number out of range')
+        band_nums = request.inputs['bi'][0].data
 
-        srs = request.inputs['srs'][0].data.lower() if 'srs' in request.inputs else None
-        if srs == 'pl':
-            srs = LocationInfoSRS.PixelLine
-        elif srs == 'xy':
-            srs = LocationInfoSRS.SameAsDS_SRS
-        elif srs == 'll':
-            srs = LocationInfoSRS.SameAsDS_SRS_GeogCS
-        else:
-            try:
-                srs = int(srs)
-            except Exception:
-                pass
+        srs = process_helper.get_location_info_srs(request.inputs)
 
         x = process_helper.get_input_data_array(request.inputs['x'])
         y = process_helper.get_input_data_array(request.inputs['y'])
 
+        ovr_idx = process_helper.get_ovr(request.inputs, ds)
+
         if len(x) != len(y):
             raise Exception('length(x)={} is different from length(y)={}'.format(len(x), len(y)))
 
-        pixels, lines, values = gdallocationinfo(ds, x=x, y=y, srs=srs, axis_order=OAMS_TRADITIONAL_GIS_ORDER)
+        pixels, lines, output = gdallocationinfo(ds, ovr_idx=ovr_idx, band_nums=band_nums,
+                                                 x=x, y=y, srs=srs, axis_order=OAMS_TRADITIONAL_GIS_ORDER)
         del ds
 
+        response.outputs['r'].data = raster_filename
+
+        response.outputs['x'].output_format = FORMATS.JSON
+        response.outputs['x'].data = x
+
+        response.outputs['y'].output_format = FORMATS.JSON
+        response.outputs['y'].data = y
+
         response.outputs['output'].output_format = FORMATS.JSON
-        response.outputs['output'].data = values
+        response.outputs['output'].data = output
 
         return response
