@@ -1,3 +1,2 @@
 gdal-mrr
-gdal-ecw
 talosgis>=2.7.6.3
