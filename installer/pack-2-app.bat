@@ -4,7 +4,7 @@ pushd "%~dp0"
 call "%~dp0\env_set_root.bat"
 call "%~dp0\env_installer.bat"
 
-set APP_REPO=https://github.com/talos-gis/pywps-flask.git
+set APP_REPO=https://github.com/talos-gis/talos_api.git
 
 set APP_ROOT_PATH=%INSTALLER_ROOT%\%APP_NAME%
 set APP_NAME_ZIP=%INSTALLER_ROOT%\%APP_NAME%.7z
