@@ -1,10 +1,363 @@
 {
 	"info": {
 		"_postman_id": "52447cf7-4a40-4b97-b73d-9c7b84dea3b2",
-		"name": "talos_wps",
+		"name": "talos_api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "hello",
+			"item": [
+				{
+					"name": "hello world get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{talos_wps}}?service=wps&version=1.0.0&request=execute&Identifier=say_hello&storeExecuteResponse=true&DataInputs=name=Idan&RawDataOutput=output",
+							"host": [
+								"{{talos_wps}}"
+							],
+							"query": [
+								{
+									"key": "service",
+									"value": "wps"
+								},
+								{
+									"key": "version",
+									"value": "1.0.0"
+								},
+								{
+									"key": "request",
+									"value": "execute"
+								},
+								{
+									"key": "Identifier",
+									"value": "say_hello"
+								},
+								{
+									"key": "storeExecuteResponse",
+									"value": "true"
+								},
+								{
+									"key": "DataInputs",
+									"value": "name=Idan"
+								},
+								{
+									"key": "RawDataOutput",
+									"value": "output"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hello world post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>say_hello</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n        <wps:Input>\n            <ows:Identifier>name</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>Idan</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\t</wps:DataInputs>\n    \n</wps:Execute>\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "info",
+			"item": [
+				{
+					"name": "into post",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"identifier\": \"info\"\n}",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info get",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{talos_wps}}?service=wps&version=1.0.0&request=execute&Identifier=info&storeExecuteResponse=true&f=json",
+							"host": [
+								"{{talos_wps}}"
+							],
+							"query": [
+								{
+									"key": "service",
+									"value": "wps"
+								},
+								{
+									"key": "version",
+									"value": "1.0.0"
+								},
+								{
+									"key": "request",
+									"value": "execute"
+								},
+								{
+									"key": "Identifier",
+									"value": "info"
+								},
+								{
+									"key": "storeExecuteResponse",
+									"value": "true"
+								},
+								{
+									"key": "f",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gdalinfo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"gdalinfo\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"p\": [\"-json\", \"d:\\\\Maps\\\\samples\\\\rgb.tif\"]\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sandbox",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"sandbox\",\n\t\"_outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"name\": \"Idan\",\n\t\t\"age\": 20\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ras_val",
+			"item": [
+				{
+					"name": "ras val 1",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"ras_val\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"x\": [35.01, 35.02],\n\t\t\"y\": [32.01, 32.02],\n        \"interpolate\": true\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "geod_profile",
+			"item": [
+				{
+					"name": "geod_profile",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"geod_profile\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"x1\": [35.01, 35.03],\n\t\t\"y1\": [32.01, 32.03],\n\t\t\"x2\": [35.02, 35.35],\n\t\t\"y2\": [32.02, 32.35],\n        \"npts\": 0,\n        \"del_s\": 100,\n        \"interpolate\": true\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "color_crop",
+			"item": [
+				{
+					"name": "color_crop_czml",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>crop_color</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>czml</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>output_tif</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>False</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>output_czml</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>True</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n<!--\t\t<wps:Input>-->\n<!--            <ows:Identifier>extent</ows:Identifier>-->\n<!--            <wps:Data>-->\n<!--                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">-->\n<!--                    <ows:LowerCorner>35.0 31.5</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>35.1 31.6</ows:UpperCorner>-->\n<!--                </wps:BoundingBoxData>-->\n<!--            </wps:Data>-->\n<!--\t\t</wps:Input>-->\n\n\t\t<wps:Input>\n            <ows:Identifier>extent</ows:Identifier>\n            <wps:Data>\n                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">\n                    <ows:LowerCorner>35.2 32.6</ows:LowerCorner>\n                    <ows:UpperCorner>35.3 32.7</ows:UpperCorner>\n<!--                    <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>180.0 90.0</ows:UpperCorner>-->\n                </wps:BoundingBoxData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                         xsi:schemaLocation=\"http://ogr.maptools.org/ poly.xsd\"\n                         xmlns:ogr=\"http://ogr.maptools.org/\"\n                         xmlns:gml=\"http://www.opengis.net/gml\">\n                      <gml:boundedBy>\n                        <gml:Box>\n                          <gml:coord><gml:X>35.15711864406779</gml:X><gml:Y>32.52847457627119</gml:Y></gml:coord>\n                          <gml:coord><gml:X>35.45135593220338</gml:X><gml:Y>32.78237288135593</gml:Y></gml:coord>\n                        </gml:Box>\n                      </gml:boundedBy>\n\n                      <gml:featureMember>\n                        <ogr:poly fid=\"poly.0\">\n                          <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1571186440678,32.6708474576271 35.2864406779661,32.7823728813559 35.4513559322034,32.6471186440678 35.3338983050847,32.6115254237288 35.1571186440678,32.6708474576271</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                          <ogr:id xsi:nil=\"true\"/>\n                        </ogr:poly>\n                      </gml:featureMember>\n                      <gml:featureMember>\n                        <ogr:poly fid=\"poly.1\">\n                          <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1666101694915,32.5913559322034 35.2733898305085,32.606779661017 35.2710169491525,32.536779661017 35.185593220339,32.5284745762712 35.1666101694915,32.5913559322034</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                          <ogr:id xsi:nil=\"true\"/>\n                        </ogr:poly>\n                      </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n                    100% 255 255 255 &#xA;\n                    75% 235 220 175 &#xA;\n                    20% 190 185 135 &#xA;\n                    0% 240 250 150 &#xA;\n                    nv  0 0 0 0\n                </wps:ComplexData>\n<!--                <wps:ComplexData>-->\n<!--                    500 255 255 255 &#xA;-->\n<!--                    450 235 220 175 &#xA;-->\n<!--                    300 190 185 135 &#xA;-->\n<!--                    150 240 250 150 &#xA;-->\n<!--                    76  50  180  50 &#xA;-->\n<!--                    75  200 230 255 &#xA;-->\n<!--                    nv  0 0 0 0-->\n<!--                </wps:ComplexData>-->\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "color_crop_czml simple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>crop_color</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>czml</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>output_tif</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>False</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>output_czml</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>True</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n<!--\t\t<wps:Input>-->\n<!--            <ows:Identifier>extent</ows:Identifier>-->\n<!--            <wps:Data>-->\n<!--                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">-->\n<!--                    <ows:LowerCorner>35.0 31.5</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>35.1 31.6</ows:UpperCorner>-->\n<!--                </wps:BoundingBoxData>-->\n<!--            </wps:Data>-->\n<!--\t\t</wps:Input>-->\n\n\t\t<wps:Input>\n            <ows:Identifier>extent</ows:Identifier>\n            <wps:Data>\n                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">\n                    <ows:LowerCorner>33.0 33.0</ows:LowerCorner>\n                    <ows:UpperCorner>33.1 33.1</ows:UpperCorner>\n<!--                    <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>180.0 90.0</ows:UpperCorner>-->\n                </wps:BoundingBoxData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n                    100% 0 255 0 &#xA;\n                    75% 235 220 175 &#xA;\n                    20% 190 185 135 &#xA;\n                    0% 255 0 0 &#xA;\n                    nv  0 0 0 0\n                </wps:ComplexData>\n<!--                <wps:ComplexData>-->\n<!--                    500 255 255 255 &#xA;-->\n<!--                    450 235 220 175 &#xA;-->\n<!--                    300 190 185 135 &#xA;-->\n<!--                    150 240 250 150 &#xA;-->\n<!--                    76  50  180  50 &#xA;-->\n<!--                    75  200 230 255 &#xA;-->\n<!--                    nv  0 0 0 0-->\n<!--                </wps:ComplexData>-->\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "viewshed",
 			"item": [
@@ -218,106 +571,6 @@
 			]
 		},
 		{
-			"name": "hello",
-			"item": [
-				{
-					"name": "hello world get",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{talos_wps}}?service=wps&version=1.0.0&request=execute&Identifier=say_hello&storeExecuteResponse=true&DataInputs=name=Idan&RawDataOutput=output",
-							"host": [
-								"{{talos_wps}}"
-							],
-							"query": [
-								{
-									"key": "service",
-									"value": "wps"
-								},
-								{
-									"key": "version",
-									"value": "1.0.0"
-								},
-								{
-									"key": "request",
-									"value": "execute"
-								},
-								{
-									"key": "Identifier",
-									"value": "say_hello"
-								},
-								{
-									"key": "storeExecuteResponse",
-									"value": "true"
-								},
-								{
-									"key": "DataInputs",
-									"value": "name=Idan"
-								},
-								{
-									"key": "RawDataOutput",
-									"value": "output"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "hello world post",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>say_hello</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n        <wps:Input>\n            <ows:Identifier>name</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>Idan</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\t</wps:DataInputs>\n    \n</wps:Execute>\n",
-							"options": {
-								"raw": {
-									"language": "xml"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{talos_wps}}",
-							"host": [
-								"{{talos_wps}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "color_crop",
-			"item": [
-				{
-					"name": "color_crop_czml",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>crop_color</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>czml</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>output_tif</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>False</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>output_czml</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>True</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n<!--\t\t<wps:Input>-->\n<!--            <ows:Identifier>extent</ows:Identifier>-->\n<!--            <wps:Data>-->\n<!--                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">-->\n<!--                    <ows:LowerCorner>35.0 31.5</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>35.1 31.6</ows:UpperCorner>-->\n<!--                </wps:BoundingBoxData>-->\n<!--            </wps:Data>-->\n<!--\t\t</wps:Input>-->\n\n\t\t<wps:Input>\n            <ows:Identifier>extent</ows:Identifier>\n            <wps:Data>\n                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">\n                    <ows:LowerCorner>35.2 32.6</ows:LowerCorner>\n                    <ows:UpperCorner>35.3 32.7</ows:UpperCorner>\n<!--                    <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>-->\n<!--                    <ows:UpperCorner>180.0 90.0</ows:UpperCorner>-->\n                </wps:BoundingBoxData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                         xsi:schemaLocation=\"http://ogr.maptools.org/ poly.xsd\"\n                         xmlns:ogr=\"http://ogr.maptools.org/\"\n                         xmlns:gml=\"http://www.opengis.net/gml\">\n                      <gml:boundedBy>\n                        <gml:Box>\n                          <gml:coord><gml:X>35.15711864406779</gml:X><gml:Y>32.52847457627119</gml:Y></gml:coord>\n                          <gml:coord><gml:X>35.45135593220338</gml:X><gml:Y>32.78237288135593</gml:Y></gml:coord>\n                        </gml:Box>\n                      </gml:boundedBy>\n\n                      <gml:featureMember>\n                        <ogr:poly fid=\"poly.0\">\n                          <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1571186440678,32.6708474576271 35.2864406779661,32.7823728813559 35.4513559322034,32.6471186440678 35.3338983050847,32.6115254237288 35.1571186440678,32.6708474576271</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                          <ogr:id xsi:nil=\"true\"/>\n                        </ogr:poly>\n                      </gml:featureMember>\n                      <gml:featureMember>\n                        <ogr:poly fid=\"poly.1\">\n                          <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.1666101694915,32.5913559322034 35.2733898305085,32.606779661017 35.2710169491525,32.536779661017 35.185593220339,32.5284745762712 35.1666101694915,32.5913559322034</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                          <ogr:id xsi:nil=\"true\"/>\n                        </ogr:poly>\n                      </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n                    100% 255 255 255 &#xA;\n                    75% 235 220 175 &#xA;\n                    20% 190 185 135 &#xA;\n                    0% 240 250 150 &#xA;\n                    nv  0 0 0 0\n                </wps:ComplexData>\n<!--                <wps:ComplexData>-->\n<!--                    500 255 255 255 &#xA;-->\n<!--                    450 235 220 175 &#xA;-->\n<!--                    300 190 185 135 &#xA;-->\n<!--                    150 240 250 150 &#xA;-->\n<!--                    76  50  180  50 &#xA;-->\n<!--                    75  200 230 255 &#xA;-->\n<!--                    nv  0 0 0 0-->\n<!--                </wps:ComplexData>-->\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
-							"options": {
-								"raw": {
-									"language": "xml"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{talos_wps}}",
-							"host": [
-								"{{talos_wps}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "radio",
 			"item": [
 				{
@@ -327,7 +580,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"backend\": \"radio\",\n\t\t\"of\": \"tif\",\n        \"color_palette\": {\n\t\t\t\"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/viewshed/count_z.txt\"\n        },\n\t\t\"max_r\": \"2000\",\n\t\t\"ox\": \"35.11\",\n\t\t\"oy\": \"32.06\",\n\t\t\"oz\": \"10.0\",\n\t\t\"tz\": \"10.0\",\n\t\t\"omsl\": \"False\",\n\t\t\"tmsl\": \"False\"\n\t}\n}",
+							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"backend\": \"radio\",\n\t\t\"of\": \"czml\",\n        \"color_palette\": {\n\t\t\t\"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/gradient/percentages5.txt\"\n        },\n\t\t\"max_r\": \"2000\",\n\t\t\"ox\": \"35.11\",\n\t\t\"oy\": \"32.06\",\n\t\t\"oz\": \"10.0\",\n\t\t\"tz\": \"10.0\",\n\t\t\"omsl\": \"False\",\n        \"frequency\": 3000,\n        \"polarity\": \"H\",\n\t\t\"tmsl\": \"False\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,12 +598,437 @@
 				},
 				{
 					"name": "radio los",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"los\",\n\t\"_outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"ox\": [35.11, 35.12, 35.13, 35.14],\n\t\t\"oy\": [32.0, 32.07],\n\t\t\"oz\": [10.0],\n\t\t\"tx\": [35.18, 35.19],\n\t\t\"ty\": [32.08, 32.09],\n\t\t\"tz\": [11.0],\n        \"xy_fill\": \"zip_cycle\",\n        \"ot_fill\": \"product\",\n\t\t\"omsl\": \"False\",\n\t\t\"tmsl\": \"False\",\n        \"mode\": [\"PathLoss\", \"FreeSpaceLoss\"],\n        \"frequency\": 3333.0,\n        \"polarity\": \"h\",\n        \"mock\": false\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "radio los api",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"los\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"ox\": [35.11, 35.12, 35.13, 35.14],\n\t\t\"oy\": [32.0, 32.07],\n\t\t\"oz\": [10.0],\n\t\t\"tx\": [35.18, 35.19],\n\t\t\"ty\": [32.08, 32.09],\n\t\t\"tz\": [11.0],\n        \"xy_fill\": \"zip_cycle\",\n        \"ot_fill\": \"product\",\n\t\t\"omsl\": \"False\",\n\t\t\"tmsl\": \"False\",\n        \"mode\": [\"PathLoss\", \"FreeSpaceLoss\"],\n        \"mock\": false\n\t}\n}",
+							"raw": "{\n    \"ox\": [35.11, 35.12, 35.13, 35.14],\n    \"oy\": [32.0, 32.07],\n    \"oz\": [10.0],\n    \"tx\": [35.18, 35.19],\n    \"ty\": [32.08, 32.09],\n    \"tz\": [11.0],\n    \"xy_fill\": \"zip_cycle\",\n    \"ot_fill\": \"product\",\n    \"omsl\": \"False\",\n    \"tmsl\": \"False\",\n    \"mode\": [\"PathLoss\", \"FreeSpaceLoss\"],\n    \"frequency\": 3333.0,\n    \"polarity\": \"h\",\n    \"mock\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_api}}/los",
+							"host": [
+								"{{talos_api}}"
+							],
+							"path": [
+								"los"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TASC",
+			"item": [
+				{
+					"name": "ElevationPoint",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"points\": [\n\t\t{ \"lon\": 34.3, \"lat\": 32.2 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ElevationPoint",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ElevationPoint"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "ElevationPoint",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.geo+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"accessToken\": \"test\",\n\t\"points\": [\n\t\t{ \"lon\": 34, \"lat\": 32 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{tasc_api1}}/ElevationPoint",
+									"host": [
+										"{{tasc_api1}}"
+									],
+									"path": [
+										"ElevationPoint"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*",
+									"name": "Access-Control-Allow-Origin",
+									"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "1728000",
+									"name": "Access-Control-Max-Age",
+									"description": "Indicates how long the results of a preflight request can be cached in seconds."
+								},
+								{
+									"key": "Content-Length",
+									"value": "515",
+									"name": "Content-Length",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.geo+json",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 06 Aug 2019 07:49:19 GMT",
+									"name": "Date",
+									"description": "The date and time that the message was sent"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-HTTPAPI/2.0",
+									"name": "Server",
+									"description": "A name for the server"
+								}
+							],
+							"cookie": [],
+							"body": "{\"features\":[{\"geometry\":{\"coordinates\":[34.0,32.0,0.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[35.5,32.5,-123.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[35.8,32.8,339.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[36.1,33.0,628.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[36.2,33.2,765.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"}],\"type\":\"FeatureCollection\"}"
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"priority\": 1,\n\t\"resolution\": 100,\n\t\"sampleRes\":92,\n\t\"calcSideSlopes\": false,\n\t\"line\": [{\n\t\t\"lon\": 34.427,\n\t\t\"lat\": 31.67112\n\t},\n\t{\n\t\t\"lon\": 35.4688718,\n\t\t\"lat\": 31.6116019\n\t}]\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/Profile",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"Profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"points\": [\n\t\t{ \"lon\": 34.3, \"lat\": 32.2 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ElevationPoint",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ElevationPoint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Points2PLoss",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"priority\": 0,\n\t\"resolution\": 500,\n\t\"centralMeridian\": 32.8,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0,\n\t\"MaxPoints\": 1000,\n\t\"IsProfile\": false,\n\t\"Refractivity\": 301.0,\n\t\"Conductivity\": 0.028,\n\t\"Permittivity\": 15.0,\n\t\"Humidity\": 10.0,\n\t\"Fidelity\": 1,\n\t\"requests\": [\n\t\t{\n            \"Loss\": 0,\n\t\t\t\"TxLatitude\": 32.88,\n\t\t\t\"TxLongitude\": 34.98,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLatitude\": 33.08,\n\t\t\t\"RxLongitude\": 35.54,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t},\n\t\t{\n\t\t\t\"TxLatitude\": 32.8,\n\t\t\t\"TxLongitude\": 34.2,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLatitude\": 33.0,\n\t\t\t\"RxLongitude\": 35.64,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/Points2PLoss",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"Points2PLoss"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Visibility",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "image/tiff;application/zip"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accessToken\": \"test\",\n  \"resolution\": 500,\n  \"obsPos\": {\n    \"lat\": 32.8,\n    \"lon\": 35.8,\n    \"alt\": 80\n  },\n  \"obsEqp\": {\n    \"maxRange\": 300000\n  },\n  \"aoi\": [\n  \t{\"lon\":35.70, \"lat\":32.69 },\n\t{\"lon\":35.90, \"lat\":32.65 },\n\t{\"lon\":35.95, \"lat\":32.50 },\n\t{\"lon\":35.75, \"lat\":32.44 }\n  ],\n  \"returnSingleRaster\": true,\n  \"returnRanges\": true,\n  \"returnElAngles\": true,\n  \"returnAzAngles\": true,\n  \"returnHeights\": true\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ExtendedVisibility",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ExtendedVisibility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ROS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"test\",\n\t\"LineOfSightRange\": [\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.8,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.5,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.6,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t}\n\t],\n\t\"IsUserRefraction\": false,\n\t\"priority\": 0,\n\t\"resolution\": 0.0,\n\t\"centralMeridian\": null,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ros",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Position\": {\r\n\t\t\"X\": 35.1,\r\n\t\t\"Y\": 31.3,\r\n\t\t\"Z\": 530\r\n\t},\r\n\t\"AzimuthRange\": {\r\n\t\t\"From\": 0.0,\r\n\t\t\"To\": 359.0,\r\n\t\t\"Samples\": 10\r\n\t},\r\n\t\"ElevationRange\": {\r\n\t\t\"From\": -5.0,\r\n\t\t\"To\": 7.0,\r\n\t\t\"Samples\": 25\r\n\t},\r\n\t\"IsUseRefraction\": false,\r\n\t\"accessToken\": \"token\",\r\n\t\"priority\": 0,\r\n\t\"resolution\": 0.0,\r\n\t\"centralMeridian\": null,\r\n\t\"dtmOnly\": false,\r\n\t\"timeOut\": 0\r\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/AOS",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"AOS"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExtendedVisibility",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "image/tiff;application/zip"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accessToken\": \"test\",\n  \"resolution\": 500,\n  \"obsPos\": {\n    \"lat\": 32.8,\n    \"lon\": 35.8,\n    \"alt\": 80\n  },\n  \"obsEqp\": {\n    \"maxRange\": 300000\n  },\n  \"aoi\": [\n  \t{\"lon\":35.70, \"lat\":32.69 },\n\t{\"lon\":35.90, \"lat\":32.65 },\n\t{\"lon\":35.95, \"lat\":32.50 },\n\t{\"lon\":35.75, \"lat\":32.44 }\n  ],\n  \"returnSingleRaster\": true,\n  \"returnRanges\": true,\n  \"returnElAngles\": true,\n  \"returnAzAngles\": true,\n  \"returnHeights\": true\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ExtendedVisibility",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ExtendedVisibility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExtendedVisibilityBatch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "image/tiff;"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accessToken\": \"test\",\n  \"resolution\": 500,\n  \"requests\": [{\n\t  \"obsPos\": {\n\t    \"lat\": 32.8,\n\t    \"lon\": 35.8,\n\t    \"alt\": 80\n\t  },\n\t  \"obsEqp\": {\n\t    \"maxRange\": 100000\n\t  },\n\t  \"aoi\": [\n\t  \t{\"lon\":35.74, \"lat\":32.69 },\n\t\t{\"lon\":35.94, \"lat\":32.65 },\n\t\t{\"lon\":35.95, \"lat\":32.50 },\n\t\t{\"lon\":35.74, \"lat\":32.44 }\n\t  ],\n\t  \"returnRange\": false,\n\t  \"returnSingleRaster\": false\n  },{\n\t  \"obsPos\": {\n\t    \"lat\": 32.85,\n\t    \"lon\": 35.85,\n\t    \"alt\": 80\n\t  },\n\t  \"obsEqp\": {\n\t    \"maxRange\": 100000\n\t  },\n\t  \"aoi\": [\n\t  \t{\"lon\":35.74, \"lat\":32.69 },\n\t\t{\"lon\":35.94, \"lat\":32.65 },\n\t\t{\"lon\":35.95, \"lat\":32.50 },\n\t\t{\"lon\":35.74, \"lat\":32.44 }\n\t  ],\n\t  \"returnRange\": false,\n\t  \"returnSingleRaster\": false\n  },{\n\t  \"obsPos\": {\n\t    \"lat\": 32.9,\n\t    \"lon\": 35.9,\n\t    \"alt\": 80\n\t  },\n\t  \"obsEqp\": {\n\t    \"maxRange\": 100000\n\t  },\n\t  \"aoi\": [\n\t  \t{\"lon\":35.74, \"lat\":32.69 },\n\t\t{\"lon\":35.94, \"lat\":32.65 },\n\t\t{\"lon\":35.95, \"lat\":32.50 },\n\t\t{\"lon\":35.74, \"lat\":32.44 }\n\t  ],\n\t  \"returnRange\": false,\n\t  \"returnSingleRaster\": false\n  }]\n}"
+						},
+						"url": {
+							"raw": "{{tasc_api1}}/ExtendedVisibilityBatch",
+							"host": [
+								"{{tasc_api1}}"
+							],
+							"path": [
+								"ExtendedVisibilityBatch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "trans",
+			"item": [
+				{
+					"name": "trans 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"trans\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"r\": \"d:\\\\Maps\\\\samples\\\\rgb.tif\",      \n        \"skip_ndv\": false,\n        \"of\": \"xyz\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -369,16 +1047,22 @@
 			]
 		},
 		{
-			"name": "trans",
+			"name": "xyz",
 			"item": [
 				{
-					"name": "trans 1",
+					"name": "xyz 1",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"trans\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"r\": \"d:\\\\Maps\\\\samples\\\\rgb.tif\",        \n        \"of\": \"xyz\"\n\t}\n}",
+							"raw": "{\n\t\"identifier\": \"xyz\",\n\t\"inputs\": {\n        \"r\": \"d:\\\\Maps\\\\samples\\\\rgb.tif\",\n        \"skip_nodata\": false,\n        \"_dst_nodata\": -1000,\n        \"_src_nodata\": 255\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -389,6 +1073,40 @@
 							"raw": "{{talos_wps}}",
 							"host": [
 								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "xyz api",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"r\": \"d:\\\\Maps\\\\samples\\\\rgb.tif\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_root}}/api/1/xyz",
+							"host": [
+								"{{talos_root}}"
+							],
+							"path": [
+								"api",
+								"1",
+								"xyz"
 							]
 						}
 					},
