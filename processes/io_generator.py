@@ -11,6 +11,7 @@ from pywps.exceptions import MissingParameterValue
 from pywps.inout import LiteralOutput, ComplexOutput
 from . import process_helper
 from .process_defaults import LiteralInputD, ComplexInputD, BoundingBoxInputD
+from .process_helper import get_request_data
 
 mm = dict(min_occurs=1, max_occurs=None)
 mm0 = dict(min_occurs=0, max_occurs=None)
@@ -333,13 +334,13 @@ def get_io_crs(request_inputs):
 
 
 def get_input_raster(request_inputs):
-    ovr_idx = request_inputs['ovr'][0].data
-    res = request_inputs['res'][0].data
+    ovr_idx = get_request_data(request_inputs, 'ovr')
+    res = get_request_data(request_inputs, 'res')
     if res:
         ovr_idx = float(res)
     # raster_filename, input_ds = process_helper.open_ds_from_wps_input(request_inputs['r'][0], ovr_idx=ovr_idx)
     raster_filename = process_helper.get_request_data(request_inputs, 'r')
-    bi = request_inputs['bi'][0].data
+    bi = get_request_data(request_inputs, 'bi')
 
     co = None
     if 'co' in request_inputs:
