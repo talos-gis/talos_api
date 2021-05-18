@@ -1,4 +1,4 @@
-Flask
+Flask<2
 Jinja2
 jsonschema
 lxml
@@ -6,13 +6,13 @@ OWSLib
 pyproj
 requests
 Shapely
-Werkzeug
+Werkzeug<2
 SQLAlchemy
 psutil
 pyyaml
 numpy!=1.19.4
 
 pywps-json>=4.2.9.8
-gdalos>=0.55.2
+gdalos>=0.55.3
 gdal-utils>=3.3.0.8
 gdal>=3.0.0
