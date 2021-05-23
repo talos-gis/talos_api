@@ -27,26 +27,16 @@ viewshed:
   out_crs: '0'
   backend: 'talos'
 
-  refractivity: {{ radio_refractivity }}
-  conductivity: {{ radio_conductivity }}
-  permittivity: {{ radio_permittivity }}
-  humidity: {{ radio_humidity }}
-
   fill_center: False
   power_diff: 0
   profile_extension: True
 
 los:
   of: 'json'
-  r: '{{ dtm_utm }}'
+  r: '{{ dtm_geo }}'
   in_crs: '0'
   out_crs: '0'
   backend: 'radio'
-
-  refractivity: {{ radio_refractivity }}
-  conductivity: {{ radio_conductivity }}
-  permittivity: {{ radio_permittivity }}
-  humidity: {{ radio_humidity }}
 
   fill_center: False
   power_diff: 0

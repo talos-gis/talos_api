@@ -16,8 +16,9 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
     requests = list_of_dict_to_dict_of_lists(requests)
 
     # convert main section keys
+    inputs['del_s'] = inputs['resolution']
     key_conv = {
-        'resolution': 'res',
+        'resolution': 'res_m',
     }
     for k, v in key_conv.items():
         if k in inputs:

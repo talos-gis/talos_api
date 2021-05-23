@@ -14,8 +14,3 @@ dtm_color_palette: './static/data/color_files/color_file_1.txt'
 dtm_geo: 'd:\Maps\w84geo\dtm_SRTM1_hgt_ndv0.cog.tif.new.cog.tif'
 
 dtm_utm: 'd:\maps\srtm3\utm\*.tif'
-
-radio_refractivity: 333.0
-radio_conductivity: 3.0
-radio_permittivity: 33.0
-radio_humidity: 33.0

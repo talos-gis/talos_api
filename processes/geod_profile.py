@@ -22,9 +22,9 @@ class GeodProfile(Process):
             [
                 LiteralInputD(defaults, 'npts', 'number of points ', data_type='integer', min_occurs=0, max_occurs=1,
                               default=0),
-                LiteralInputD(defaults, 'del_s', 'delimiter distance between each two successive points ',
+                LiteralInputD(defaults, 'del_s', 'delimiter distance between each two successive points',
                               data_type='float', min_occurs=0, max_occurs=1, default=0),
-                LiteralInputD(defaults, 'interpolate', 'interpolate ', data_type='boolean', min_occurs=1, max_occurs=1,
+                LiteralInputD(defaults, 'interpolate', 'interpolate', data_type='boolean', min_occurs=1, max_occurs=1,
                               default=True),
             ]
         outputs = iog.output_r() + \
@@ -46,6 +46,7 @@ class GeodProfile(Process):
 
     def _handler(self, request, response: ExecuteResponse):
         raster_filename, ds = process_helper.open_ds_from_wps_input(request.inputs['r'][0])
+        ovr_idx = process_helper.get_ovr(request.inputs, ds)
 
         band_nums = request.inputs['bi'][0].data
 
@@ -55,8 +56,6 @@ class GeodProfile(Process):
 
         npts = get_request_data(request.inputs, 'npts') or 0
         del_s = get_request_data(request.inputs, 'del_s') or 0
-
-        ovr_idx = process_helper.get_ovr(request.inputs, ds)
 
         if not (len(x1) == len(y1) == len(x2) == len(y2)):
             raise Exception(f'the length of x1={len(x1)},y1={len(y1)},x2={len(x2)},y2={len(y2)} should be equal')

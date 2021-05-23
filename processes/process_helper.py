@@ -3,6 +3,7 @@ from typing import List
 
 from gdalos import gdalos_util
 from osgeo_utils.auxiliary.osr_util import get_srs
+from osgeo_utils.auxiliary.util import PathOrDS, OpenDS
 from osgeo_utils.samples.gdallocationinfo import LocationInfoSRS
 
 
@@ -56,12 +57,13 @@ def get_location_info_srs(request_inputs, name='srs'):
     return srs
 
 
-def get_ovr(request_inputs, ds):
+def get_ovr(request_inputs, filename_or_ds: PathOrDS):
     ovr_idx = get_request_data(request_inputs, 'ovr') or get_request_data(request_inputs, 'res')
     if ovr_idx is None:
         ovr_idx = get_request_data(request_inputs, 'res_m')
         if ovr_idx is not None:
-            srs = get_srs(ds)
-            if srs.IsGeographic():
-                ovr_idx /= 111_111  # meter to deg
+            with OpenDS(filename_or_ds) as ds:
+                srs = get_srs(ds)
+                if srs.IsGeographic():
+                    ovr_idx /= 111_111  # meter to deg
     return ovr_idx

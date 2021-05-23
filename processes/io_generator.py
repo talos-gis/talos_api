@@ -1,3 +1,5 @@
+from typing import Union, Optional
+
 from backend.formats import czml_format
 from gdalos import util as gdalos_base
 from gdalos.gdalos_selector import DataSetSelector
@@ -9,6 +11,8 @@ from pywps import FORMATS, UOM
 from pywps.app.Common import Metadata
 from pywps.exceptions import MissingParameterValue
 from pywps.inout import LiteralOutput, ComplexOutput
+
+from osgeo_utils.auxiliary.base import PathLikeOrStr
 from . import process_helper
 from .process_defaults import LiteralInputD, ComplexInputD, BoundingBoxInputD
 from .process_helper import get_request_data
@@ -333,11 +337,7 @@ def get_io_crs(request_inputs):
     return in_coords_srs, out_crs
 
 
-def get_input_raster(request_inputs):
-    ovr_idx = get_request_data(request_inputs, 'ovr')
-    res = get_request_data(request_inputs, 'res')
-    if res:
-        ovr_idx = float(res)
+def get_input_raster(request_inputs, use_data_selector=True):
     # raster_filename, input_ds = process_helper.open_ds_from_wps_input(request_inputs['r'][0], ovr_idx=ovr_idx)
     raster_filename = process_helper.get_request_data(request_inputs, 'r')
     bi = get_request_data(request_inputs, 'bi')
@@ -352,7 +352,20 @@ def get_input_raster(request_inputs):
                 raise Exception(f'creation option {creation_option} unsupported')
             co.append(creation_option)
 
-    return raster_filename, bi, ovr_idx, co
+    input_file = get_input_file(raster_filename, use_data_selector=use_data_selector)
+    first_file = input_file.get_map(0) if isinstance(input_file, DataSetSelector) else input_file
+    ovr_idx = process_helper.get_ovr(request_inputs, first_file)
+
+    return raster_filename, bi, ovr_idx, co, input_file
+
+
+def get_input_file(raster_filename: PathLikeOrStr, use_data_selector=True) -> \
+        Optional[Union[PathLikeOrStr, DataSetSelector]]:
+    r = None if not raster_filename else DataSetSelector(raster_filename) if use_data_selector else raster_filename
+    if isinstance(r, DataSetSelector):
+        if r.get_map_count() == 1:
+            r = r.get_map(0)
+    return r
 
 
 def get_vp(request_inputs, vp_class):
@@ -360,7 +373,6 @@ def get_vp(request_inputs, vp_class):
     vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(vp_class))
 
     if 'radio' in backend:
-        backend = ViewshedBackend.talos
         radio_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(RadioParams))
         for k, v in radio_arrays_dict.items():
             if v is None:
@@ -368,7 +380,3 @@ def get_vp(request_inputs, vp_class):
         vp_arrays_dict['radio_parameters'] = radio_arrays_dict
 
     return backend, vp_arrays_dict
-
-
-def get_input_file(raster_filename, use_data_selector=True):
-    return None if not raster_filename else DataSetSelector(raster_filename) if use_data_selector else raster_filename

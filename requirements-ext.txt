@@ -1,2 +1,2 @@
 gdal-mrr
-talosgis>=2.7.6.3
+talosgis>=2.8.1.3

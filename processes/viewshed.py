@@ -114,12 +114,10 @@ class Viewshed(Process):
 
         else:
             in_coords_srs, out_crs = iog.get_io_crs(request.inputs)
-            raster_filename, bi, ovr_idx, co = iog.get_input_raster(request.inputs)
+            raster_filename, bi, ovr_idx, co, input_file = iog.get_input_raster(request.inputs, use_data_selector=True)
             backend, vp_arrays_dict = iog.get_vp(request.inputs, ViewshedParams)
 
         vp_slice = process_helper.get_request_data(request.inputs, 'vps')
-
-        input_file = iog.get_input_file(raster_filename, use_data_selector=True)
 
         viewshed_calc(input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
                       output_filename=output_filename, co=co, of=of,

@@ -33,6 +33,7 @@ my_modules = [
     r'D:\dev\gis\pywps',
     r'D:\dev\gis\gdalos\src',
     r'D:\dev\gis\TaLoS\1\p\talos\src',
+    r'D:\dev\gis\tirem_api\src',
 ]
 for m in my_modules:
     print(f'adding {m} to path')
