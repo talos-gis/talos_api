@@ -1,7 +1,7 @@
-Werkzeug<2
-Flask<2
-Jinja2<3
-pywps-json>=4.2.9.8
+Werkzeug
+Flask
+Jinja2
+pywps-json>=4.2.11.12
 
 jsonschema
 lxml
