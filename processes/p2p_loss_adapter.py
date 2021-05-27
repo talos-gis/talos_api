@@ -26,13 +26,13 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
 
     # convert per-request keys
     key_conv = {
-        'TxLatitude': 'ox',
-        'TxLongitude': 'oy',
+        'TxLatitude': 'oy',
+        'TxLongitude': 'ox',
         'TxHeight': 'oz',
         'IsTxHeightAboveTerrain': 'omsl',
         'TxFrequency': 'frequency',
-        'RxLatitude': 'tx',
-        'RxLongitude': 'ty',
+        'RxLatitude': 'ty',
+        'RxLongitude': 'tx',
         'RxHeight': 'tz',
         'IsRxHeightAboveTerrain': 'tmsl',
         'Polarization': 'polarity',
