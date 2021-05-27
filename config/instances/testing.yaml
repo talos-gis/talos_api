@@ -10,12 +10,9 @@ root: './static/data/maps'
 
 dtm_color_palette: './static/data/color_files/color_file_1.txt'
 
-dtm_geo: './static/data/maps/srtm1_x35_y32.tif'
+dtm_geo: './static/data/maps/srtm_30k.tif'
+#dtm_geo: './static/data/maps/srtm1_x35_y32.tif'
 #dtm_geo: '@xlink:href=file:./static/data/maps/srtm1_x35_y32.tif'
 
 dtm_utm: './static/data/maps/srtm1_w84u36.tif'
 
-radio_refractivity: 333.0
-radio_conductivity: 3.0
-radio_permittivity: 33.0
-radio_humidity: 33.0
