@@ -1,5 +1,4 @@
-from gdalos.geod_profile import geod_profile
-from osgeo_utils.samples.gdallocationinfo import LocationInfoSRS
+from rfmodel.geod.geod_profile import geod_profile
 from pywps import FORMATS
 from pywps.app import Process
 from .process_defaults import process_defaults, LiteralInputD
