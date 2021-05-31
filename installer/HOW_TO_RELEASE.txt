@@ -7,5 +7,6 @@ call pack-2-app.bat
 call pack-3-wheels.bat
 call pack-4-wheels_replace.bat
 call install-3-wheels.bat
+call install-4-config.bat
 
 run iss-installer.iss
