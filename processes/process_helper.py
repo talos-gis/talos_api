@@ -28,8 +28,9 @@ def get_arrays_dict(request_inputs, params) -> dict:
 
 def open_ds_from_wps_input(request_input, **kwargs):
     # ds: gdal.Dataset
-    raster_filename = request_input.file
+    raster_filename = None
     try:
+        raster_filename = request_input.file
         ds = gdalos_util.open_ds(raster_filename, **kwargs)
     except:
         ds = None
