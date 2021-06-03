@@ -2,6 +2,7 @@ import copy
 from typing import List
 
 from gdalos import gdalos_util
+from osgeo_utils.auxiliary.color_palette import ColorPalette
 from osgeo_utils.auxiliary.osr_util import get_srs
 from osgeo_utils.auxiliary.util import PathOrDS, OpenDS
 from osgeo_utils.samples.gdallocationinfo import LocationInfoSRS
@@ -68,3 +69,8 @@ def get_ovr(request_inputs, filename_or_ds: PathOrDS):
                 if srs.IsGeographic():
                     ovr_idx /= 111_111  # meter to deg
     return ovr_idx
+
+
+def get_color_palette_from_request(request_inputs, name='color_palette'):
+    pal = get_request_data(request_inputs, name, True)
+    return None if pal is None else ColorPalette.from_string_list(pal)

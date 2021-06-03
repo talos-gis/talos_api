@@ -1,7 +1,7 @@
 Werkzeug
 Flask
 Jinja2
-pywps-json>=4.2.11.12
+pywps-json>=4.4.3.15
 
 jsonschema
 lxml
@@ -14,6 +14,6 @@ psutil
 pyyaml
 numpy!=1.19.4
 
-gdalos>=0.56.0
-gdal-utils>=3.3.0.8
+gdalos>=0.58.1
+gdal-utils>=3.3.0.10
 gdal>=3.0.0

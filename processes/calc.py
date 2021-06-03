@@ -109,12 +109,12 @@ class Calc(Process):
                 calc, kwargs = gdalos_combine.make_calc_with_func(files, alpha_pattern, func, **kwargs)
             else:
                 calc, kwargs = gdalos_combine.make_calc_with_operand(files, alpha_pattern, operand, **kwargs)
-        color_table = process_helper.get_color_table(request.inputs, 'color_palette')
+        color_palette = process_helper.get_color_palette_from_request(request.inputs, 'color_palette')
         if 'gdalos_version' not in dir(gdalos_main) or gdalos_main.gdalos_version < (0, 50):
             kwargs['return_ds'] = gdal_out_format == 'MEM'
         dst_ds = gdal_calc.Calc(
             calc, outfile=output_filename, extent=extent, format=gdal_out_format,
-            color_table=color_table, hideNodata=hide_nodata, **kwargs)
+            color_table=color_palette, hideNodata=hide_nodata, **kwargs)
 
         if output_filename is not None and dst_ds is not None:
             gdal_to_czml.gdal_to_czml(dst_ds, name=output_filename, out_filename=output_filename)

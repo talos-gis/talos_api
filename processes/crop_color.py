@@ -81,9 +81,7 @@ class GdalDem(Process):
         if output_czml or output_tif:
             process_palette = request.inputs['process_palette'][0].data if output_czml else 0
             cutline = request.inputs['cutline'][0].file if 'cutline' in request.inputs else None
-            # color_palette = request.inputs['color_palette'][0].file if 'color_palette' in request.inputs else None
-            color_palette = ColorPalette.from_string_list(
-                process_helper.get_request_data(request.inputs, 'color_palette', True))
+            color_palette = process_helper.get_color_palette_from_request(request.inputs, 'color_palette')
             extent = request.inputs['extent'][0].data if 'extent' in request.inputs else None
             if extent is not None:
                 # I'm not sure why the extent is in format miny, minx, maxy, maxx
@@ -112,13 +110,12 @@ class GdalDem(Process):
             response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF
             response.outputs['output'].file = output_filename
 
+            response.outputs['tif'].output_format = FORMATS.GEOTIFF
+            response.outputs['czml'].output_format = czml_format
             if output_tif:
-                response.outputs['tif'].output_format = FORMATS.GEOTIFF
                 response.outputs['tif'].file = tif_output_filename
             if output_czml:
-                response.outputs['czml'].output_format = czml_format
                 response.outputs['czml'].file = czml_output_filename
 
         response.outputs['r'].data = raster_filename
-        # response.outputs['output'].uom = UOM('unity')
         return response
