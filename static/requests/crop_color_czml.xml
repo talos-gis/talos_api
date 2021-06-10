@@ -10,25 +10,39 @@
 
     <wps:DataInputs>
 
+		<wps:Input>
+            <ows:Identifier>output_tif</ows:Identifier>
+            <wps:Data>
+                <wps:LiteralData>False</wps:LiteralData>
+            </wps:Data>
+		</wps:Input>
 
-<!--		<wps:Input>-->
-<!--            <ows:Identifier>extent</ows:Identifier>-->
-<!--            <wps:Data>-->
-<!--                <wps:BoundingBoxData crs="EPSG:4326" dimenstions="2">-->
-<!--                    <ows:LowerCorner>35.0 31.5</ows:LowerCorner>-->
-<!--                    <ows:UpperCorner>35.1 31.6</ows:UpperCorner>-->
-<!--                </wps:BoundingBoxData>-->
-<!--            </wps:Data>-->
-<!--		</wps:Input>-->
+        <wps:Input>
+            <ows:Identifier>output_czml</ows:Identifier>
+            <wps:Data>
+                <wps:LiteralData>True</wps:LiteralData>
+            </wps:Data>
+		</wps:Input>
+
+		<wps:Input>
+            <ows:Identifier>color_palette</ows:Identifier>
+            <wps:Data>
+                <wps:ComplexData>
+                    100% 255 0 0 &#xA;
+                    75% 0 0 255 &#xA;
+                    20% 0 255 0 &#xA;
+                    0% 0 255 255 &#xA;
+                    nv  0 0 0 0
+                </wps:ComplexData>
+            </wps:Data>
+		</wps:Input>
 
 		<wps:Input>
             <ows:Identifier>extent</ows:Identifier>
             <wps:Data>
                 <wps:BoundingBoxData crs="EPSG:4326" dimenstions="2">
-                    <ows:LowerCorner>35.02 32.02</ows:LowerCorner>
-                    <ows:UpperCorner>35.15 32.15</ows:UpperCorner>
-<!--                    <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>-->
-<!--                    <ows:UpperCorner>180.0 90.0</ows:UpperCorner>-->
+                    <ows:LowerCorner>34 30</ows:LowerCorner>
+                    <ows:UpperCorner>36 34</ows:UpperCorner>
                 </wps:BoundingBoxData>
             </wps:Data>
 		</wps:Input>
@@ -39,63 +53,25 @@
                 <wps:ComplexData>
 
                 <ogr:FeatureCollection
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xsi:schemaLocation="http://ogr.maptools.org/ poly1.xsd"
-                    xmlns:ogr="http://ogr.maptools.org/"
-                    xmlns:gml="http://www.opengis.net/gml">
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://ogr.maptools.org/ israel_poly.xsd"
+                     xmlns:ogr="http://ogr.maptools.org/"
+                     xmlns:gml="http://www.opengis.net/gml">
                   <gml:boundedBy>
                     <gml:Box>
-                      <gml:coord><gml:X>35.02971332582586</gml:X><gml:Y>32.00907837837838</gml:Y></gml:coord>
-                      <gml:coord><gml:X>35.11521930680684</gml:X><gml:Y>32.09218463463463</gml:Y></gml:coord>
+                      <gml:coord><gml:X>34.23437499999997</gml:X><gml:Y>29.46262254901961</gml:Y></gml:coord>
+                      <gml:coord><gml:X>35.87285539215684</gml:X><gml:Y>33.28645833333333</gml:Y></gml:coord>
                     </gml:Box>
                   </gml:boundedBy>
 
                   <gml:featureMember>
-                    <ogr:poly1 fid="poly1.0">
-                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0297133258259,32.0832172422422 35.0487848223224,32.0918057307307 35.0596467342343,32.0729868368368 35.0359020895896,32.0622512262262 35.0297133258259,32.0832172422422</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
-                    </ogr:poly1>
-                  </gml:featureMember>
-                  <gml:featureMember>
-                    <ogr:poly1 fid="poly1.1">
-                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.084275487988,32.076396971972 35.0905905530531,32.0921846346346 35.1152193068068,32.0787966966967 35.0905905530531,32.0652824574575 35.084275487988,32.076396971972</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
-                    </ogr:poly1>
-                  </gml:featureMember>
-                  <gml:featureMember>
-                    <ogr:poly1 fid="poly1.2">
-                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0669722097097,32.0612408158158 35.0563629004004,32.0426745245245 35.0787182307308,32.0429271271271 35.0669722097097,32.0612408158158</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
-                    </ogr:poly1>
-                  </gml:featureMember>
-                  <gml:featureMember>
-                    <ogr:poly1 fid="poly1.3">
-                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>35.0390596221222,32.0396432932933 35.0510582457458,32.0227189189189 35.0845280905906,32.0234767267267 35.1056204079079,32.0396432932933 35.0921061686687,32.0099624874875 35.0497952327328,32.0090783783784 35.0390596221222,32.0396432932933</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
-                    </ogr:poly1>
+                    <ogr:israel_poly fid="israel_poly.0">
+                      <ogr:geometry><gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.234375,31.3370098039216 34.9292279411764,29.4626225490196 35.4825367647059,31.2984068627451 35.5683210784313,32.6966911764706 35.8728553921568,32.797487745098 35.8170955882353,33.2864583333333 35.0922181372549,33.0591299019608 34.9506740196078,32.8532475490196 34.234375,31.3370098039216</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometry>
+                    </ogr:israel_poly>
                   </gml:featureMember>
                 </ogr:FeatureCollection>
 
-
                 </wps:ComplexData>
-            </wps:Data>
-		</wps:Input>
-
-		<wps:Input>
-            <ows:Identifier>color_palette</ows:Identifier>
-            <wps:Data>
-                <wps:ComplexData>
-                    100% 255 255 255 &#xA;
-                    75% 235 220 175 &#xA;
-                    20% 190 185 135 &#xA;
-                    0% 240 250 150 &#xA;
-                    nv  0 0 0 0
-                </wps:ComplexData>
-<!--                <wps:ComplexData>-->
-<!--                    500 255 255 255 &#xA;-->
-<!--                    450 235 220 175 &#xA;-->
-<!--                    300 190 185 135 &#xA;-->
-<!--                    150 240 250 150 &#xA;-->
-<!--                    76  50  180  50 &#xA;-->
-<!--                    75  200 230 255 &#xA;-->
-<!--                    nv  0 0 0 0-->
-<!--                </wps:ComplexData>-->
             </wps:Data>
 		</wps:Input>
 

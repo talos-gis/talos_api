@@ -1,0 +1,29 @@
+[
+    {
+        "id": "document",
+        "version": "1.0",
+        "name": "czml",
+        "description": "nv:#000000 650.00:#FFFF0000 452.25:#FF0000FF 17.20:#FF00FF00 -141.00:#FF00FFFF"
+    },
+    {
+        "id": "rect",
+        "name": "C:\\Users\\idanm\\AppData\\Local\\Temp\\tmph2gidano.czml",
+        "rectangle": {
+            "coordinates": {
+                "wsenDegrees": [
+                    34.0,
+                    30.0,
+                    36.0,
+                    34.0
+                ]
+            },
+            "fill": true,
+            "material": {
+                "image": {
+                    "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAOCAYAAADjXQYbAAAAnUlEQVQYlb3QIQvCUBiF4Xe7xW4bGIwWUTBMMLgss62K3f/iX1Dj4lCrFmE2MdkMgs0qFt0xiMi9637xPBw4fPCfGzPTgZYAfEvyUPPJnfY0cioFIk3Eua5v9GsWBlYxLGOnpUBcA1W5iWwoG59GpMlniDoOHpsi2uhBRUgOhrlqXMRiZIEPoH2XNQMwL0rogddjB6dG6SkA9NnKzd4oAzkrT/xYugAAAABJRU5ErkJggg==",
+                    "transparent": true
+                }
+            }
+        }
+    }
+]
