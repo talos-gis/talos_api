@@ -41,13 +41,17 @@ def test_talos():
             other[1]['name'] = None
             super().assert_response(other)
 
+    czml_request_response = [
+        'crop_color',
+        'viewshed_cutline_ap',
+    ]
     tests: List[TalosTest] = [
         CzmlTest(
             url=env.talos_wps,
-            request=read_file(root / 'static/requests/crop_color_czml.xml'),
-            response=json.loads(read_file(root / 'static/responses/crop_color.czml')),
-        ),
-    ]
+            request=read_file(root / f'static/requests/{name}_czml.xml'),
+            response=json.loads(read_file(root / f'static/responses/{name}.czml')),
+        )
+        for name in czml_request_response]
 
     with app.test_client() as c:
         for test in tests:
