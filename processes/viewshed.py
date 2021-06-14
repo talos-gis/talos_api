@@ -37,6 +37,7 @@ class Viewshed(Process):
             iog.extent(defaults) + \
             iog.operation(defaults) + \
             iog.resolution_output(defaults) + \
+            iog.threads(defaults) + \
             iog.radio(defaults) + \
             iog.fake_raster(defaults)
 
@@ -73,6 +74,7 @@ class Viewshed(Process):
 
         cutline = process_helper.get_request_data(request.inputs, 'cutline', True)
         operation = process_helper.get_request_data(request.inputs, 'o')
+        threads = process_helper.get_request_data(request.inputs, 'threads')
         if not operation:
             operation = None
         else:
@@ -124,7 +126,7 @@ class Viewshed(Process):
                       vp_array=vp_arrays_dict, extent=extent, cutline=cutline, operation=operation,
                       in_coords_srs=in_coords_srs, out_crs=out_crs,
                       color_palette=color_palette, discrete_mode=discrete_mode,
-                      files=files, vp_slice=vp_slice)
+                      files=files, vp_slice=vp_slice, threads=threads)
 
         response.outputs['r'].data = raster_filename
         response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF

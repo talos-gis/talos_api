@@ -87,6 +87,12 @@ def resolution_output(defaults):
     ]
 
 
+def threads(defaults):
+    return [
+        LiteralInputD(defaults, 'threads', 'number of calc threads, use 0 for default', data_type='integer', **mm0)
+    ]
+
+
 def raster_ranges(defaults):
     return [
         LiteralInputD(defaults, 'min_r', 'Minimum visibility range/radius/distance', default=0, **mmm),
