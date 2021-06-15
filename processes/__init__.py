@@ -12,6 +12,7 @@ from .info import GetInfo
 from .ls import ls
 from .invert import Invert
 from .trans import Trans
+from .visibility_adapter import pre_request_visibility, pre_response_visibility
 from .xyz import XYZ
 from .crop_color import GdalDem
 from .ras_val import RasterValue
@@ -56,6 +57,8 @@ processes = [
 ]
 
 preprocessosrs = {
+    'Visibility': ('viewshed', pre_request_visibility, pre_response_visibility),
+    'ExtendedVisibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
     'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
     'Profile': ('geod_profile', pre_request_profile, pre_response_profile),
