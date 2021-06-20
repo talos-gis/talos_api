@@ -2,7 +2,7 @@
 
 call "%~dp0\env_installer.bat"
 
-set WHEELS_SOURCE=d:\dev\pip\wheels1
+set WHEELS_SOURCE=d:\pip\wheels1
 set WHEELS_ARCH=win_amd64
 
 for %%W in (GDAL,talosgis,gdal_mrr,gdal_utils,tirem,tirem_bin) do (
