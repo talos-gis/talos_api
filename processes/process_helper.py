@@ -1,5 +1,5 @@
 import copy
-from typing import List
+from typing import List, Dict
 
 from gdalos import gdalos_util
 from osgeo_utils.auxiliary.color_palette import ColorPalette
@@ -20,11 +20,12 @@ def get_request_data(request_input, name, get_file: bool = False, index=0):
 
 
 def get_input_data_array(request_input) -> List:
-    return [x.data for x in request_input]
+    return None if request_input is None else [x.data for x in request_input]
 
 
-def get_arrays_dict(request_inputs, params) -> dict:
-    return {k: get_input_data_array(request_inputs[k]) if k in request_inputs else None for k in params}
+def get_arrays_dict(request_inputs, params, name_map: Dict[str, str] = None) -> dict:
+    name_map = name_map or dict()
+    return {k: get_input_data_array(request_inputs.get(name_map.get(k, k), None)) for k in params}
 
 
 def open_ds_from_wps_input(request_input, **kwargs):

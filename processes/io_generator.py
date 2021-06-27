@@ -4,8 +4,8 @@ from backend.formats import czml_format
 from gdalos import util as gdalos_base
 from gdalos.gdalos_selector import DataSetSelector
 from gdalos.viewshed import radio_params
-from gdalos.viewshed.radio_params import RadioParams
-from gdalos.viewshed.viewshed_calc import ViewshedBackend
+from gdalos.viewshed.radio_params import RadioParams, RadioCalcType
+from gdalos.viewshed.viewshed_calc import ViewshedBackend, default_LOSBackend
 from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
 from pywps import FORMATS, UOM
 from pywps.app.Common import Metadata
@@ -76,6 +76,17 @@ def raster_input(defaults):
                       data_type='float', min_occurs=0, max_occurs=1),
         LiteralInputD(defaults, 'res_m', 'input raster resolution [meter]',
                       data_type='float', min_occurs=0, max_occurs=1, uoms=[UOM('metre')]),
+    ]
+
+
+def raster2_input(defaults):
+    return [
+        LiteralInputD(defaults, 'r2', 'input raster alternative',
+                      data_type='string', min_occurs=1, max_occurs=1),
+    ]
+
+def raster_co(defaults):
+    return [
         LiteralInputD(defaults, 'co', 'input raster creation options',
                       data_type='string', min_occurs=0, max_occurs=1),
     ]
@@ -93,10 +104,24 @@ def threads(defaults):
     ]
 
 
+def del_s(defaults):
+    return [
+        LiteralInputD(defaults, 'del_s', 'delimiter distance between each two successive points',
+                      data_type='float', min_occurs=0, max_occurs=1, default=0),
+    ]
+
+
+def max_r(defaults, required: bool):
+    m = mmm if required else mmm0
+    return [
+        LiteralInputD(defaults, 'max_r', 'Maximum visibility range/radius/distance', **m),
+    ]
+
+
 def raster_ranges(defaults):
     return [
         LiteralInputD(defaults, 'min_r', 'Minimum visibility range/radius/distance', default=0, **mmm),
-        LiteralInputD(defaults, 'max_r', 'Maximum visibility range/radius/distance', **mmm),
+        *max_r(defaults, required=True),
         LiteralInputD(defaults, 'min_r_shave', 'ignore DTM before Minimum range', default=False,
                       data_type='boolean', **mm),
         LiteralInputD(defaults, 'max_r_slant', 'Use Slant Range as Max Range (instead of ground range)',
@@ -142,8 +167,8 @@ def target(defaults, xy, z, msl):
     if xy:
         inputs.extend([
             # x,y in the given input-CRS
-            LiteralInputD(defaults, 'tx', 'target X/longitude', **mmm),
-            LiteralInputD(defaults, 'ty', 'target Y/latitude', **mmm),
+            LiteralInputD(defaults, 'tx', 'target X/longitude', **mmm0),
+            LiteralInputD(defaults, 'ty', 'target Y/latitude', **mmm0),
         ])
     if z:
         inputs.extend([
@@ -157,11 +182,16 @@ def target(defaults, xy, z, msl):
     return inputs
 
 
-def angles(defaults):
+def directions(defaults):
     return [
         LiteralInputD(defaults, 'azimuth', 'horizontal azimuth direction', default=0, **dmm),
-        LiteralInputD(defaults, 'h_aperture', 'horizontal aperture', default=360, **dmm),
         LiteralInputD(defaults, 'elevation', 'vertical elevation direction', default=0, **dmm),
+    ]
+
+
+def apertures(defaults):
+    return [
+        LiteralInputD(defaults, 'h_aperture', 'horizontal aperture', default=360, **dmm),
         LiteralInputD(defaults, 'v_aperture', 'vertical aperture', default=180, **dmm),
     ]
 
@@ -198,7 +228,7 @@ def refraction(defaults):
     ]
 
 
-def mode(defaults, default=None):
+def calc_mode(defaults, default=None):
     return [
         LiteralInputD(defaults, 'mode', 'calculation mode', default=default, data_type='string', **mm0),
     ]
@@ -267,8 +297,6 @@ def radio(defaults):
                       data_type='float', default=0, **mm0),
         LiteralInputD(defaults, 'polarity', 'radio: Transmitter antenna polarization (Horizontal or Vertical)',
                       data_type='string', **mm0),
-        LiteralInputD(defaults, 'calc_type', 'radio: calculation output type',
-                      data_type='string', default=radio_params.RadioCalcType.PathLoss.name, **mm0),
 
         # Radio: Earth surface parameters
         LiteralInputD(defaults, 'refractivity', 'radio: Surface refractivity in N-units. Range: 200.0 to 450.0 N',
@@ -287,7 +315,7 @@ def radio(defaults):
         LiteralInputD(defaults, 'power_diff',
                       'radio: power difference = BroadcastPower - MinPower. '
                       'Only relevant for PowerReminder calculation. '
-                      'PowerReminder = power_diff - path_loss', data_type='float', **mm0),
+                      'PowerReminder = power_diff - path_loss', data_type='float', default=0, **mm0),
         LiteralInputD(defaults, 'fill_center',
                       'radio: fill missing samples data with FreeSpace calculation, '
                       'Sometimes when the distance too short the radio calculation returns invalid value. '
@@ -343,11 +371,26 @@ def get_io_crs(request_inputs):
     return in_coords_srs, out_crs
 
 
-def get_input_raster(request_inputs, use_data_selector=True):
+def get_input_raster(request_inputs, use_data_selector=True, prefer_r2=False):
     # raster_filename, input_ds = process_helper.open_ds_from_wps_input(request_inputs['r'][0], ovr_idx=ovr_idx)
-    raster_filename = process_helper.get_request_data(request_inputs, 'r')
+    if prefer_r2:
+        r_names = ['r2', 'r']
+    else:
+        r_names = ['r', 'r2']
+    for r in r_names:
+        raster_filename = process_helper.get_request_data(request_inputs, r)
+        if raster_filename is not None:
+            break
     bi = get_request_data(request_inputs, 'bi')
 
+    input_file = get_input_file(raster_filename, use_data_selector=use_data_selector)
+    first_file = input_file.get_map(0) if isinstance(input_file, DataSetSelector) else input_file
+    ovr_idx = process_helper.get_ovr(request_inputs, first_file)
+
+    return raster_filename, bi, ovr_idx, input_file
+
+
+def get_creation_options(request_inputs):
     co = None
     if 'co' in request_inputs:
         co = []
@@ -357,12 +400,7 @@ def get_input_raster(request_inputs, use_data_selector=True):
             if sep_index == -1:
                 raise Exception(f'creation option {creation_option} unsupported')
             co.append(creation_option)
-
-    input_file = get_input_file(raster_filename, use_data_selector=use_data_selector)
-    first_file = input_file.get_map(0) if isinstance(input_file, DataSetSelector) else input_file
-    ovr_idx = process_helper.get_ovr(request_inputs, first_file)
-
-    return raster_filename, bi, ovr_idx, co, input_file
+    return co
 
 
 def get_input_file(raster_filename: PathLikeOrStr, use_data_selector=True) -> \
@@ -376,9 +414,19 @@ def get_input_file(raster_filename: PathLikeOrStr, use_data_selector=True) -> \
 
 def get_vp(request_inputs, vp_class):
     backend = process_helper.get_request_data(request_inputs, 'backend')
-    vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(vp_class))
+    name_map = {'calc_mode': 'mode'}
+    params = list(gdalos_base.get_all_slots(vp_class))
+    vp_arrays_dict = process_helper.get_arrays_dict(request_inputs, params, name_map)
 
-    if 'radio' in backend:
+    calc_mode = vp_arrays_dict['calc_mode']
+    is_radio = calc_mode is not None and any('loss' in str(x).lower() for x in calc_mode)
+    if backend is None:
+        backend = 'radio' if is_radio else default_LOSBackend.name
+    if calc_mode is None:
+        calc_mode = [RadioCalcType.PathLoss if is_radio else RadioCalcType.LOSRange]
+    vp_arrays_dict['calc_mode'] = calc_mode
+
+    if is_radio:
         radio_arrays_dict = process_helper.get_arrays_dict(request_inputs, gdalos_base.get_all_slots(RadioParams))
         for k, v in radio_arrays_dict.items():
             if v is None:

@@ -5,6 +5,7 @@ from backend.formats import czml_format
 from gdalos.gdalos_color import ColorPalette
 from gdalos import gdalos_util
 from gdalos.rectangle import GeoRectangle
+from gdalos.viewshed.radio_params import RadioCalcType
 from gdalos.viewshed.viewshed_calc import viewshed_calc, CalcOperation
 from gdalos.viewshed.viewshed_params import ViewshedParams
 from processes import process_helper
@@ -24,15 +25,17 @@ class Viewshed(Process):
             iog.io_crs(defaults) + \
             iog.of_raster(defaults) + \
             iog.raster_input(defaults) + \
+            iog.raster_co(defaults) + \
             iog.raster_ranges(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \
             iog.target(defaults, xy=False, z=True, msl=True) + \
-            iog.angles(defaults) + \
+            iog.directions(defaults) + \
+            iog.apertures(defaults) + \
             iog.viewshed_values(defaults) + \
             iog.slice(defaults) + \
             iog.backend(defaults) + \
             iog.refraction(defaults) + \
-            iog.mode(defaults, default="2") + \
+            iog.calc_mode(defaults, default=RadioCalcType.FOS.name) + \
             iog.color_palette(defaults) + \
             iog.extent(defaults) + \
             iog.operation(defaults) + \
@@ -116,8 +119,9 @@ class Viewshed(Process):
 
         else:
             in_coords_srs, out_crs = iog.get_io_crs(request.inputs)
-            raster_filename, bi, ovr_idx, co, input_file = iog.get_input_raster(request.inputs, use_data_selector=True)
+            raster_filename, bi, ovr_idx, input_file = iog.get_input_raster(request.inputs, use_data_selector=True)
             backend, vp_arrays_dict = iog.get_vp(request.inputs, ViewshedParams)
+            co = iog.get_creation_options(request.inputs)
 
         vp_slice = process_helper.get_request_data(request.inputs, 'vps')
 
