@@ -24,7 +24,10 @@ class LOS(Process):
             iog.raster_input(defaults) + \
             iog.raster2_input(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \
+            iog.fwd_calc(defaults) + \
             iog.target(defaults, xy=True, z=True, msl=True) + \
+            iog.max_r(defaults, required=False) + \
+            iog.directions(defaults) + \
             iog.del_s(defaults) + \
             iog.backend(defaults) + \
             iog.refraction(defaults) + \

@@ -907,7 +907,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"accessToken\": \"test\",\n\t\"LineOfSightRange\": [\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.8,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.5,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.6,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevetion\": 10\n\t\t}\n\t],\n\t\"IsUserRefraction\": false,\n\t\"priority\": 0,\n\t\"resolution\": 0.0,\n\t\"centralMeridian\": null,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0\n}",
+							"raw": "{\n\t\"accessToken\": \"test\",\n\t\"LineOfSightRange\": [\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.8,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevation\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.5,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevation\": 10\n\t\t},\n\t\t{\n\t\t\t\"Position\": {\n\t\t\t\t\"X\": 35.6,\n\t\t\t\t\"Y\": 32.0,\n\t\t\t\t\"Z\": 8.0\n\t\t\t},\n\t\t\t\"Azimuth\": 45.0,\n\t\t\t\"Elevation\": 10\n\t\t}\n\t],\n\t\"IsUserRefraction\": false,\n\t\"priority\": 0,\n\t\"resolution\": 0.0,\n\t\"centralMeridian\": null,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"

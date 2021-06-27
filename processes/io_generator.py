@@ -104,6 +104,12 @@ def threads(defaults):
     ]
 
 
+def fwd_calc(defaults):
+    return [
+        LiteralInputD(defaults, 'fwd', 'is forward geodesic calculation yes/no/auto',
+                      data_type='boolean', min_occurs=0, max_occurs=1, default=None),
+    ]
+
 def del_s(defaults):
     return [
         LiteralInputD(defaults, 'del_s', 'delimiter distance between each two successive points',
