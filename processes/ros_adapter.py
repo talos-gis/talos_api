@@ -1,7 +1,6 @@
 from typing import Dict, Any
 
-from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, inverse_list_items, \
-    pre_request_transform
+from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 
 def pre_request_ros(d: Dict[str, Any]):
@@ -19,6 +18,7 @@ def pre_request_ros_inputs(inputs: Dict[str, Any]):
     # convert main section keys
     inputs['del_s'] = inputs['resolution']
     key_conv = {
+        'centralmeridian': 'central_meridian',
         'resolution': 'res_m',
     }
     for k, v in key_conv.items():
@@ -49,15 +49,16 @@ def pre_request_ros_inputs(inputs: Dict[str, Any]):
             k = key_conv[k]
             inputs[k] = v
 
+    is_refraction = inputs.get('isuserefraction', False)
+
     # the following keys are redundant
-    unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'dtmonly', 'centralMeridian', 'lineofsightrange']
+    unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'dtmonly',
+                   'lineofsightrange', 'isuserefraction']
     for k in unused_keys:
         if k in inputs:
             del inputs[k]
 
     # these are the outputs we want to create
-    is_refraction = inputs.get('IsUserRefraction', False)
-    # max_r = inputs.get('MaxRange', None)
     inputs['refraction_coeff'] = 1/7 if not is_refraction else 0.25
     inputs['fwd'] = True
     inputs['omsl'] = True

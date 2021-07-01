@@ -25,6 +25,7 @@ class Viewshed(Process):
             iog.io_crs(defaults) + \
             iog.of_raster(defaults) + \
             iog.raster_input(defaults) + \
+            iog.central_meridian_input(defaults) + \
             iog.raster_co(defaults) + \
             iog.raster_ranges(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \

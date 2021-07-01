@@ -26,6 +26,7 @@ from .sandbox import Sandbox
 
 from .p2p_loss_adapter import pre_request_p2p_loss, pre_response_p2p_loss
 from .ros_adapter import pre_request_ros, pre_response_ros
+from .aos_adapter import pre_request_aos, pre_response_aos
 from .elevation_point_adapter import pre_request_elevation_point, pre_response_elevation_point
 from .geod_profile_adapter import pre_request_profile, pre_response_profile
 
@@ -61,6 +62,7 @@ preprocessosrs = {
     'Visibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'ExtendedVisibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'ros': ('los', pre_request_ros, pre_response_ros),
+    'aos': ('los', pre_request_aos, pre_response_aos),
     'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
     'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
     'Profile': ('geod_profile', pre_request_profile, pre_response_profile),

@@ -23,6 +23,7 @@ class LOS(Process):
             iog.io_crs(defaults) + \
             iog.raster_input(defaults) + \
             iog.raster2_input(defaults) + \
+            iog.central_meridian_input(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \
             iog.fwd_calc(defaults) + \
             iog.target(defaults, xy=True, z=True, msl=True) + \
@@ -35,10 +36,11 @@ class LOS(Process):
             iog.radio(defaults) + \
             iog.xy_fill(defaults) + \
             iog.ot_fill(defaults) + \
+            iog.comment_input(defaults) + \
             iog.mock(defaults)
 
         outputs = iog.output_r() + \
-                  iog.output_value(['output'])
+                  iog.output_value(['output', 'comment'])
 
         super().__init__(
             self._handler,
@@ -74,6 +76,7 @@ class LOS(Process):
             in_coords_srs=in_coords_srs, out_crs=out_crs, mock=mock)
 
         response.outputs['r'].data = raster_filename
+        response.outputs['comment'].data = process_helper.get_request_data(request.inputs, 'comment')
         response.outputs['output'].output_format = FORMATS.JSON
         response.outputs['output'].data = results
 

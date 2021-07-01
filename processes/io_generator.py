@@ -85,6 +85,14 @@ def raster2_input(defaults):
                       data_type='string', min_occurs=1, max_occurs=1),
     ]
 
+
+def central_meridian_input(defaults):
+    return [
+        LiteralInputD(defaults, 'centralMeridian', 'Central Meridian, used to help select the best input projected raster',
+                      data_type='float', min_occurs=0, max_occurs=1, default=None),
+    ]
+
+
 def raster_co(defaults):
     return [
         LiteralInputD(defaults, 'co', 'input raster creation options',
@@ -295,6 +303,13 @@ def mock(defaults):
     ]
 
 
+def comment_input(defaults):
+    return [
+        LiteralInputD(defaults, 'comment', 'passthrough comment',
+                      data_type='string', default=None, min_occurs=0, max_occurs=1),
+    ]
+
+
 def radio(defaults):
     return [
         LiteralInputD(defaults, 'frequency', 'radio: Transmitter frequency in MHz. Range: 1.0 to 40000.0 MHz',
@@ -391,6 +406,10 @@ def get_input_raster(request_inputs, use_data_selector=True, prefer_r2=False):
 
     input_file = get_input_file(raster_filename, use_data_selector=use_data_selector)
     first_file = input_file.get_map(0) if isinstance(input_file, DataSetSelector) else input_file
+    if input_file is DataSetSelector:
+        central_meridian = process_helper.get_request_data(request_inputs, 'central_meridian')
+        if central_meridian is not None:
+            input_file = input_file.get_item_projected(central_meridian, None)
     ovr_idx = process_helper.get_ovr(request_inputs, first_file)
 
     return raster_filename, bi, ovr_idx, input_file
