@@ -2,11 +2,14 @@ update version info: VERSION.txt, iss-app_consts.iss
 push
 
 unpack python38 to d:\iss
-
 call pack-2-app.bat
+
+:: offline
 call pack-3-wheels.bat
 call pack-4-wheels_replace.bat
-call install-3-wheels.bat
-call install-4-config.bat
 
+:: online
+call install-3-wheels.bat online
+
+call install-4-config.bat
 run iss-installer.iss
