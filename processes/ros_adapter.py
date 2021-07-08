@@ -62,7 +62,7 @@ def pre_request_ros_inputs(inputs: Dict[str, Any]):
     inputs['refraction_coeff'] = 1/7 if not is_refraction else 0.25
     inputs['fwd'] = True
     inputs['omsl'] = True
-    inputs['calc_mode'] = ['LOSRange']
+    inputs['mode'] = ['LOSRange']
     inputs['backend'] = 'talos'
     return inputs
 

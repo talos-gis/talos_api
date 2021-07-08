@@ -1,14 +1,10 @@
-import tempfile
-
 from pywps import FORMATS
 from pywps.app import Process
-from gdalos.viewshed.radio_params import RadioCalcType
-from .process_defaults import process_defaults, LiteralInputD
+from .process_defaults import process_defaults
 from pywps.app.Common import Metadata
 from pywps.response.execute import ExecuteResponse
 from processes import process_helper
 from gdalos.viewshed.viewshed_params import MultiPointParams
-from gdalos.gdalos_main import gdalos_util
 from gdalos.viewshed.viewshed_calc import los_calc, ViewshedBackend
 import processes.io_generator as iog
 from .process_helper import get_request_data
@@ -68,7 +64,6 @@ class LOS(Process):
         mock = process_helper.get_request_data(request.inputs, 'mock')
 
         del_s = get_request_data(request.inputs, 'del_s') or 0
-
         results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
             output_filename=None, of=None,

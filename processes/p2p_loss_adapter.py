@@ -53,7 +53,7 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
         inputs[k] = inverse_list_items(inputs[k])
 
     # these are the outputs we want to create
-    inputs['calc_mode'] = ['PathLoss', 'FreeSpaceLoss']
+    inputs['mode'] = ['PathLoss', 'FreeSpaceLoss']
     inputs['backend'] = 'radio'
     return inputs
 
