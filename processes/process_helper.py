@@ -2,6 +2,7 @@ import copy
 from typing import List, Dict
 
 from gdalos import gdalos_util
+from gdalos.viewshed.viewshed_calc import CalcOperation
 from osgeo_utils.auxiliary.color_palette import ColorPalette
 from osgeo_utils.auxiliary.osr_util import get_srs
 from osgeo_utils.auxiliary.util import PathOrDS, OpenDS
@@ -80,3 +81,8 @@ def get_color_palette_from_request(request_inputs, name='color_palette'):
         pal = ColorPalette.from_string_list(pal)
         pal.set_ndv(0)
         return pal
+
+
+def get_operation(request_inputs, name='o'):
+    operation = get_request_data(request_inputs, name)
+    return None if not operation else CalcOperation.get(operation)

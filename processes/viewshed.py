@@ -77,32 +77,11 @@ class Viewshed(Process):
             extent = request.inputs['extent_c'][0].data
 
         cutline = process_helper.get_request_data(request.inputs, 'cutline', True)
-        operation = process_helper.get_request_data(request.inputs, 'o')
         threads = process_helper.get_request_data(request.inputs, 'threads')
-        if not operation:
-            operation = None
-        else:
-            try:
-                i = int(operation)
-                if i == 0:
-                    operation = CalcOperation.viewshed
-                elif i == 1:
-                    operation = CalcOperation.count
-                elif i == 2:
-                    operation = CalcOperation.unique
-                operation = CalcOperation(i)
-            except ValueError:
-                try:
-                    operation = CalcOperation[operation]
-                except ValueError:
-                    raise Exception('unknown operation requested {}'.format(operation))
-
+        operation = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
-        if color_palette is None:
-            if is_czml:
-                raise Exception('color_palette is required for czml output')
-        else:
-            color_palette = ColorPalette.from_string_list(color_palette)
+        if color_palette is None and is_czml:
+            raise Exception('color_palette is required for czml output')
         discrete_mode = process_helper.get_request_data(request.inputs, 'discrete_mode')
 
         output_filename = tempfile.mktemp(suffix=ext)

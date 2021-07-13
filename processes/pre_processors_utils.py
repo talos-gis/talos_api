@@ -3,7 +3,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, Any, List, Sequence
 
-from osgeo_utils.auxiliary.base import PathLikeOrStr
+from osgeo_utils.auxiliary.base import PathLikeOrStr, MaybeSequence
 
 
 def lower_case_keys(d: Dict[str, Any]):
@@ -20,12 +20,18 @@ def list_of_dict_to_dict_of_lists(lst: List[Dict[str, Any]]):
     return res
 
 
-def inverse_list_items(lst: Sequence[bool]):
-    return [not elem for elem in lst]
+def inverse_list_items(lst: MaybeSequence[bool]):
+    if isinstance(lst, Sequence):
+        return [not elem for elem in lst]
+    else:
+        return not lst
 
 
-def inverse_list_items_int(lst: Sequence[bool]):
-    return [int(not elem) for elem in lst]
+def inverse_list_items_int(lst: MaybeSequence[bool]):
+    if isinstance(lst, Sequence):
+        return [int(not elem) for elem in lst]
+    else:
+        return int(not lst)
 
 
 def pre_request_transform(input_filename: PathLikeOrStr, pre_request, output_filename=None):

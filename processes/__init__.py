@@ -1,3 +1,4 @@
+from .multi_loss_adapter import pre_request_multi_loss, pre_response_multi_loss
 from .sayhello import SayHello
 from .ultimate_question import UltimateQuestion
 from .sleep import Sleep
@@ -64,6 +65,7 @@ preprocessosrs = {
     'ros': ('los', pre_request_ros, pre_response_ros),
     'aos': ('los', pre_request_aos, pre_response_aos),
     'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
+    'MultiLos': ('los', pre_request_multi_loss, pre_response_multi_loss),
     'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
     'Profile': ('geod_profile', pre_request_profile, pre_response_profile),
 }

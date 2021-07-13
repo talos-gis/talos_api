@@ -1,8 +1,7 @@
 from typing import Dict, Any
 
-from gdalos.talos.geom_util import h_azimuth_and_aperture_from_az, v_elevation_and_aperture_from_az
-from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, inverse_list_items, \
-    pre_request_transform
+from gdalos.talos.geom_util import direction_and_aperture_from_az
+from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 
 def pre_request_visibility(d: Dict[str, Any]):
@@ -46,12 +45,15 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any]):
     start_el = eqp.get('startal', -45)
     end_el = eqp.get('endal', 45)
 
-    inputs['azimuth'], inputs['h_aperture'] = h_azimuth_and_aperture_from_az(start_az, end_az)
-    inputs['azimuth'], inputs['h_aperture'] = v_elevation_and_aperture_from_az(start_el, end_el)
+    inputs['azimuth'], inputs['h_aperture'] = direction_and_aperture_from_az(start_az, end_az, 360)
+    inputs['elevation'], inputs['v_aperture'] = direction_and_aperture_from_az(start_el, end_el)
 
     aoi = inputs['aoi']
 
-    inputs['color_palette'] = './static/data/color_files/viewshed/viewshed.txt'
+    inputs['color_palette'] = {
+        "type": "reference",
+        "href": "file:./static/data/color_files/viewshed/viewshed.txt"
+    }
 
     if 'of' not in inputs:
         inputs['of'] = 'czml'
