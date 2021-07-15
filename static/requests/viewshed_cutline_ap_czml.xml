@@ -10,19 +10,26 @@
 
 	<wps:DataInputs>
 
-	<wps:Input>
-            <ows:Identifier>threads</ows:Identifier>
-            <wps:Data>
-                <wps:LiteralData>1</wps:LiteralData>
-            </wps:Data>
-	</wps:Input>
+        <wps:Input>
+                <ows:Identifier>r</ows:Identifier>
+                <wps:Data>
+                    <wps:LiteralData>./static/data/maps/srtm1_boker_32636.tif</wps:LiteralData>
+                </wps:Data>
+        </wps:Input>
 
-	<wps:Input>
-            <ows:Identifier>of</ows:Identifier>
-            <wps:Data>
-                <wps:LiteralData>czml</wps:LiteralData>
-            </wps:Data>
-	</wps:Input>
+        <wps:Input>
+                <ows:Identifier>threads</ows:Identifier>
+                <wps:Data>
+                    <wps:LiteralData>1</wps:LiteralData>
+                </wps:Data>
+        </wps:Input>
+
+        <wps:Input>
+                <ows:Identifier>of</ows:Identifier>
+                <wps:Data>
+                    <wps:LiteralData>czml</wps:LiteralData>
+                </wps:Data>
+        </wps:Input>
 
         <wps:Input>
             <ows:Identifier>ox</ows:Identifier>

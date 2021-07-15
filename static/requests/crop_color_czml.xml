@@ -10,6 +10,13 @@
 
     <wps:DataInputs>
 
+        <wps:Input>
+                <ows:Identifier>r</ows:Identifier>
+                <wps:Data>
+                    <wps:LiteralData>./static/data/maps/srtm_30k_global.tif</wps:LiteralData>
+                </wps:Data>
+        </wps:Input>
+
 		<wps:Input>
             <ows:Identifier>output_tif</ows:Identifier>
             <wps:Data>
