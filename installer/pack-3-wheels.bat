@@ -10,7 +10,7 @@ set APP_ROOT_PATH=%APP_BASE_PATH%\%APP_NAME%
 @echo step 3: install %APP_NAME% python package requirements
 ::FOR %%R IN (requirements.txt, requirements-opt.txt) DO %PYTHON_EXE%  -m pip download -r %APP_ROOT_PATH%\%%R -d %WHEELS_TARGET%
 
-:: process one requirement at a time so that if one failes it would still process the rest.
+:: process one requirement at a time so that if one fails it would still process the rest.
 FOR %%R IN (requirements.txt, requirements-opt.txt) DO for /F "tokens=*" %%F in (%APP_ROOT_PATH%\%%R) do %PYTHON_EXE% -m pip download %%F -d %WHEELS_TARGET%
 
 popd

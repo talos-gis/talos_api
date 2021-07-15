@@ -1,6 +1,8 @@
 url: 'http://localhost:5000/wps'
+#  allowedinputpaths is a list of paths. you may add another entry below. it should include all allowed prefixes of input files to the service
 allowedinputpaths:
   - './static/'
+
 default_mimetype: 'text/xml'
 #default_mimetype: 'application/json'
 #json_indent: -1
