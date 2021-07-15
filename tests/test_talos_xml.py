@@ -4,6 +4,7 @@ from types import SimpleNamespace
 from typing import NamedTuple, List, Any
 
 from app import app
+from osgeo_utils.auxiliary.base import PathLikeOrStr
 
 
 def read_file(filename):
@@ -25,6 +26,7 @@ def test_talos():
         url: str
         request: Any
         response: Any
+        dump_response: PathLikeOrStr
 
         def assert_response(self, other):
             assert self.response == other
@@ -33,6 +35,9 @@ def test_talos():
             rv = c.post(self.url, data=self.request)
             assert rv.status_code == 200
             json_data = rv.get_json()
+            if self.dump_response:
+                with open(self.dump_response, 'w') as f:
+                    json.dump(json_data, f, indent=4)
             self.assert_response(json_data)
 
     class CzmlTest(TalosTest):
@@ -50,6 +55,7 @@ def test_talos():
             url=env.talos_wps,
             request=read_file(root / f'static/requests/{name}_czml.xml'),
             response=json.loads(read_file(root / f'static/responses/{name}.czml')),
+            dump_response=root / f'static/responses/{name}_new.czml'
         )
         for name in czml_request_response]
 
