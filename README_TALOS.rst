@@ -1,4 +1,4 @@
-:Name: talos-wps
+:Name: talos_api
 :Authors: Idan Miara, Ben Avrahami
 
 .. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
