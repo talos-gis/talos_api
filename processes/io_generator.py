@@ -314,8 +314,6 @@ def radio(defaults):
     return [
         LiteralInputD(defaults, 'frequency', 'radio: Transmitter frequency in MHz. Range: 1.0 to 40000.0 MHz',
                       data_type='float', **mm0),
-        LiteralInputD(defaults, 'KFactor', 'radio: KFactor',
-                      data_type='float', default=0, **mm0),
         LiteralInputD(defaults, 'polarity', 'radio: Transmitter antenna polarization (Horizontal or Vertical)',
                       data_type='string', **mm0),
 
