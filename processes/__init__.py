@@ -26,6 +26,7 @@ from .gdalinfo import GdalInfo
 from .sandbox import Sandbox
 
 from .p2p_loss_adapter import pre_request_p2p_loss, pre_response_p2p_loss
+from .plt_loss_adapter import pre_request_plt_loss, pre_response_plt_loss
 from .ros_adapter import pre_request_ros, pre_response_ros
 from .aos_adapter import pre_request_aos, pre_response_aos
 from .elevation_point_adapter import pre_request_elevation_point, pre_response_elevation_point
@@ -65,6 +66,7 @@ preprocessosrs = {
     'ros': ('los', pre_request_ros, pre_response_ros),
     'aos': ('los', pre_request_aos, pre_response_aos),
     'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
+    'PathlossTable': ('los', pre_request_plt_loss, pre_response_plt_loss),
     'MultiLos': ('los', pre_request_multi_loss, pre_response_multi_loss),
     'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
     'Profile': ('geod_profile', pre_request_profile, pre_response_profile),
