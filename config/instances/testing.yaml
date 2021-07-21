@@ -17,3 +17,5 @@ dtm_geo: './static/data/maps/srtm_30k_global.tif'
 
 dtm_utm: './static/data/maps/srtm_30k_32636.tif'
 dtm_utm_small: './static/data/maps/srtm1_boker_32636.tif'
+
+loss_ext_url: 'http://localhost:5050/api/1.0/PathlossTable'

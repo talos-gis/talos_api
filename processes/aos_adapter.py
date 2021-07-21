@@ -1,6 +1,8 @@
 from typing import Dict, Any
 
 import numpy as np
+
+from gdalos.viewshed.viewshed_params import atmospheric_refraction_coeff, rf_refraction_coeff
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 
@@ -64,11 +66,11 @@ def pre_request_aos_inputs(inputs: Dict[str, Any]):
 
     # these are the outputs we want to create
     # max_r = inputs.get('MaxRange', None)
-    inputs['refraction_coeff'] = 1/7 if not is_refraction else 0.25
+    inputs['refraction_coeff'] = atmospheric_refraction_coeff if not is_refraction else rf_refraction_coeff
     inputs['fwd'] = True
-    inputs['omsl'] = True
+    inputs.setdefault('omsl', True)
     inputs['mode'] = ['LOSRange']
-    inputs['backend'] = 'talos'
+    inputs.setdefault('backend', 'talos')
     return inputs
 
 

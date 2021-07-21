@@ -36,6 +36,7 @@ class LOS(Process):
             iog.operation(defaults) + \
             iog.color_palette(defaults) + \
             iog.comment_input(defaults) + \
+            iog.ext_url(defaults) + \
             iog.mock(defaults)
 
         outputs = iog.output_r() + \
@@ -69,12 +70,13 @@ class LOS(Process):
         del_s = get_request_data(request.inputs, 'del_s') or 0
         operation = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
+        ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
         results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
             output_filename=None, of=None,
             vp=vp_arrays_dict, del_s=del_s,
             in_coords_srs=in_coords_srs, out_crs=out_crs,
-            operation=operation, color_palette=color_palette, mock=mock)
+            operation=operation, color_palette=color_palette, ext_url=ext_url, mock=mock)
 
         response.outputs['r'].data = raster_filename
         response.outputs['comment'].data = process_helper.get_request_data(request.inputs, 'comment')

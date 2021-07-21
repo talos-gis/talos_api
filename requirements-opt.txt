@@ -1,4 +1,4 @@
 wheel
 czml3>=0.5.4
 gdal-ecw
-rfmodel
+rfmodel>=0.0.8

@@ -3,7 +3,6 @@ from typing import Union, Optional
 from backend.formats import czml_format
 from gdalos import util as gdalos_base
 from gdalos.gdalos_selector import DataSetSelector
-from gdalos.viewshed import radio_params
 from gdalos.viewshed.radio_params import RadioParams, RadioCalcType
 from gdalos.viewshed.viewshed_calc import ViewshedBackend, default_LOSBackend
 from gdalos.viewshed.viewshed_params import viewshed_defaults, atmospheric_refraction_coeff
@@ -306,6 +305,13 @@ def mock(defaults):
 def comment_input(defaults):
     return [
         LiteralInputD(defaults, 'comment', 'passthrough comment',
+                      data_type='string', default=None, min_occurs=0, max_occurs=1),
+    ]
+
+
+def ext_url(defaults):
+    return [
+        LiteralInputD(defaults, 'ext_url', 'external service url address',
                       data_type='string', default=None, min_occurs=0, max_occurs=1),
     ]
 

@@ -1,5 +1,6 @@
 from typing import Dict, Any
 
+from gdalos.viewshed.viewshed_params import rf_refraction_coeff
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, inverse_list_items, \
     pre_request_transform
 
@@ -53,8 +54,9 @@ def pre_request_p2p_loss_inputs(inputs: Dict[str, Any]):
         inputs[k] = inverse_list_items(inputs[k])
 
     # these are the outputs we want to create
-    inputs['mode'] = ['PathLoss', 'FreeSpaceLoss']
-    inputs['backend'] = 'radio'
+    inputs['mode'] = ['PathLoss', 'FreeSpaceLoss', 'LOSVisRes']
+    inputs.setdefault('refraction_coeff', rf_refraction_coeff)
+    inputs.setdefault('backend', 'radio')
     return inputs
 
 
@@ -62,8 +64,8 @@ def pre_response_p2p_loss(response: Dict[str, Any]):
     output = response['output']
     data = output.data
     new_data = []
-    for loss, freespace in zip(data['PathLoss'], data['FreeSpaceLoss']):
-        item = {"Loss": float(loss), "FreeSpaceLoss": float(freespace), "QueryType": 18}
+    for loss, freespace, los in zip(data['PathLoss'], data['FreeSpaceLoss'], data['LOSVisRes']):
+        item = {"Loss": loss, "FreeSpaceLoss": freespace, 'los': los, "QueryType": 18}
         new_data.append(item)
     output.data = new_data
     return response

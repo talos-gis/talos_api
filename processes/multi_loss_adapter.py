@@ -84,7 +84,7 @@ def pre_request_multi_loss_inputs(inputs: Dict[str, Any]):
     inputs['comment'] = len(inputs['ox'])
     inputs['ot_fill'] = 'product'
     inputs['mode'] = ['LOSVisRes']
-    inputs['backend'] = 'talos'
+    inputs.setdefault('backend', 'talos')
 
     return inputs
 

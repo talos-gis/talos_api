@@ -2,6 +2,7 @@ from typing import Dict, Any, Tuple
 import re
 
 from gdalos.viewshed.radio_params import DefaultRadioBaseParams
+from gdalos.viewshed.viewshed_params import rf_refraction_coeff
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 
@@ -49,8 +50,9 @@ def pre_request_plt_loss_inputs(inputs: Dict[str, Any]):
     inputs['tx'] = [p[0] for p in targets]
     inputs['ty'] = [p[1] for p in targets]
 
-    k_factor = inputs.get('kfactor', 4/3)
-    inputs['refraction_coeff'] = 1 - 1/k_factor
+    k_factor = inputs.get('kfactor', None)
+    refraction_coeff = rf_refraction_coeff if k_factor is None else (1 - 1/k_factor)
+    inputs['refraction_coeff'] = refraction_coeff
 
     # the following keys are redundant
     unused_keys = ['destpointsrows', 'isfeet1', 'originpointwktgeowgs84', 'kfactor']
@@ -66,8 +68,8 @@ def pre_request_plt_loss_inputs(inputs: Dict[str, Any]):
         inputs.setdefault(k, v)
 
     # these are the outputs we want to create
-    inputs['mode'] = ['PathLoss']
-    inputs['backend'] = 'radio'
+    inputs['mode'] = ['PathLoss', 'FreeSpaceLoss', 'LOSVisRes']
+    inputs.setdefault('backend', 'radio')
     return inputs
 
 
@@ -76,8 +78,8 @@ def pre_response_plt_loss(response: Dict[str, Any]):
     data = output.data
 
     new_data = []
-    for idx, (x, y, z, loss) in enumerate(zip(data['tx'], data['ty'], data['tz'], data['PathLoss'])):
-        item = {'rowID': idx+1, 'x': x, 'y': y, 'height': z, 'medianLoss': float(loss), 'isRFLOS': False}
+    for idx, (x, y, z, loss, los) in enumerate(zip(data['tx'], data['ty'], data['tz'], data['PathLoss'], data['LOSVisRes'])):
+        item = {'rowID': idx+1, 'x': x, 'y': y, 'height': z, 'medianLoss': loss, 'isRFLOS': los}
         new_data.append(item)
     output.data = {'operationResult': {'pathLossTable': new_data}}
     return response

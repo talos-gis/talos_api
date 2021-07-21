@@ -1,5 +1,6 @@
 from typing import Dict, Any
 
+from gdalos.viewshed.viewshed_params import rf_refraction_coeff, atmospheric_refraction_coeff
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 
@@ -59,11 +60,11 @@ def pre_request_ros_inputs(inputs: Dict[str, Any]):
             del inputs[k]
 
     # these are the outputs we want to create
-    inputs['refraction_coeff'] = 1/7 if not is_refraction else 0.25
+    inputs['refraction_coeff'] = atmospheric_refraction_coeff if not is_refraction else rf_refraction_coeff
     inputs['fwd'] = True
-    inputs['omsl'] = True
+    inputs.setdefault('omsl', True)
     inputs['mode'] = ['LOSRange']
-    inputs['backend'] = 'talos'
+    inputs.setdefault('backend', 'talos')
     return inputs
 
 
