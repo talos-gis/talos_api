@@ -17,35 +17,29 @@ from gdalos import gdalos_util
 from gdalos.rectangle import GeoRectangle
 from .process_defaults import process_defaults, LiteralInputD, ComplexInputD, BoundingBoxInputD
 from processes import process_helper
-from gdalos.gdalos_color import ColorPalette
+import processes.io_generator as iog
 
 
 class GdalDem(Process):
     def __init__(self):
         process_id = 'crop_color'
         defaults = process_defaults(process_id)
-        inputs = [
-            LiteralInputD(defaults, 'of', 'output format (czml, gtiff)', data_type='string',
-                          min_occurs=0, max_occurs=1, default='gtiff'),
-            LiteralInputD(defaults, 'output_czml', 'make output as czml', data_type='boolean',
-                         min_occurs=0, max_occurs=1, default=None),
-            LiteralInputD(defaults, 'output_tif', 'make output as tif', data_type='boolean',
-                         min_occurs=0, max_occurs=1, default=None),
+        inputs = \
+            iog.raster_input(defaults) + \
+            iog.of_raster(defaults) + \
+            [
+                LiteralInputD(defaults, 'output_czml', 'make output as czml', data_type='boolean',
+                             min_occurs=0, max_occurs=1, default=None),
+                LiteralInputD(defaults, 'output_tif', 'make output as tif', data_type='boolean',
+                             min_occurs=0, max_occurs=1, default=None),
+            ] + \
+            iog.color_palette(defaults) + \
+            [
+                LiteralInputD(defaults, 'process_palette', 'put palette in czml description', data_type='integer',
+                             min_occurs=1, max_occurs=1, default=2),
+            ] + \
+            iog.extent(defaults)
 
-            ComplexInputD(defaults, 'r', 'input raster', supported_formats=[FORMATS.GEOTIFF],
-                         min_occurs=1, max_occurs=1, default=None),
-            ComplexInputD(defaults, 'color_palette', 'color palette', supported_formats=[FORMATS.TEXT],
-                         min_occurs=0, max_occurs=1, default=None),
-            ComplexInputD(defaults, 'cutline', 'input vector cutline',
-                         supported_formats=[FORMATS.GML],
-                         # crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
-                         min_occurs=0, max_occurs=1, default=None),
-            LiteralInputD(defaults, 'process_palette', 'put palette in czml description', data_type='integer',
-                         min_occurs=1, max_occurs=1, default=2),
-            BoundingBoxInputD(defaults, 'extent', 'extent BoundingBox',
-                             crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
-                             min_occurs=0, max_occurs=1, default=None)
-        ]
         outputs = [
             LiteralOutput('r', 'input raster name', data_type='string'),
             ComplexOutput('output', 'result raster', supported_formats=[FORMATS.GEOTIFF, czml_format]),
@@ -80,13 +74,13 @@ class GdalDem(Process):
 
         if output_czml or output_tif:
             process_palette = request.inputs['process_palette'][0].data if output_czml else 0
-            cutline = request.inputs['cutline'][0].file if 'cutline' in request.inputs else None
             color_palette = process_helper.get_color_palette_from_request(request.inputs, 'color_palette')
             extent = request.inputs['extent'][0].data if 'extent' in request.inputs else None
             if extent is not None:
                 # I'm not sure why the extent is in format miny, minx, maxy, maxx
                 extent = [float(x) for x in extent]
                 extent = GeoRectangle.from_min_max(extent[1], extent[3], extent[0], extent[2])
+            cutline = request.inputs['cutline'][0].file if 'cutline' in request.inputs else None
 
             czml_output_filename = tempfile.mktemp(suffix=czml_format.extension) if output_czml else None
             tif_output_filename = tempfile.mktemp(suffix=FORMATS.GEOTIFF.extension) if output_tif else None

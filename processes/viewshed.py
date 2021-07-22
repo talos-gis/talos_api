@@ -39,6 +39,7 @@ class Viewshed(Process):
             iog.calc_mode(defaults, default=RadioCalcType.FOS.name) + \
             iog.color_palette(defaults) + \
             iog.extent(defaults) + \
+            iog.extent_combine(defaults) + \
             iog.operation(defaults) + \
             iog.resolution_output(defaults) + \
             iog.threads(defaults) + \

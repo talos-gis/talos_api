@@ -256,16 +256,21 @@ def color_palette(defaults):
     ]
 
 
+def extent_combine(defaults):
+    return [
+        LiteralInputD(defaults, 'extent_c', 'extent combine mode 2:union/3:intersection', data_type='integer',
+                      min_occurs=1, max_occurs=1, default=2),  # was: m
+    ]
+
+
 def extent(defaults):
     return [
         # output extent definition
-        LiteralInputD(defaults, 'extent_c', 'extent combine mode 2:union/3:intersection', data_type='integer',
-                      min_occurs=1, max_occurs=1, default=2),  # was: m
         BoundingBoxInputD(defaults, 'extent', 'extent BoundingBox',
                           crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
                           min_occurs=0, max_occurs=1, default=None),
         ComplexInputD(defaults, 'cutline', 'output vector cutline',
-                      supported_formats=[FORMATS.GML],
+                      supported_formats=[FORMATS.GML, FORMATS.GEOJSON],
                       # crss=['EPSG:4326', ], metadata=[Metadata('EPSG.io', 'http://epsg.io/'), ],
                       min_occurs=0, max_occurs=1, default=None),
     ]
