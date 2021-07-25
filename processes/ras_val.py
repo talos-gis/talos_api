@@ -67,6 +67,6 @@ class RasterValue(Process):
         response.outputs['y'].data = y
 
         response.outputs['output'].output_format = FORMATS.JSON
-        response.outputs['output'].data = output
+        response.outputs['output'].data = output.tolist()
 
         return response
