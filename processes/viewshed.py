@@ -79,7 +79,7 @@ class Viewshed(Process):
 
         cutline = process_helper.get_request_data(request.inputs, 'cutline', True)
         threads = process_helper.get_request_data(request.inputs, 'threads')
-        operation = process_helper.get_operation(request.inputs)
+        operation, operation_hidendv = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
         if color_palette is None and is_czml:
             raise Exception('color_palette is required for czml output')
@@ -108,7 +108,8 @@ class Viewshed(Process):
 
         viewshed_calc(input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
                       output_filename=output_filename, co=co, of=of,
-                      vp_array=vp_arrays_dict, extent=extent, cutline=cutline, operation=operation,
+                      vp_array=vp_arrays_dict, extent=extent, cutline=cutline,
+                      operation=operation, operation_hidendv=operation_hidendv,
                       in_coords_srs=in_coords_srs, out_crs=out_crs,
                       color_palette=color_palette, discrete_mode=discrete_mode,
                       files=files, vp_slice=vp_slice, threads=threads)

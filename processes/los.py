@@ -68,7 +68,7 @@ class LOS(Process):
         mock = process_helper.get_request_data(request.inputs, 'mock')
 
         del_s = get_request_data(request.inputs, 'del_s') or 0
-        operation = process_helper.get_operation(request.inputs)
+        operation, operation_hidendv = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
         ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
         results = los_calc(

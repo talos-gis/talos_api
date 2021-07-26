@@ -282,6 +282,8 @@ def operation(defaults):
         # 254 is the max possible values for unique function. for sum it's not really limited
         LiteralInputD(defaults, 'o', 'operation viewshed/max/count/count_z/unique', data_type='string',
                       min_occurs=0, max_occurs=1, default=None),
+        LiteralInputD(defaults, 'o_hide', 'operation hide nodata', data_type='boolean',
+                      min_occurs=0, max_occurs=1, default=True),
     ]
 
 

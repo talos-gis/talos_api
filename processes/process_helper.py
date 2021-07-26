@@ -83,6 +83,8 @@ def get_color_palette_from_request(request_inputs, name='color_palette'):
         return pal
 
 
-def get_operation(request_inputs, name='o'):
+def get_operation(request_inputs, name='o', name_hide='o_hide'):
     operation = get_request_data(request_inputs, name)
-    return None if not operation else CalcOperation.get(operation)
+    opertaion = None if not operation else CalcOperation.get(operation)
+    operation_hidendv = get_request_data(request_inputs, name_hide)
+    return opertaion, operation_hidendv
