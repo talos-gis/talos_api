@@ -1,4 +1,4 @@
-update version info: VERSION.txt, iss-app_consts.iss
+update version info: .version, iss-app_consts.iss
 push
 
 unpack python38 to d:\iss

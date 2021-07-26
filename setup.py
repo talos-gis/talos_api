@@ -25,7 +25,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-with open('VERSION.txt') as ff:
+with open('.version') as ff:
     VERSION = ff.read().strip()
 
 with open('requirements.txt') as f:
