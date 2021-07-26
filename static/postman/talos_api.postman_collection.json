@@ -67,7 +67,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"say_hello\",\n\t\"_outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"name\": \"Idan\"\n\t}\n}",
+							"raw": "{\n\t\"identifier\": \"say_hello\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"name\": \"Idan\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -386,7 +386,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"ras_val\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"x\": [35.01, 35.02],\n\t\t\"y\": [32.01, 32.02],\n        \"interpolate\": true\n\t}\n}",
+							"raw": "{\n\t\"identifier\": \"ras_val\",\n\t\"_outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"x\": [35.01, 35.02],\n\t\t\"y\": [32.01, 32.02],\n        \"interpolate\": true\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -447,6 +447,52 @@
 			"name": "color_crop",
 			"item": [
 				{
+					"name": "color_crop_czml json boker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"crop_color\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"r\": \"./static/data/maps/srtm1_boker_4326.tif\",\n\t\t\"of\": \"tif\",\n\t\t\"color_palette\": {\n\t\t\t\"type\": \"reference\",\n\t\t\t\"href\": \"file:./static/data/color_files/gradient/qgis_spectral.qml\"\n\t\t},\n        \"extent\": {\n            \"type\": \"bbox\",\n          \t\"bbox\": [30.82, 34.74, 30.85, 34.78]\n        },\n\t\t\"cutline\": {\n            \"type\": \"complex\",\n\t\t\t\"data\": {\n\t\t\t\t\"type\": \"FeatureCollection\",\n\t\t\t\t\"name\": \"havarim-cutline\",\n\t\t\t\t\"crs\": {\n\t\t\t\t\t\"type\": \"name\",\n\t\t\t\t\t\"properties\": {\n\t\t\t\t\t\t\"name\": \"urn:ogc:def:crs:OGC:1.3:CRS84\"\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t\"features\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"type\": \"Feature\",\n\t\t\t\t\t\t\"properties\": {\n\t\t\t\t\t\t\t\"fid\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"geometry\": {\n\t\t\t\t\t\t\t\"type\": \"Polygon\",\n\t\t\t\t\t\t\t\"coordinates\": [\n\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.739128836278108,\n\t\t\t\t\t\t\t\t\t\t30.830528995489457\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.73837096878935,\n\t\t\t\t\t\t\t\t\t\t30.83156413157167\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.73822309220617,\n\t\t\t\t\t\t\t\t\t\t30.832765628809957\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7386482373828,\n\t\t\t\t\t\t\t\t\t\t30.83383773403796\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.73977579632949,\n\t\t\t\t\t\t\t\t\t\t30.83635163595191\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.74212333708737,\n\t\t\t\t\t\t\t\t\t\t30.84161973922746\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.743417257190149,\n\t\t\t\t\t\t\t\t\t\t30.844004249131126\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.74543207563588,\n\t\t\t\t\t\t\t\t\t\t30.845353622952584\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.74800143126852,\n\t\t\t\t\t\t\t\t\t\t30.846444212753487\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.749461712527359,\n\t\t\t\t\t\t\t\t\t\t30.846684512201145\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.75110683951516,\n\t\t\t\t\t\t\t\t\t\t30.846906327075904\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.75243772876372,\n\t\t\t\t\t\t\t\t\t\t30.847553287127288\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.753528318564629,\n\t\t\t\t\t\t\t\t\t\t30.848329639188948\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.75454497007394,\n\t\t\t\t\t\t\t\t\t\t30.848532969490809\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.757243717716857,\n\t\t\t\t\t\t\t\t\t\t30.84814479345998\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.75924005158969,\n\t\t\t\t\t\t\t\t\t\t30.847405410544114\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76108850887936,\n\t\t\t\t\t\t\t\t\t\t30.84759025627308\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76484087717739,\n\t\t\t\t\t\t\t\t\t\t30.848985841526785\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76698508763341,\n\t\t\t\t\t\t\t\t\t\t30.85011340047348\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76779840884086,\n\t\t\t\t\t\t\t\t\t\t30.85127792856597\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76866718376701,\n\t\t\t\t\t\t\t\t\t\t30.852793663543499\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.769961103869778,\n\t\t\t\t\t\t\t\t\t\t30.854143037364957\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.77410164819863,\n\t\t\t\t\t\t\t\t\t\t30.85268275610612\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.777003726143409,\n\t\t\t\t\t\t\t\t\t\t30.850889752535143\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.779110967453629,\n\t\t\t\t\t\t\t\t\t\t30.8494664404221\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78180971509654,\n\t\t\t\t\t\t\t\t\t\t30.849928554744513\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78190213796103,\n\t\t\t\t\t\t\t\t\t\t30.849965523890309\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78208698369,\n\t\t\t\t\t\t\t\t\t\t30.849521894140787\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.786652673195479,\n\t\t\t\t\t\t\t\t\t\t30.850298246202447\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7881868927459,\n\t\t\t\t\t\t\t\t\t\t30.85027976162955\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78857506877673,\n\t\t\t\t\t\t\t\t\t\t30.85107459826411\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.790053834608468,\n\t\t\t\t\t\t\t\t\t\t30.851536712586524\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.790774732951437,\n\t\t\t\t\t\t\t\t\t\t30.851647620023905\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.79092260953461,\n\t\t\t\t\t\t\t\t\t\t30.852571848668739\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.79400953320835,\n\t\t\t\t\t\t\t\t\t\t30.852775178970604\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.79493376185319,\n\t\t\t\t\t\t\t\t\t\t30.832294272201083\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.79304833541772,\n\t\t\t\t\t\t\t\t\t\t30.828930079933888\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78831628475618,\n\t\t\t\t\t\t\t\t\t\t30.82689677691525\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.78058973328537,\n\t\t\t\t\t\t\t\t\t\t30.832626994513224\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.77068200221275,\n\t\t\t\t\t\t\t\t\t\t30.82563982595828\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.76413846340733,\n\t\t\t\t\t\t\t\t\t\t30.82024233067245\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.75389801002257,\n\t\t\t\t\t\t\t\t\t\t30.818985379715476\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.74901808277785,\n\t\t\t\t\t\t\t\t\t\t30.824419844147099\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.746282365989149,\n\t\t\t\t\t\t\t\t\t\t30.82708162264422\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.74195697593132,\n\t\t\t\t\t\t\t\t\t\t30.828893110788095\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7398867037669,\n\t\t\t\t\t\t\t\t\t\t30.82985430857872\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.739128836278108,\n\t\t\t\t\t\t\t\t\t\t30.830528995489457\n\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t]\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "color_crop_czml xml boker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>crop_color</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>./static/data/maps/srtm1_boker_4326.tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/gradient/qgis_spectral.qml\"/>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>extent</ows:Identifier>\n            <wps:Data>\n                <wps:BoundingBoxData crs=\"EPSG:4326\" dimenstions=\"2\">\n                    <ows:LowerCorner>34.74 30.82</ows:LowerCorner>\n                    <ows:UpperCorner>34.78 30.85</ows:UpperCorner>\n                </wps:BoundingBoxData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                <ogr:FeatureCollection\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xsi:schemaLocation=\"http://ogr.maptools.org/ havarim-cutline.xsd\"\n                    xmlns:ogr=\"http://ogr.maptools.org/\"\n                    xmlns:gml=\"http://www.opengis.net/gml\">\n                <gml:boundedBy>\n                    <gml:Box>\n                    <gml:coord><gml:X>34.73822309220617</gml:X><gml:Y>30.81898537971547</gml:Y></gml:coord>\n                    <gml:coord><gml:X>34.79493376185319</gml:X><gml:Y>30.85414303736496</gml:Y></gml:coord>\n                    </gml:Box>\n                </gml:boundedBy>\n                                                                                                        \n                <gml:featureMember>\n                    <ogr:havarim_cutline fid=\"havarim_cutline.0\">\n                    <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7391288362781,30.8305289954895 34.7383709687893,30.8315641315717 34.7382230922062,30.83276562881 34.7386482373828,30.833837734038 34.7397757963295,30.8363516359519 34.7421233370874,30.8416197392275 34.7434172571901,30.8440042491311 34.7454320756359,30.8453536229526 34.7480014312685,30.8464442127535 34.7494617125274,30.8466845122011 34.7511068395152,30.8469063270759 34.7524377287637,30.8475532871273 34.7535283185646,30.8483296391889 34.7545449700739,30.8485329694908 34.7572437177169,30.84814479346 34.7592400515897,30.8474054105441 34.7610885088794,30.8475902562731 34.7648408771774,30.8489858415268 34.7669850876334,30.8501134004735 34.7677984088409,30.851277928566 34.768667183767,30.8527936635435 34.7699611038698,30.854143037365 34.7741016481986,30.8526827561061 34.7770037261434,30.8508897525351 34.7791109674536,30.8494664404221 34.7818097150965,30.8499285547445 34.781902137961,30.8499655238903 34.78208698369,30.8495218941408 34.7866526731955,30.8502982462024 34.7881868927459,30.8502797616296 34.7885750687767,30.8510745982641 34.7900538346085,30.8515367125865 34.7907747329514,30.8516476200239 34.7909226095346,30.8525718486687 34.7940095332084,30.8527751789706 34.7949337618532,30.8322942722011 34.7930483354177,30.8289300799339 34.7883162847562,30.8268967769153 34.7805897332854,30.8326269945132 34.7706820022128,30.8256398259583 34.7641384634073,30.8202423306724 34.7538980100226,30.8189853797155 34.7490180827779,30.8244198441471 34.7462823659891,30.8270816226442 34.7419569759313,30.8288931107881 34.7398867037669,30.8298543085787 34.7391288362781,30.8305289954895</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                    </ogr:havarim_cutline>\n                </gml:featureMember>\n                </ogr:FeatureCollection>\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "color_crop_czml xml old",
 					"request": {
 						"method": "POST",
@@ -468,18 +514,23 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "viewshed",
+			"item": [
 				{
-					"name": "color_crop_czml xml new boker",
+					"name": "viewshed cutline ap json",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>crop_color</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>./static/data/maps/srtm1_boker_4326.tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/gradient/qgis_spectral.qml\"/>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                <ogr:FeatureCollection\n                    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                    xsi:schemaLocation=\"http://ogr.maptools.org/ havarim-cutline.xsd\"\n                    xmlns:ogr=\"http://ogr.maptools.org/\"\n                    xmlns:gml=\"http://www.opengis.net/gml\">\n                <gml:boundedBy>\n                    <gml:Box>\n                    <gml:coord><gml:X>34.73822309220617</gml:X><gml:Y>30.81898537971547</gml:Y></gml:coord>\n                    <gml:coord><gml:X>34.79493376185319</gml:X><gml:Y>30.85414303736496</gml:Y></gml:coord>\n                    </gml:Box>\n                </gml:boundedBy>\n                                                                                                        \n                <gml:featureMember>\n                    <ogr:havarim_cutline fid=\"havarim_cutline.0\">\n                    <ogr:geometryProperty><gml:Polygon srsName=\"EPSG:4326\"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7391288362781,30.8305289954895 34.7383709687893,30.8315641315717 34.7382230922062,30.83276562881 34.7386482373828,30.833837734038 34.7397757963295,30.8363516359519 34.7421233370874,30.8416197392275 34.7434172571901,30.8440042491311 34.7454320756359,30.8453536229526 34.7480014312685,30.8464442127535 34.7494617125274,30.8466845122011 34.7511068395152,30.8469063270759 34.7524377287637,30.8475532871273 34.7535283185646,30.8483296391889 34.7545449700739,30.8485329694908 34.7572437177169,30.84814479346 34.7592400515897,30.8474054105441 34.7610885088794,30.8475902562731 34.7648408771774,30.8489858415268 34.7669850876334,30.8501134004735 34.7677984088409,30.851277928566 34.768667183767,30.8527936635435 34.7699611038698,30.854143037365 34.7741016481986,30.8526827561061 34.7770037261434,30.8508897525351 34.7791109674536,30.8494664404221 34.7818097150965,30.8499285547445 34.781902137961,30.8499655238903 34.78208698369,30.8495218941408 34.7866526731955,30.8502982462024 34.7881868927459,30.8502797616296 34.7885750687767,30.8510745982641 34.7900538346085,30.8515367125865 34.7907747329514,30.8516476200239 34.7909226095346,30.8525718486687 34.7940095332084,30.8527751789706 34.7949337618532,30.8322942722011 34.7930483354177,30.8289300799339 34.7883162847562,30.8268967769153 34.7805897332854,30.8326269945132 34.7706820022128,30.8256398259583 34.7641384634073,30.8202423306724 34.7538980100226,30.8189853797155 34.7490180827779,30.8244198441471 34.7462823659891,30.8270816226442 34.7419569759313,30.8288931107881 34.7398867037669,30.8298543085787 34.7391288362781,30.8305289954895</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                    </ogr:havarim_cutline>\n                </gml:featureMember>\n                </ogr:FeatureCollection>\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
+							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"threads\": 1,\n\t\t\"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n\t\t\"of\": \"tif\",\n\t\t\"ox\": 34.75,\n\t\t\"oy\": 30.85,\n\t\t\"oz\": 10,\n\t\t\"tz\": 10,\n\t\t\"omsl\": false,\n\t\t\"tmsl\": false,\n\t\t\"max_r\": 3000,\n\t\t\"h_aperture\": 90,\n\t\t\"azimuth\": 45,\n\t\t\"v_aperture\": 90,\n\t\t\"elevation\": 0,\n\t\t\"color_palette\": {\n\t\t\t\"type\": \"reference\",\n\t\t\t\"href\": \"file:./static/data/color_files/viewshed/viewshed.txt\"\n\t\t},\n\t\t\"cutline\": {\n            \"type\": \"complex\",\n\t\t\t\"data\": {\n\t\t\t\t\"type\": \"FeatureCollection\",\n\t\t\t\t\"name\": \"boker_small\",\n\t\t\t\t\"features\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"type\": \"Feature\",\n\t\t\t\t\t\t\"properties\": {\n\t\t\t\t\t\t\t\"fid\": \"boker_small.0\",\n\t\t\t\t\t\t\t\"id\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"geometry\": {\n\t\t\t\t\t\t\t\"type\": \"Polygon\",\n\t\t\t\t\t\t\t\"coordinates\": [\n\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7362962841255,\n\t\t\t\t\t\t\t\t\t\t30.8680831681697\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7491785691475,\n\t\t\t\t\t\t\t\t\t\t30.8950968464391\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7590722435378,\n\t\t\t\t\t\t\t\t\t\t30.8688212606708\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7838986868885,\n\t\t\t\t\t\t\t\t\t\t30.8566306973987\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7572117347723,\n\t\t\t\t\t\t\t\t\t\t30.8480495047654\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7662270596898,\n\t\t\t\t\t\t\t\t\t\t30.825619383215\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7403982755041,\n\t\t\t\t\t\t\t\t\t\t30.8416540562687\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.733370763062,\n\t\t\t\t\t\t\t\t\t\t30.8252499617118\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7079026880956,\n\t\t\t\t\t\t\t\t\t\t30.8619545725602\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7362962841255,\n\t\t\t\t\t\t\t\t\t\t30.8680831681697\n\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t]\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t}\n\t}\n}",
 							"options": {
 								"raw": {
-									"language": "xml"
+									"language": "json"
 								}
 							}
 						},
@@ -491,23 +542,18 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "viewshed",
-			"item": [
+				},
 				{
-					"name": "viewshed json",
+					"name": "viewshed cutline ap",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n        \"of\": \"tif\",\n\t\t\"ox\": 34.75,\n\t\t\"oy\": 30.85,\n        \"oz\": 1000,\n        \"tz\": 1000,\n        \"omsl\": false,\n        \"tmsl\": false,\n        \"max_r\": 3000,\n        \"azimuth\": 45,\n        \"h_aperture\": 90,\n        \"elevation\": 0,\n        \"v_aperture\": 90,\n        \"color_palette\": {\n            \"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/viewshed/viewshed.txt\"\n        }\n\t}\n}",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>viewshed</ows:Identifier>\n\n   <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n\t<wps:DataInputs>\n\n\t<wps:Input>\n        <ows:Identifier>threads</ows:Identifier>\n        <wps:Data>\n            <wps:LiteralData>1</wps:LiteralData>\n        </wps:Data>\n\t</wps:Input>\n\n    <wps:Input>\n        <ows:Identifier>r</ows:Identifier>\n        <wps:Data>\n            <wps:LiteralData>./static/data/maps/srtm1_boker_32636.tif</wps:LiteralData>\n        </wps:Data>\n    </wps:Input>\n    \n\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>tif</wps:LiteralData>\n            </wps:Data>\n\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>ox</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>34.75</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n        <wps:Input>\n            <ows:Identifier>oy</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>30.85</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>oz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>tz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>max_r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>3000</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>h_aperture</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>90</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>azimuth</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>45</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>v_aperture</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>90</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>elevation</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>0</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/viewshed/viewshed.txt\"/>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                        xsi:schemaLocation=\"http://ogr.maptools.org/ boker_small.xsd\"\n                        xmlns:ogr=\"http://ogr.maptools.org/\"\n                        xmlns:gml=\"http://www.opengis.net/gml\">\n                    <gml:boundedBy>\n                        <gml:Box>\n                        <gml:coord><gml:X>34.70790268809563</gml:X><gml:Y>30.82524996171175</gml:Y></gml:coord>\n                        <gml:coord><gml:X>34.78389868688846</gml:X><gml:Y>30.89509684643911</gml:Y></gml:coord>\n                        </gml:Box>\n                    </gml:boundedBy>\n                                                                                                            \n                    <gml:featureMember>\n                        <ogr:boker_small fid=\"boker_small.0\">\n                        <ogr:geometryProperty><gml:Polygon><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7362962841255,30.8680831681697 34.7491785691475,30.8950968464391 34.7590722435378,30.8688212606708 34.7838986868885,30.8566306973987 34.7572117347723,30.8480495047654 34.7662270596898,30.825619383215 34.7403982755041,30.8416540562687 34.733370763062,30.8252499617118 34.7079026880956,30.8619545725602 34.7362962841255,30.8680831681697</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                        <ogr:id xsi:nil=\"true\"/>\n                        </ogr:boker_small>\n                    </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
 							"options": {
 								"raw": {
-									"language": "json"
+									"language": "xml"
 								}
 							}
 						},
@@ -534,29 +580,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>viewshed</ows:Identifier>\n\n   <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n\t<wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>./static/data/maps/srtm1_boker_32636.tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>ox</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>34.75</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n        <wps:Input>\n            <ows:Identifier>oy</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>30.85</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>oz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>tz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>max_r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>3000</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/viewshed/viewshed.txt\"/>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                        xsi:schemaLocation=\"http://ogr.maptools.org/ boker_small.xsd\"\n                        xmlns:ogr=\"http://ogr.maptools.org/\"\n                        xmlns:gml=\"http://www.opengis.net/gml\">\n                    <gml:boundedBy>\n                        <gml:Box>\n                        <gml:coord><gml:X>34.70790268809563</gml:X><gml:Y>30.82524996171175</gml:Y></gml:coord>\n                        <gml:coord><gml:X>34.78389868688846</gml:X><gml:Y>30.89509684643911</gml:Y></gml:coord>\n                        </gml:Box>\n                    </gml:boundedBy>\n                                                                                                            \n                    <gml:featureMember>\n                        <ogr:boker_small fid=\"boker_small.0\">\n                        <ogr:geometryProperty><gml:Polygon><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7362962841255,30.8680831681697 34.7491785691475,30.8950968464391 34.7590722435378,30.8688212606708 34.7838986868885,30.8566306973987 34.7572117347723,30.8480495047654 34.7662270596898,30.825619383215 34.7403982755041,30.8416540562687 34.733370763062,30.8252499617118 34.7079026880956,30.8619545725602 34.7362962841255,30.8680831681697</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                        <ogr:id xsi:nil=\"true\"/>\n                        </ogr:boker_small>\n                    </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
-							"options": {
-								"raw": {
-									"language": "xml"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{talos_wps}}",
-							"host": [
-								"{{talos_wps}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "viewshed cutline ap",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>viewshed</ows:Identifier>\n\n   <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n\t<wps:DataInputs>\n\n\t<wps:Input>\n        <ows:Identifier>threads</ows:Identifier>\n        <wps:Data>\n            <wps:LiteralData>1</wps:LiteralData>\n        </wps:Data>\n\t</wps:Input>\n\n    <wps:Input>\n        <ows:Identifier>r</ows:Identifier>\n        <wps:Data>\n            <wps:LiteralData>./static/data/maps/srtm1_boker_32636.tif</wps:LiteralData>\n        </wps:Data>\n    </wps:Input>\n    \n\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>czml</wps:LiteralData>\n            </wps:Data>\n\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>ox</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>34.75</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n        <wps:Input>\n            <ows:Identifier>oy</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>30.85</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>oz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>tz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>max_r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>3000</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>h_aperture</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>90</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>azimuth</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>45</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>v_aperture</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>90</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>elevation</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>0</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/viewshed/viewshed.txt\"/>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                        xsi:schemaLocation=\"http://ogr.maptools.org/ boker_small.xsd\"\n                        xmlns:ogr=\"http://ogr.maptools.org/\"\n                        xmlns:gml=\"http://www.opengis.net/gml\">\n                    <gml:boundedBy>\n                        <gml:Box>\n                        <gml:coord><gml:X>34.70790268809563</gml:X><gml:Y>30.82524996171175</gml:Y></gml:coord>\n                        <gml:coord><gml:X>34.78389868688846</gml:X><gml:Y>30.89509684643911</gml:Y></gml:coord>\n                        </gml:Box>\n                    </gml:boundedBy>\n                                                                                                            \n                    <gml:featureMember>\n                        <ogr:boker_small fid=\"boker_small.0\">\n                        <ogr:geometryProperty><gml:Polygon><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7362962841255,30.8680831681697 34.7491785691475,30.8950968464391 34.7590722435378,30.8688212606708 34.7838986868885,30.8566306973987 34.7572117347723,30.8480495047654 34.7662270596898,30.825619383215 34.7403982755041,30.8416540562687 34.733370763062,30.8252499617118 34.7079026880956,30.8619545725602 34.7362962841255,30.8680831681697</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                        <ogr:id xsi:nil=\"true\"/>\n                        </ogr:boker_small>\n                    </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -709,6 +732,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "viewshed cutline temp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Echo",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>viewshed</ows:Identifier>\n\n   <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n\t<wps:DataInputs>\n\n\t\t<wps:Input>\n            <ows:Identifier>r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>./static/data/maps/srtm1_boker_32636.tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>of</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>tif</wps:LiteralData>\n            </wps:Data>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>ox</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>34.75</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n        <wps:Input>\n            <ows:Identifier>oy</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>30.85</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>oz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>tz</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>10</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>max_r</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>3000</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\n\t\t<wps:Input>\n            <ows:Identifier>color_palette</ows:Identifier>\n                <wps:Reference xlink:href=\"file:./static/data/color_files/viewshed/viewshed.txt\"/>\n\t\t</wps:Input>\n\n        <wps:Input>\n            <ows:Identifier>cutline</ows:Identifier>\n            <wps:Data>\n                <wps:ComplexData>\n\n                    <ogr:FeatureCollection\n                        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n                        xsi:schemaLocation=\"http://ogr.maptools.org/ boker_small.xsd\"\n                        xmlns:ogr=\"http://ogr.maptools.org/\"\n                        xmlns:gml=\"http://www.opengis.net/gml\">\n                    <gml:boundedBy>\n                        <gml:Box>\n                        <gml:coord><gml:X>34.70790268809563</gml:X><gml:Y>30.82524996171175</gml:Y></gml:coord>\n                        <gml:coord><gml:X>34.78389868688846</gml:X><gml:Y>30.89509684643911</gml:Y></gml:coord>\n                        </gml:Box>\n                    </gml:boundedBy>\n                                                                                                            \n                    <gml:featureMember>\n                        <ogr:boker_small fid=\"boker_small.0\">\n                        <ogr:geometryProperty><gml:Polygon><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>34.7362962841255,30.8680831681697 34.7491785691475,30.8950968464391 34.7590722435378,30.8688212606708 34.7838986868885,30.8566306973987 34.7572117347723,30.8480495047654 34.7662270596898,30.825619383215 34.7403982755041,30.8416540562687 34.733370763062,30.8252499617118 34.7079026880956,30.8619545725602 34.7362962841255,30.8680831681697</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon></ogr:geometryProperty>\n                        <ogr:id xsi:nil=\"true\"/>\n                        </ogr:boker_small>\n                    </gml:featureMember>\n                    </ogr:FeatureCollection>\n\n\n\n                </wps:ComplexData>\n            </wps:Data>\n\t\t</wps:Input>\n\n\t</wps:DataInputs>\n</wps:Execute>\n",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -816,6 +868,66 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PathlossTable 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"kFactor\": 1.3333333333333333,\n\t\"samplingInterval\": 500.0,\n\t\"originPointWKTGeoWGS84\": \"POINT(35.2, 33.2)\",\n\t\"isfeet1\": false,\n\t\"fernelOrder\": 0,\n\t\"originAntHeight\": 5.0,\n\t\"destPointsRows\": [\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.4, 33.3)\",\n\t\t\t\"destAntHeight\": 5.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3500.0,\n\t\t\t\"polarizationDeg\": 0,\n\t\t\t\"rowId\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{talos_api1}}/PathlossTable",
+							"host": [
+								"{{talos_api1}}"
+							],
+							"path": [
+								"PathlossTable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PathlossTable 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"kFactor\": 1.3333333333333333,\n\t\"samplingInterval\": 500.0,\n\t\"originPointWKTGeoWGS84\": \"POINT(35.0, 33.0)\",\n\t\"isfeet1\": false,\n\t\"fernelOrder\": 0,\n\t\"originAntHeight\": 5.0,\n\t\"destPointsRows\": [\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.1, 33.1)\",\n\t\t\t\"destAntHeight\": 5.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3500.0,\n\t\t\t\"polarizationDeg\": 0,\n\t\t\t\"rowId\": 1\n\t\t},\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.2, 33.2)\",\n\t\t\t\"destAntHeight\": 15.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3000.0,\n\t\t\t\"polarizationDeg\": 90,\n\t\t\t\"rowId\": 2\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{talos_api1}}/PathlossTable",
+							"host": [
+								"{{talos_api1}}"
+							],
+							"path": [
+								"PathlossTable"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -841,96 +953,16 @@
 							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"points\": [\n\t\t{ \"lon\": 34.3, \"lat\": 32.2 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}"
 						},
 						"url": {
-							"raw": "{{tasc_api1}}/ElevationPoint",
+							"raw": "{{talos_api1}}/ElevationPoint",
 							"host": [
-								"{{tasc_api1}}"
+								"{{talos_api1}}"
 							],
 							"path": [
 								"ElevationPoint"
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "ElevationPoint",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "application/vnd.geo+json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"accessToken\": \"test\",\n\t\"points\": [\n\t\t{ \"lon\": 34, \"lat\": 32 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{tasc_api1}}/ElevationPoint",
-									"host": [
-										"{{tasc_api1}}"
-									],
-									"path": [
-										"ElevationPoint"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*",
-									"name": "Access-Control-Allow-Origin",
-									"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
-								},
-								{
-									"key": "Access-Control-Max-Age",
-									"value": "1728000",
-									"name": "Access-Control-Max-Age",
-									"description": "Indicates how long the results of a preflight request can be cached in seconds."
-								},
-								{
-									"key": "Content-Length",
-									"value": "515",
-									"name": "Content-Length",
-									"description": "The length of the response body in octets (8-bit bytes)"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/vnd.geo+json",
-									"name": "Content-Type",
-									"description": "The mime type of this content"
-								},
-								{
-									"key": "Date",
-									"value": "Tue, 06 Aug 2019 07:49:19 GMT",
-									"name": "Date",
-									"description": "The date and time that the message was sent"
-								},
-								{
-									"key": "Server",
-									"value": "Microsoft-HTTPAPI/2.0",
-									"name": "Server",
-									"description": "A name for the server"
-								}
-							],
-							"cookie": [],
-							"body": "{\"features\":[{\"geometry\":{\"coordinates\":[34.0,32.0,0.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[35.5,32.5,-123.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[35.8,32.8,339.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[36.1,33.0,628.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"},{\"geometry\":{\"coordinates\":[36.2,33.2,765.0],\"type\":\"Point\"},\"properties\":{},\"type\":\"Feature\"}],\"type\":\"FeatureCollection\"}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Profile",
@@ -951,9 +983,9 @@
 							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"priority\": 1,\n\t\"resolution\": 100,\n\t\"sampleRes\":92,\n\t\"calcSideSlopes\": false,\n\t\"line\": [{\n\t\t\"lon\": 34.427,\n\t\t\"lat\": 31.67112\n\t},\n\t{\n\t\t\"lon\": 35.4688718,\n\t\t\"lat\": 31.6116019\n\t}]\n}"
 						},
 						"url": {
-							"raw": "{{tasc_api1}}/Profile",
+							"raw": "{{talos_api1}}/Profile",
 							"host": [
-								"{{tasc_api1}}"
+								"{{talos_api1}}"
 							],
 							"path": [
 								"Profile"
@@ -981,9 +1013,9 @@
 							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"points\": [\n\t\t{ \"lon\": 34.3, \"lat\": 32.2 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}"
 						},
 						"url": {
-							"raw": "{{tasc_api1}}/ElevationPoint",
+							"raw": "{{talos_api1}}/ElevationPoint",
 							"host": [
-								"{{tasc_api1}}"
+								"{{talos_api1}}"
 							],
 							"path": [
 								"ElevationPoint"
@@ -1045,7 +1077,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"_backend\": \"z_rest\",\n\t\"accessToken\": \"token\",\n\t\"priority\": 0,\n\t\"resolution\": 500,\n\t\"centralMeridian\": 32.8,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0,\n\t\"MaxPoints\": 1000,\n\t\"IsProfile\": false,\n\t\"Refractivity\": 300.0,\n\t\"Conductivity\": 0.03,\n\t\"Permittivity\": 15.0,\n\t\"Humidity\": 1.0,\n\t\"Fidelity\": 1,\n\t\"requests\": [\n\t\t{\n\t\t\t\"TxLongitude\": 35.2,\n\t\t\t\"TxLatitude\": 33.2,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLongitude\": 35.4,\n\t\t\t\"RxLatitude\": 33.3,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t},        \n\t\t{\n            \"Loss\": 0,\n\t\t\t\"TxLongitude\": 35.0,\n\t\t\t\"TxLatitude\": 33.0,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLongitude\": 35.10,\n\t\t\t\"RxLatitude\": 33.10,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t},\n\t\t{\n            \"Loss\": 0,\n\t\t\t\"TxLongitude\": 35.0,\n\t\t\t\"TxLatitude\": 33.0,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3000.0,\n\t\t\t\"RxLongitude\": 35.20,\n\t\t\t\"RxLatitude\": 33.20,\n\t\t\t\"RxHeight\": 15.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 0\n\t\t}\n\t]\n}"
+							"raw": "{\n    \"backend\": \"z_rest\",\n    \"ext_url\": \"http://localhost:5050/api/1.0/PathlossTable\",\n\t\"accessToken\": \"token\",\n\t\"priority\": 0,\n\t\"resolution\": 500,\n\t\"centralMeridian\": 32.8,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0,\n\t\"MaxPoints\": 1000,\n\t\"IsProfile\": false,\n\t\"Refractivity\": 300.0,\n\t\"Conductivity\": 0.03,\n\t\"Permittivity\": 15.0,\n\t\"Humidity\": 1.0,\n\t\"Fidelity\": 1,\n\t\"requests\": [\n\t\t{\n\t\t\t\"TxLongitude\": 35.2,\n\t\t\t\"TxLatitude\": 33.2,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLongitude\": 35.4,\n\t\t\t\"RxLatitude\": 33.3,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t},        \n\t\t{\n            \"Loss\": 0,\n\t\t\t\"TxLongitude\": 35.0,\n\t\t\t\"TxLatitude\": 33.0,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3500.0,\n\t\t\t\"RxLongitude\": 35.10,\n\t\t\t\"RxLatitude\": 33.10,\n\t\t\t\"RxHeight\": 5.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 1\n\t\t},\n\t\t{\n            \"Loss\": 0,\n\t\t\t\"TxLongitude\": 35.0,\n\t\t\t\"TxLatitude\": 33.0,\n\t\t\t\"TxHeight\": 5.0,\n\t\t\t\"IsTxHeightAboveTerrain\": true,\n\t\t\t\"TxFrequency\": 3000.0,\n\t\t\t\"RxLongitude\": 35.20,\n\t\t\t\"RxLatitude\": 33.20,\n\t\t\t\"RxHeight\": 15.0,\n\t\t\t\"IsRxHeightAboveTerrain\": true,\n\t\t\t\"Polarization\": 0\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{talos_api1}}/Points2PLoss",
@@ -1054,66 +1086,6 @@
 							],
 							"path": [
 								"Points2PLoss"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PathlossTable 1",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"kFactor\": 1.3333333333333333,\n\t\"samplingInterval\": 500.0,\n\t\"originPointWKTGeoWGS84\": \"POINT(35.2, 33.2)\",\n\t\"isfeet1\": false,\n\t\"fernelOrder\": 0,\n\t\"originAntHeight\": 5.0,\n\t\"destPointsRows\": [\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.4, 33.3)\",\n\t\t\t\"destAntHeight\": 5.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3500.0,\n\t\t\t\"polarizationDeg\": 0,\n\t\t\t\"rowId\": 1\n\t\t}\n\t]\n}"
-						},
-						"url": {
-							"raw": "{{talos_api1}}/PathlossTable",
-							"host": [
-								"{{talos_api1}}"
-							],
-							"path": [
-								"PathlossTable"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PathlossTable 2",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"kFactor\": 1.3333333333333333,\n\t\"samplingInterval\": 500.0,\n\t\"originPointWKTGeoWGS84\": \"POINT(35.0, 33.0)\",\n\t\"isfeet1\": false,\n\t\"fernelOrder\": 0,\n\t\"originAntHeight\": 5.0,\n\t\"destPointsRows\": [\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.1, 33.1)\",\n\t\t\t\"destAntHeight\": 5.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3500.0,\n\t\t\t\"polarizationDeg\": 0,\n\t\t\t\"rowId\": 1\n\t\t},\n\t\t{\n\t\t\t\"destPointWKTGeoWGS84\": \"POINT(35.2, 33.2)\",\n\t\t\t\"destAntHeight\": 15.0,\n\t\t\t\"isfeet\": false,\n\t\t\t\"frequencyMhz\": 3000.0,\n\t\t\t\"polarizationDeg\": 90,\n\t\t\t\"rowId\": 2\n\t\t}\n\t]\n}"
-						},
-						"url": {
-							"raw": "{{talos_api1}}/PathlossTable",
-							"host": [
-								"{{talos_api1}}"
-							],
-							"path": [
-								"PathlossTable"
 							]
 						}
 					},
@@ -1235,7 +1207,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"priority\": 1,\n\t\"resolution\": 100,\n\t\"obsPos\": {\n\t\t\"lon\": 34.75,\n\t\t\"lat\": 30.85,\n\t\t\"alt\": 10,\n\t\t\"aot\": true\n\t},\n\t\"obsEqp\": {\n\t\t\"maxRange\": 3000,\n\t\t\"minRange\": 0,\n\t\t\"startAz\": 0,\n\t\t\"endAz\": 90,\n\t\t\"startEl\": -45,\n\t\t\"endEl\": 45\n\t},\n\t\"tgtAlt\": {\n\t\t\"alt\": 10,\n\t\t\"aot\": true\n\t},\n\t\"aoi\": [\n\t\t{\n\t\t\t\"lon\": 34.7385,\n\t\t\t\"lat\": 30.8493\n\t\t},\n\t\t{\n\t\t\t\"lon\": 34.7602,\n\t\t\t\"lat\": 30.8765\n\t\t},\n\t\t{\n\t\t\t\"lon\": 34.7711,\n\t\t\t\"lat\": 30.8471\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"priority\": 1,\n    \"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n    \"threads\": 1,\n\t\"resolution\": 30,\n\t\"obsPos\": {\n\t\t\"lon\": 34.75,\n\t\t\"lat\": 30.85,\n\t\t\"alt\": 10,\n\t\t\"aot\": true\n\t},\n\t\"obsEqp\": {\n\t\t\"maxRange\": 3000,\n\t\t\"minRange\": 0,\n\t\t\"startAz\": 0,\n\t\t\"endAz\": 90,\n\t\t\"startEl\": -45,\n\t\t\"endEl\": 45\n\t},\n\t\"tgtAlt\": {\n\t\t\"alt\": 10,\n\t\t\"aot\": true\n\t},\n\t\"aoi\": [\n\t\t{\n\t\t\t\"lon\": 34.7385,\n\t\t\t\"lat\": 30.8493\n\t\t},\n\t\t{\n\t\t\t\"lon\": 34.7602,\n\t\t\t\"lat\": 30.8765\n\t\t},\n\t\t{\n\t\t\t\"lon\": 34.7711,\n\t\t\t\"lat\": 30.8471\n\t\t}\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{talos_api1}}/Visibility",
