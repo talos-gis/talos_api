@@ -3,14 +3,28 @@ from typing import Dict, Any
 from gdalos.talos.geom_util import direction_and_aperture_from_az
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
+from shapely.geometry import Polygon, mapping
 
-def pre_request_visibility(d: Dict[str, Any]):
-    d['inputs'] = pre_request_visibility_inputs(d['inputs'])
+# workaround ValueError: GEOSGeom_createLineString_r returned a NULL pointer
+# https://stackoverflow.com/questions/62075847/using-qgis-and-shaply-error-geosgeom-createlinearring-r-returned-a-null-pointer
+from shapely import speedups
+speedups.disable()
+
+
+def pre_request_visibility(d: Dict[str, Any], **kwargs):
+    d['inputs'] = pre_request_visibility_inputs(d['inputs'], **kwargs)
     d['outputs'] = 'output'
     return d
 
 
-def pre_request_visibility_inputs(inputs: Dict[str, Any]):
+def aoi_to_shapely(in_poly: list) -> Polygon:
+    if in_poly[0] != in_poly[len(in_poly) - 1]:
+        in_poly.append(in_poly[0])
+    poly = Polygon([[p['lon'], p['lat']] for p in in_poly])
+    return poly
+
+
+def pre_request_visibility_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
 
     # convert main section keys
@@ -50,13 +64,22 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any]):
 
     aoi = inputs['aoi']
 
+    poly = aoi_to_shapely(aoi)
+    inputs['cutline'] = {"type": "complex", "mimeType": 'application/geo+json', "data": mapping(poly)}
+
     inputs['color_palette'] = {
         "type": "reference",
         "href": "file:./static/data/color_files/viewshed/viewshed.txt"
     }
 
     if 'of' not in inputs:
-        inputs['of'] = 'czml'
+        of = 'czml'
+        if 'http_request' in kwargs:
+            http_request = kwargs['http_request']
+            best = http_request.accept_mimetypes.best
+            if 'tif' in best:
+                of = 'tif'
+        inputs['of'] = of
 
     # the following keys are redundant
     unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'obspos', 'obseqp', 'tgtalt', 'aoi']
@@ -67,7 +90,7 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any]):
     return inputs
 
 
-def pre_response_visibility(response: Dict[str, Any]):
+def pre_response_visibility(response: Dict[str, Any], **kwargs):
     return response
 
 

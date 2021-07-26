@@ -8,13 +8,13 @@ from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists
     pre_request_transform
 
 
-def pre_request_multi_loss(d: Dict[str, Any]):
-    d['inputs'] = pre_request_multi_loss_inputs(d['inputs'])
+def pre_request_multi_loss(d: Dict[str, Any], **kwargs):
+    d['inputs'] = pre_request_multi_loss_inputs(d['inputs'], **kwargs)
     d['outputs'] = 'output'
     return d
 
 
-def pre_request_multi_loss_inputs(inputs: Dict[str, Any]):
+def pre_request_multi_loss_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
 
     # convert main section keys
@@ -89,7 +89,7 @@ def pre_request_multi_loss_inputs(inputs: Dict[str, Any]):
     return inputs
 
 
-def pre_response_multi_loss(response: Dict[str, Any]):
+def pre_response_multi_loss(response: Dict[str, Any], **kwargs):
     # output = response['output']
     # data = output.data
     # new_data = {

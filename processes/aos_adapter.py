@@ -6,13 +6,13 @@ from gdalos.viewshed.viewshed_params import atmospheric_refraction_coeff, rf_ref
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 
-def pre_request_aos(d: Dict[str, Any]):
-    d['inputs'] = pre_request_aos_inputs(d['inputs'])
+def pre_request_aos(d: Dict[str, Any], **kwargs):
+    d['inputs'] = pre_request_aos_inputs(d['inputs'], **kwargs)
     d['outputs'] = 'output'
     return d
 
 
-def pre_request_aos_inputs(inputs: Dict[str, Any]):
+def pre_request_aos_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
 
     # convert main section keys
@@ -74,7 +74,7 @@ def pre_request_aos_inputs(inputs: Dict[str, Any]):
     return inputs
 
 
-def pre_response_aos(response: Dict[str, Any]):
+def pre_response_aos(response: Dict[str, Any], **kwargs):
     output = response['output']
     width = int(response['comment'].data)
     data = output.data

@@ -1,7 +1,7 @@
 Werkzeug
 Flask
 Jinja2
-pywps>=4.4.99
+pywps==4.4.101
 
 jsonschema
 lxml

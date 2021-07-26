@@ -3,13 +3,13 @@ from typing import Dict, Any
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 
-def pre_request_elevation_point(d: Dict[str, Any]):
-    d['inputs'] = pre_request_elevation_point_inputs(d['inputs'])
+def pre_request_elevation_point(d: Dict[str, Any], **kwargs):
+    d['inputs'] = pre_request_elevation_point_inputs(d['inputs'], **kwargs)
     d['outputs'] = 'output'
     return d
 
 
-def pre_request_elevation_point_inputs(inputs: Dict[str, Any]):
+def pre_request_elevation_point_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
     requests = inputs['points']
     requests = list_of_dict_to_dict_of_lists(requests)
@@ -36,7 +36,7 @@ def pre_request_elevation_point_inputs(inputs: Dict[str, Any]):
     return inputs
 
 
-def pre_response_elevation_point(response: Dict[str, Any]):
+def pre_response_elevation_point(response: Dict[str, Any], **kwargs):
     xx = response['x'].data
     yy = response['y'].data
     zz = response['output'].data[0]

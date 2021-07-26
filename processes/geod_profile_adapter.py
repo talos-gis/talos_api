@@ -3,13 +3,13 @@ from typing import Dict, Any
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 
-def pre_request_profile(d: Dict[str, Any]):
-    d['inputs'] = pre_request_profile_inputs(d['inputs'])
+def pre_request_profile(d: Dict[str, Any], **kwargs):
+    d['inputs'] = pre_request_profile_inputs(d['inputs'], **kwargs)
     d['outputs'] = 'output'
     return d
 
 
-def pre_request_profile_inputs(inputs: Dict[str, Any]):
+def pre_request_profile_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
     lines = inputs['line']
     lines = list_of_dict_to_dict_of_lists(lines)
@@ -43,7 +43,7 @@ def pre_request_profile_inputs(inputs: Dict[str, Any]):
     return inputs
 
 
-def pre_response_profile(response: Dict[str, Any]):
+def pre_response_profile(response: Dict[str, Any], **kwargs):
     xxx = response['x'].data
     yyy = response['y'].data
     zzz = response['output'].data[0]
