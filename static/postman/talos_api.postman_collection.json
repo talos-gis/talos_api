@@ -35,10 +35,16 @@
 					"name": "hello world post xml json",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>say_hello</ows:Identifier>\n\n    <wps:ResponseForm>\n        <wps:RawDataOutput>\n          <ows:Identifier>output</ows:Identifier>\n        </wps:RawDataOutput>\n    </wps:ResponseForm>\n\n    <wps:DataInputs>\n        <wps:Input>\n            <ows:Identifier>name</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>Idan</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\t</wps:DataInputs>\n    \n</wps:Execute>\n",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<wps:Execute service=\"WPS\" version=\"1.0.0\" xmlns:wps=\"http://www.opengis.net/wps/1.0.0\" xmlns:ows=\"http://www.opengis.net/ows/1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wps/1.0.0 ../wpsExecute_request.xsd\">\n\t<ows:Identifier>say_hello</ows:Identifier>\n\n    <wps:DataInputs>\n        <wps:Input>\n            <ows:Identifier>name</ows:Identifier>\n            <wps:Data>\n                <wps:LiteralData>Idan</wps:LiteralData>\n            </wps:Data>\n        </wps:Input>\n\t</wps:DataInputs>\n    \n</wps:Execute>\n",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -528,6 +534,29 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"threads\": 1,\n\t\t\"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n\t\t\"of\": \"tif\",\n\t\t\"ox\": 34.75,\n\t\t\"oy\": 30.85,\n\t\t\"oz\": 10,\n\t\t\"tz\": 10,\n\t\t\"omsl\": false,\n\t\t\"tmsl\": false,\n\t\t\"max_r\": 3000,\n\t\t\"h_aperture\": 90,\n\t\t\"azimuth\": 45,\n\t\t\"v_aperture\": 90,\n\t\t\"elevation\": 0,\n\t\t\"color_palette\": {\n\t\t\t\"type\": \"reference\",\n\t\t\t\"href\": \"file:./static/data/color_files/viewshed/viewshed.txt\"\n\t\t},\n\t\t\"cutline\": {\n            \"type\": \"complex\",\n\t\t\t\"data\": {\n\t\t\t\t\"type\": \"FeatureCollection\",\n\t\t\t\t\"name\": \"boker_small\",\n\t\t\t\t\"features\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"type\": \"Feature\",\n\t\t\t\t\t\t\"properties\": {\n\t\t\t\t\t\t\t\"fid\": \"boker_small.0\",\n\t\t\t\t\t\t\t\"id\": null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"geometry\": {\n\t\t\t\t\t\t\t\"type\": \"Polygon\",\n\t\t\t\t\t\t\t\"coordinates\": [\n\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7362962841255,\n\t\t\t\t\t\t\t\t\t\t30.8680831681697\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7491785691475,\n\t\t\t\t\t\t\t\t\t\t30.8950968464391\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7590722435378,\n\t\t\t\t\t\t\t\t\t\t30.8688212606708\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7838986868885,\n\t\t\t\t\t\t\t\t\t\t30.8566306973987\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7572117347723,\n\t\t\t\t\t\t\t\t\t\t30.8480495047654\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7662270596898,\n\t\t\t\t\t\t\t\t\t\t30.825619383215\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7403982755041,\n\t\t\t\t\t\t\t\t\t\t30.8416540562687\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.733370763062,\n\t\t\t\t\t\t\t\t\t\t30.8252499617118\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7079026880956,\n\t\t\t\t\t\t\t\t\t\t30.8619545725602\n\t\t\t\t\t\t\t\t\t],\n\t\t\t\t\t\t\t\t\t[\n\t\t\t\t\t\t\t\t\t\t34.7362962841255,\n\t\t\t\t\t\t\t\t\t\t30.8680831681697\n\t\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t\t]\n\t\t\t\t\t\t\t]\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t}\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viewshed count_z json",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"viewshed\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n        \"threads\": 1,\n\t\t\"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n\t\t\"of\": \"tif\",\n\t\t\"ox\": [34.75, 34.76, 34.77],\n\t\t\"oy\": [30.85, 30.86, 30.87],\n\t\t\"oz\": 10,\n\t\t\"tz\": 10,\n\t\t\"omsl\": false,\n\t\t\"tmsl\": false,\n\t\t\"max_r\": 3000,\n\t\t\"color_palette\": {\n\t\t\t\"type\": \"reference\",\n\t\t\t\"href\": \"file:./static/data/color_files/viewshed/count.txt\"\n\t\t},\n        \"_vps\": 2,\n        \"o\": \"count_z\"\n\t}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
