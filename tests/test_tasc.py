@@ -143,9 +143,11 @@ def test_talos():
             },
             response=[{'FreeSpaceLoss': 175.97238159179688,
                        'Loss': 372.2876892089844,
+                       'los': False,
                        'QueryType': 18},
                       {'FreeSpaceLoss': 175.97256469726562,
                        'Loss': 372.28607177734375,
+                       'los': False,
                        'QueryType': 18}
                       ]
         ),
