@@ -3,7 +3,10 @@ from typing import Dict, Any
 import numpy as np
 
 from gdalos.viewshed.viewshed_params import atmospheric_refraction_coeff, rf_refraction_coeff
+from processes.ros_adapter import ROS_DEFAULT_MAX_RANGE
 from .pre_processors_utils import lower_case_keys, pre_request_transform
+
+AOS_DEFAULT_MAX_RANGE = ROS_DEFAULT_MAX_RANGE
 
 
 def pre_request_aos(d: Dict[str, Any], **kwargs):
@@ -54,6 +57,8 @@ def pre_request_aos_inputs(inputs: Dict[str, Any], **kwargs):
     inputs['comment'] = len(x)
     inputs['azimuth'] = xv.flatten().tolist()
     inputs['elevation'] = yv.flatten().tolist()
+
+    inputs.setdefault('max_r', AOS_DEFAULT_MAX_RANGE)
 
     is_refraction = inputs.get('isuserefraction', False)
 
