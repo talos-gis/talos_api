@@ -19,6 +19,7 @@ class LOS(Process):
             iog.io_crs(defaults) + \
             iog.raster_input(defaults) + \
             iog.raster2_input(defaults) + \
+            iog.of_pointcloud(defaults) + \
             iog.central_meridian_input(defaults) + \
             iog.observer(defaults, xy=True, z=True, msl=True) + \
             iog.fwd_calc(defaults) + \
@@ -71,9 +72,10 @@ class LOS(Process):
         operation, operation_hidendv = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
         ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
+        of = str(process_helper.get_request_data(request.inputs, 'of')).lower()
         results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
-            output_filename=None, of=None,
+            output_filename=None, of=of,
             vp=vp_arrays_dict, del_s=del_s,
             in_coords_srs=in_coords_srs, out_crs=out_crs,
             operation=operation, color_palette=color_palette, ext_url=ext_url, mock=mock)
