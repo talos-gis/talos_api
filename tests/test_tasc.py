@@ -52,10 +52,13 @@ def test_talos():
     exp_alts = np.array([56, 181, 278, 1767, 495])
     pt = list(zip(exp_lons, exp_lats, exp_alts))
 
+    srtm_30k_global = './static/data/maps/srtm_30k_global.tif'
+
     tests: List[TalosTest] = [
         TalosTest(
             url=f'{env.tasc_api1}/ElevationPoint',
             request={
+                "r": srtm_30k_global,
                 "accessToken": "token",
                 "points": [
                     {"lon": lon1, "lat": lat1},
@@ -77,6 +80,7 @@ def test_talos():
         ProfileTest(
             url=f'{env.tasc_api1}/Profile',
             request={
+                "r": srtm_30k_global,
                 "accessToken": "token",
                 "priority": 1,
                 "resolution": res_m,
@@ -100,6 +104,7 @@ def test_talos():
         TalosTest(
             url=f'{env.tasc_api1}/Points2PLoss',
             request={
+                "r": srtm_30k_global,
                 "accessToken": "token",
                 "priority": 0,
                 "resolution": del_s,
