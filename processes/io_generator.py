@@ -27,10 +27,11 @@ dmm = dict(data_type='float', uoms=[UOM('degree')], **mm)
 
 
 def io_crs(defaults):
+    # default CRS='0' means EPSG:4326. use None or '' to indicate usage of the CRS of the input/output
     return [
-        LiteralInputD(defaults, 'out_crs', 'output raster crs', data_type='string', default=None, min_occurs=0,
+        LiteralInputD(defaults, 'out_crs', 'output raster crs', data_type='string', default='0', min_occurs=0,
                       max_occurs=1),
-        LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default=None, min_occurs=0,
+        LiteralInputD(defaults, 'in_crs', 'observer input crs', data_type='string', default='0', min_occurs=0,
                       max_occurs=1),
     ]
 
@@ -81,7 +82,7 @@ def raster_input(defaults):
 def raster2_input(defaults):
     return [
         LiteralInputD(defaults, 'r2', 'input raster alternative',
-                      data_type='string', min_occurs=1, max_occurs=1),
+                      data_type='string', min_occurs=0, max_occurs=1),
     ]
 
 
