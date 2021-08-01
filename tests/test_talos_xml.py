@@ -49,6 +49,7 @@ def test_talos():
     czml_request_response = [
         'crop_color',
         'viewshed_cutline_ap',
+        'viewshed_calc_target_z',
     ]
     tests: List[TalosTest] = [
         CzmlTest(
