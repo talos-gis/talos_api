@@ -6,7 +6,7 @@ from numpy.testing import assert_almost_equal
 from app import app
 
 
-def test_talos():
+def test_tasc():
     env = SimpleNamespace()
     env.talos = 'http://localhost:5000'
     env.tasc = env.talos
