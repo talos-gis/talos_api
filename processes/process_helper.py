@@ -75,12 +75,9 @@ def get_ovr(request_inputs, filename_or_ds: PathOrDS):
 
 def get_color_palette_from_request(request_inputs, name='color_palette'):
     pal = get_request_data(request_inputs, name, True)
-    if pal is None:
-        return None
-    else:
+    if pal is not None:
         pal = ColorPalette.from_string_list(pal)
-        pal.set_ndv(0)
-        return pal
+    return pal
 
 
 def get_operation(request_inputs, name='o', name_hide='o_hide'):
