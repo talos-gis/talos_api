@@ -1,6 +1,7 @@
 from typing import Dict, Any
 
 from gdalos.talos.geom_util import direction_and_aperture_from_az
+from processes.adapter_util import get_format
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 from shapely.geometry import Polygon, mapping
@@ -73,13 +74,7 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any], **kwargs):
     }
 
     if 'of' not in inputs:
-        of = 'czml'
-        if 'http_request' in kwargs:
-            http_request = kwargs['http_request']
-            best = http_request.accept_mimetypes.best
-            if 'tif' in best:
-                of = 'tif'
-        inputs['of'] = of
+        inputs['of'] = get_format(['czml', 'tif'], **kwargs)
 
     # the following keys are redundant
     unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'obspos', 'obseqp', 'tgtalt', 'aoi']

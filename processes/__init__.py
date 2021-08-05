@@ -1,4 +1,4 @@
-from .multi_loss_adapter import pre_request_multi_loss, pre_response_multi_loss
+from .multi_los_adapter import pre_request_multi_los, pre_response_multi_los
 from .sayhello import SayHello
 from .ultimate_question import UltimateQuestion
 from .sleep import Sleep
@@ -64,10 +64,13 @@ preprocessosrs = {
     'Visibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'ExtendedVisibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'ros': ('los', pre_request_ros, pre_response_ros),
+    'ROS': ('los', pre_request_ros, pre_response_ros),
     'aos': ('los', pre_request_aos, pre_response_aos),
+    'AOS': ('los', pre_request_aos, pre_response_aos),
     'Points2PLoss': ('los', pre_request_p2p_loss, pre_response_p2p_loss),
     'PathlossTable': ('los', pre_request_plt_loss, pre_response_plt_loss),
-    'MultiLos': ('los', pre_request_multi_loss, pre_response_multi_loss),
+    'LOS': ('los', pre_request_multi_los, pre_response_multi_los),
+    'MultiLos': ('los', pre_request_multi_los, pre_response_multi_los),
     'ElevationPoint': ('ras_val', pre_request_elevation_point, pre_response_elevation_point),
     'Profile': ('geod_profile', pre_request_profile, pre_response_profile),
 }
