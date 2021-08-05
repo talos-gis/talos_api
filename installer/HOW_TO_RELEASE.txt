@@ -11,5 +11,4 @@ call pack-4-wheels_replace.bat
 :: online
 call install-3-wheels.bat online
 
-call install-4-config.bat
 run iss-installer.iss
