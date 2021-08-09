@@ -83,7 +83,8 @@ def pre_request_multi_los_inputs(inputs: Dict[str, Any], **kwargs):
             del inputs[k]
 
     inputs['ot_fill'] = 'product'
-    inputs['mode'] = ['LOSVisRes'] if inputs['of'] == 'czml' else ['LOSObsX', 'LOSObsY', 'LOSObsZ']
+    inputs['mode'] = ['LOSVisRes'] if inputs['of'] == 'czml' else \
+        ['oz_abs', 'tz_abs', 'bx', 'by', 'bz']
     inputs.setdefault('backend', 'talos')
 
     return inputs
@@ -104,8 +105,8 @@ def pre_response_multi_los(response: Dict[str, Any], **kwargs):
                                 oy
                             ],
                             [
-                                obsx,
-                                obsy
+                                bx,
+                                by
                             ]
                         ],
                         "type": "LineString"
@@ -113,7 +114,7 @@ def pre_response_multi_los(response: Dict[str, Any], **kwargs):
                     "properties": {
                         "height": [
                             oz,
-                            obsz
+                            bz
                         ],
                         "Visible": True
                     },
@@ -123,8 +124,8 @@ def pre_response_multi_los(response: Dict[str, Any], **kwargs):
                     "geometry": {
                         "coordinates": [
                             [
-                                obsx,
-                                obsy
+                                bx,
+                                by
                             ],
                             [
                                 tx,
@@ -135,7 +136,7 @@ def pre_response_multi_los(response: Dict[str, Any], **kwargs):
                     },
                     "properties": {
                         "height": [
-                            obsz,
+                            bz,
                             tz
                         ],
                         "Visible": False
@@ -144,9 +145,11 @@ def pre_response_multi_los(response: Dict[str, Any], **kwargs):
                 }
             ],
             "type": "FeatureCollection"
-        } for ox, oy, oz, tx, ty, tz, obsx, obsy, obsz in zip(data['ox'], data['oy'], data['oz'],
-                                                              data['tx'], data['ty'], data['tz'],
-                                                              data['LOSObsX'], data['LOSObsY'], data['LOSObsZ'])]
+        } for ox, oy, oz,
+              tx, ty, tz,
+              bx, by, bz in zip(data['ox'], data['oy'], data['oz_abs'],
+                                data['tx'], data['ty'], data['tz_abs'],
+                                data['bx'], data['by'], data['bz'])]
         if len(new_data) == 1:
             new_data = new_data[0]
         output.data = new_data
