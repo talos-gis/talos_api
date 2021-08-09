@@ -134,8 +134,8 @@ echo look for: How create a handler mapping for an ASP.NET handler in an IIS 7 a
 echo Or follow the following instructions:
 echo ======================================
 echo Open IIS (Start - IIS)
-echo Select the site %SITE_NAME% from the left name and open the “Handler Mappings” feature from the middle pane.
-echo Click on “Add Module Mapping” from the right pane
+echo Select the site %SITE_NAME% from the left name and open the "Handler Mappings" feature from the middle pane.
+echo Click on "Add Module Mapping" from the right pane
 echo * Request Path: "*"
 echo * Type: "FastCgiModule"
 echo * Executable: "%PYTHON_EXE%|%WFCGI_FILE%"
