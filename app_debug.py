@@ -28,16 +28,23 @@ import sys
 import os
 
 
-my_modules = [
+my_modules_paths = [
     r'D:\dev\gis\gdal\gdal\swig\python\gdal-utils',
     r'D:\dev\gis\pywps',
     r'D:\dev\gis\gdalos\src',
     r'D:\dev\gis\TaLoS\1\p\talos\src',
     r'D:\dev\gis\tirem_api\src',
 ]
-for m in my_modules:
+for m in my_modules_paths:
     print(f'adding {m} to path')
     sys.path.insert(0, m)
+
+my_modules_paths = ['osgeo_utils', 'gdalos', 'pywps', 'talosgis', 'tirem', 'rfmodel']
+from importlib import import_module
+for m in my_modules_paths:
+    mm = import_module(m)
+    print(f'{m}: {mm.__version__}')
+    del mm
 
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
