@@ -14,9 +14,11 @@ def get_request_data(request_input, name, get_file: bool = False, index=0):
     if name not in request_input:
         return None
     result = request_input[name][index]
+    if result.data is None:
+        return None
     result = result.file if get_file else result.data
     if result == 'None':
-        result = None  # todo: is this a bug?
+        return None  # todo: is this a bug?
     return result
 
 

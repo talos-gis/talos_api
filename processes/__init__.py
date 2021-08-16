@@ -13,7 +13,7 @@ from .info import GetInfo
 from .ls import ls
 from .invert import Invert
 from .trans import Trans
-from .visibility_adapter import pre_request_visibility, pre_response_visibility
+from .visibility_adapter import pre_request_visibility, pre_response_visibility, pre_request_fos, pre_response_fos
 from .xyz import XYZ
 from .crop_color import GdalDem
 from .ras_val import RasterValue
@@ -63,6 +63,8 @@ processes = [
 preprocessosrs = {
     'Visibility': ('viewshed', pre_request_visibility, pre_response_visibility),
     'ExtendedVisibility': ('viewshed', pre_request_visibility, pre_response_visibility),
+    'fos': ('viewshed', pre_request_fos, pre_response_fos),
+    'FOS': ('viewshed', pre_request_fos, pre_response_fos),
     'ros': ('los', pre_request_ros, pre_response_ros),
     'ROS': ('los', pre_request_ros, pre_response_ros),
     'aos': ('los', pre_request_aos, pre_response_aos),

@@ -2,8 +2,8 @@ from typing import Dict, Any
 
 import numpy as np
 
-from gdalos.viewshed.viewshed_params import atmospheric_refraction_coeff, rf_refraction_coeff
 from processes.ros_adapter import ROS_DEFAULT_MAX_RANGE
+from processes.tasc_adapter import get_tasc_refraction
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 AOS_DEFAULT_MAX_RANGE = ROS_DEFAULT_MAX_RANGE
@@ -60,7 +60,7 @@ def pre_request_aos_inputs(inputs: Dict[str, Any], **kwargs):
 
     inputs.setdefault('max_r', AOS_DEFAULT_MAX_RANGE)
 
-    is_refraction = inputs.get('isuserefraction', False)
+    inputs['refraction_coeff'] = get_tasc_refraction(inputs)
 
     # the following keys are redundant
     unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'dtmonly',
@@ -71,7 +71,6 @@ def pre_request_aos_inputs(inputs: Dict[str, Any], **kwargs):
 
     # these are the outputs we want to create
     # max_r = inputs.get('MaxRange', None)
-    inputs['refraction_coeff'] = atmospheric_refraction_coeff if not is_refraction else rf_refraction_coeff
     inputs['fwd'] = True
     inputs.setdefault('omsl', True)
     inputs['mode'] = ['LOSRange']

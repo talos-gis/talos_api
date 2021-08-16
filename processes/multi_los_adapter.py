@@ -30,15 +30,16 @@ def pre_request_multi_los_inputs(inputs: Dict[str, Any], **kwargs):
     tar = inputs['to']
 
     formats = ['json', 'czml']
+    default_format = 'json'
     colors = inputs.get('colors')
     if colors:
-        formats = list(reversed(formats))
+        default_format = 'czml'
         cp = ColorPalette()
         read_color_palette_dict(cp, colors)
         inputs['color_palette'] = cp.to_mem_buffer()
 
     if 'of' not in inputs:
-        inputs['of'] = get_format(formats, **kwargs)
+        inputs['of'] = get_format(formats, default=default_format **kwargs)
 
     if isinstance(obs, Sequence):
         inputs['comment'] = len(obs)

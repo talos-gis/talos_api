@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from gdalos.viewshed.viewshed_params import rf_refraction_coeff, atmospheric_refraction_coeff
+from processes.tasc_adapter import get_tasc_refraction
 from .pre_processors_utils import lower_case_keys, list_of_dict_to_dict_of_lists, pre_request_transform
 
 ROS_DEFAULT_MAX_RANGE = 150000
@@ -53,7 +53,7 @@ def pre_request_ros_inputs(inputs: Dict[str, Any], **kwargs):
             k = key_conv[k]
             inputs[k] = v
 
-    is_refraction = inputs.get('isuserefraction', False)
+    inputs['refraction_coeff'] = get_tasc_refraction(inputs)
 
     # the following keys are redundant
     unused_keys = ['requests', 'accesstoken', 'priority', 'timeout', 'dtmonly',
@@ -63,7 +63,6 @@ def pre_request_ros_inputs(inputs: Dict[str, Any], **kwargs):
             del inputs[k]
 
     # these are the outputs we want to create
-    inputs['refraction_coeff'] = atmospheric_refraction_coeff if not is_refraction else rf_refraction_coeff
     inputs['fwd'] = True
     inputs.setdefault('omsl', True)
     inputs['mode'] = ['LOSRange']

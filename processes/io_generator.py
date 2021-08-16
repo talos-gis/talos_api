@@ -112,6 +112,12 @@ def threads(defaults):
     ]
 
 
+def return_dtm(defaults):
+    return [
+        LiteralInputD(defaults, 'return_dtm', 'return also dtm band', data_type='boolean',
+                      default=False, **mm0)
+    ]
+
 def fwd_calc(defaults):
     return [
         LiteralInputD(defaults, 'fwd', 'is forward geodesic calculation yes/no/auto',
@@ -389,8 +395,8 @@ def output_value(names):
 
 def output_output(is_output_raster, name='output'):
     return [
-        ComplexOutput(name, 'calculation result',
-                      supported_formats=[FORMATS.GEOTIFF, czml_format] if is_output_raster else [FORMATS.TEXT]),
+        ComplexOutput(name, f'calculation result {name}',
+                      supported_formats=[FORMATS.GEOTIFF, FORMATS.JSON, FORMATS.GEOJSON, czml_format] if is_output_raster else [FORMATS.TEXT]),
     ]
 
 

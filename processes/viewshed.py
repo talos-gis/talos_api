@@ -1,5 +1,7 @@
 import tempfile
 
+from pywps.inout import formats
+
 import processes.io_generator as iog
 from backend.formats import czml_format
 from gdalos.gdalos_color import ColorPalette
@@ -44,9 +46,11 @@ class Viewshed(Process):
             iog.resolution_output(defaults) + \
             iog.threads(defaults) + \
             iog.radio(defaults) + \
+            iog.return_dtm(defaults) + \
             iog.fake_raster(defaults)
 
-        outputs = iog.output_r() + iog.output_output(is_output_raster=True)
+        outputs = iog.output_r() + \
+                  iog.output_output(is_output_raster=True)
 
         super().__init__(
             self._handler,
@@ -68,6 +72,7 @@ class Viewshed(Process):
             of = 'gtiff'
         ext = gdalos_util.get_ext_by_of(of)
         is_czml = ext == '.czml'
+        is_json = ext == '.json'
 
         extent = process_helper.get_request_data(request.inputs, 'extent')
         if extent is not None:
@@ -85,7 +90,7 @@ class Viewshed(Process):
             raise Exception('color_palette is required for czml output')
         discrete_mode = process_helper.get_request_data(request.inputs, 'discrete_mode')
 
-        output_filename = tempfile.mktemp(suffix=ext)
+        output_filename = None if is_json else tempfile.mktemp(suffix=ext)
 
         co = None
         files = []
@@ -106,16 +111,22 @@ class Viewshed(Process):
 
         vp_slice = process_helper.get_request_data(request.inputs, 'vps')
 
-        viewshed_calc(input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
-                      output_filename=output_filename, co=co, of=of,
-                      vp_array=vp_arrays_dict, extent=extent, cutline=cutline,
-                      operation=operation, operation_hidendv=operation_hidendv,
-                      in_coords_srs=in_coords_srs, out_crs=out_crs,
-                      color_palette=color_palette, discrete_mode=discrete_mode,
-                      files=files, vp_slice=vp_slice, threads=threads)
+        data = viewshed_calc(
+            input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
+            output_filename=output_filename, co=co, of=of,
+            vp_array=vp_arrays_dict, extent=extent, cutline=cutline,
+            operation=operation, operation_hidendv=operation_hidendv,
+            in_coords_srs=in_coords_srs, out_crs=out_crs,
+            color_palette=color_palette, discrete_mode=discrete_mode,
+            files=files, vp_slice=vp_slice, threads=threads)
 
         response.outputs['r'].data = raster_filename
-        response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF
-        response.outputs['output'].file = output_filename
+
+        data_format = FORMATS.JSON if is_json else czml_format if is_czml else FORMATS.GEOTIFF
+        response.outputs['output'].data_format = data_format
+        if is_json:
+            response.outputs['output'].data = data
+        else:
+            response.outputs['output'].file = output_filename
 
         return response
