@@ -101,11 +101,11 @@ class GdalDem(Process):
                 process_palette=process_palette,
                 output_format=gdal_out_format)
 
-            response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF
+            response.outputs['output'].data_format = czml_format if is_czml else FORMATS.GEOTIFF
             response.outputs['output'].file = output_filename
 
-            response.outputs['tif'].output_format = FORMATS.GEOTIFF
-            response.outputs['czml'].output_format = czml_format
+            response.outputs['tif'].data_format = FORMATS.GEOTIFF
+            response.outputs['czml'].data_format = czml_format
             if output_tif:
                 response.outputs['tif'].file = tif_output_filename
             if output_czml:

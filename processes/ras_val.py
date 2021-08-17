@@ -60,13 +60,13 @@ class RasterValue(Process):
 
         response.outputs['r'].data = raster_filename
 
-        response.outputs['x'].output_format = FORMATS.JSON
+        response.outputs['x'].data_format = FORMATS.JSON
         response.outputs['x'].data = x
 
-        response.outputs['y'].output_format = FORMATS.JSON
+        response.outputs['y'].data_format = FORMATS.JSON
         response.outputs['y'].data = y
 
-        response.outputs['output'].output_format = FORMATS.JSON
+        response.outputs['output'].data_format = FORMATS.JSON
         response.outputs['output'].data = output.tolist()
 
         return response

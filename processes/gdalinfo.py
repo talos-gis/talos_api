@@ -43,7 +43,7 @@ class GdalInfo(Process):
         gdalinfo_path = osgeo_path / "gdalinfo"
         output = subprocess.Popen([gdalinfo_path, *p], stdout=subprocess.PIPE).communicate()[0].decode("utf-8")
 
-        response.outputs['output'].output_format = FORMATS.JSON
+        response.outputs['output'].data_format = FORMATS.JSON
         response.outputs['output'].data = output
 
         return response

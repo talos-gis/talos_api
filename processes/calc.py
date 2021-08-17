@@ -123,7 +123,7 @@ class Calc(Process):
         for i in range(len(files)):
             files[i] = None
 
-        response.outputs['output'].output_format = czml_format if is_czml else FORMATS.GEOTIFF
+        response.outputs['output'].data_format = czml_format if is_czml else FORMATS.GEOTIFF
         response.outputs['output'].file = output_filename
 
         return response

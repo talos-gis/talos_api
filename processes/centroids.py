@@ -60,6 +60,6 @@ class Centroids(Process):
             geom = shape(feature['geometry'])
             feature['geometry'] = mapping(geom.centroid)
         out_bytes = json.dumps(data, indent=2)
-        response.outputs['out'].output_format = Format(FORMATS['JSON'])
+        response.outputs['out'].data_format = Format(FORMATS['JSON'])
         response.outputs['out'].data = out_bytes
         return response

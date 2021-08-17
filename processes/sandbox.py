@@ -27,7 +27,7 @@ class Sandbox(Process):
     def _handler(self, request, response):
         name = request.inputs['name'][0].data
         num = request.inputs['age'][0].data
-        response.outputs['output'].output_format = FORMATS.TEXT
+        response.outputs['output'].data_format = FORMATS.TEXT
         response.outputs['output'].data = str(Person(name, num))
         return response
 

@@ -82,7 +82,7 @@ class LOS(Process):
 
         response.outputs['r'].data = raster_filename
         response.outputs['comment'].data = process_helper.get_request_data(request.inputs, 'comment')
-        response.outputs['output'].output_format = FORMATS.JSON
+        response.outputs['output'].data_format = FORMATS.JSON
         response.outputs['output'].data = results
 
         return response

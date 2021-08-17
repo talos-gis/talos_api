@@ -61,7 +61,7 @@ class Invert(Process):
         del d_band
         del d_ds
 
-        response.outputs['output'].output_format = FORMATS.GEOTIFF
+        response.outputs['output'].data_format = FORMATS.GEOTIFF
         response.outputs['output'].file = d_path
 
         return response

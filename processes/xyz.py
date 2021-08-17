@@ -54,10 +54,10 @@ class XYZ(Process):
 
             response.outputs['nodata'].data = nodata
 
-            response.outputs['x'].output_format = FORMATS.JSON
-            response.outputs['y'].output_format = FORMATS.JSON
-            response.outputs['z'].output_format = FORMATS.JSON
-            response.outputs['categories'].output_format = FORMATS.JSON
+            response.outputs['x'].data_format = FORMATS.JSON
+            response.outputs['y'].data_format = FORMATS.JSON
+            response.outputs['z'].data_format = FORMATS.JSON
+            response.outputs['categories'].data_format = FORMATS.JSON
 
             response.outputs['x'].data = x
             response.outputs['y'].data = y

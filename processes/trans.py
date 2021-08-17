@@ -48,7 +48,7 @@ class Trans(Process):
             gdalos_trans(raster_filename, of=of, out_filename=output_filename)
 
         response.outputs['r'].data = raster_filename
-        response.outputs['output'].output_format = FORMATS.TEXT
+        response.outputs['output'].data_format = FORMATS.TEXT
         response.outputs['output'].file = output_filename
 
         return response

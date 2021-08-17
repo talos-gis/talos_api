@@ -21,7 +21,7 @@ class TestJson(Process):
     def _handler(self, request, response):
         data = json.loads('["foo", {"bar":["baz", null, 1.0, 2]}]')
         out_bytes = json.dumps(data, indent=2)
-        response.outputs['output'].output_format = 'application/json'
+        response.outputs['output'].data_format = 'application/json'
         response.outputs['output'].data = out_bytes
 
         return response

@@ -79,7 +79,7 @@ class Buffer(Process):
 
         out_source.Destroy()
 
-        response.outputs['buff_out'].output_format = FORMATS.GML
+        response.outputs['buff_out'].data_format = FORMATS.GML
         response.outputs['buff_out'].file = out_filename
 
         return response
