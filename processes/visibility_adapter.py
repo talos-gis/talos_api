@@ -1,9 +1,11 @@
+import math
 from typing import Dict, Any
 
 from gdalos.talos.geom_util import direction_and_aperture_from_az
+from gdalos.viewshed.viewshed_params import st_hidden, st_seenbut
 from osgeo_utils.auxiliary.osr_util import get_srs
 from processes.adapter_util import get_format
-from processes.tasc_adapter import aoi_to_geojson
+from processes.tasc_adapter import aoi_to_geojson, get_raster_names
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 
@@ -55,6 +57,7 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any], **kwargs):
     inputs['elevation'], inputs['v_aperture'] = direction_and_aperture_from_az(start_el, end_el)
 
     inputs['cutline'] = aoi_to_geojson(inputs)
+    inputs['output_ras'] = get_raster_names(inputs)
 
     inputs['color_palette'] = {
         "type": "reference",
@@ -83,42 +86,12 @@ def pre_request_fos(d: Dict[str, Any], **kwargs):
     return d
 
 
-# {
-# 	"accessToken": "token",
-# 	"Position": {
-# 		"X": 32.8,
-# 		"Y": 35.8,
-# 		"Z": 1
-# 	},
-# 	"Radius": 100.0,
-# 	"TargetAlt": 3000.0,
-# 	"IsTargetAltAboveTerrain": false,
-# 	"IsReturnHeights": true,
-# 	"IsReturnGeo": true,
-# 	"AOI": [],
-# 	"CenterGeoRaster": false,
-# 	"CenterAboveTerrain": true,
-# 	"LimitToAOI": false,
-# 	"priority": 0,
-# 	"resolution": 380.0,
-# 	"centralMeridian": null,
-# 	"dtmOnly": false,
-# 	"timeOut": 0
-# }
-
-# {
-# 	"IsReturnHeights": true,
-# 	"CenterGeoRaster": false,
-# 	"LimitToAOI": false,
-# }
-
 def pre_request_fos_inputs(inputs: Dict[str, Any], **kwargs):
     lower_case_keys(inputs)
 
     # convert main section keys
     key_conv = {
         'resolution': 'res_m',
-        'isreturnheights': 'return_dtm',
     }
     for k, v in key_conv.items():
         if k in inputs:
@@ -130,6 +103,8 @@ def pre_request_fos_inputs(inputs: Dict[str, Any], **kwargs):
     inputs['oy'] = obs['y']
     inputs['oz'] = obs['z']
     inputs['omsl'] = not obs.get('centeraboveterrain', True)
+
+    inputs['output_ras'] = get_raster_names(inputs)
 
     inputs['tz'] = inputs.get('targetalt', 0)
     inputs['tmsl'] = not inputs.get('istargetaltaboveterrain', True)
@@ -165,42 +140,23 @@ def pre_request_fos_inputs(inputs: Dict[str, Any], **kwargs):
     return inputs
 
 
-# {
-#     "QueryType": 14,
-#     "TopLeft": {
-#         "X": 32.78,
-#         "Y": 35.81666666666667
-#     },
-#     "BottomRight": {
-#         "X": 32.82,
-#         "Y": 35.783333333333339
-#     },
-#     "IncludeHeights": true,
-#     "IsRasterGeo": true,
-#     "Resolution": 0.0033333333333333335,
-#     "Total": 120,
-#     "Width": 12,
-#     "Height": 10,
-#     "SightValues": [
-#         null,
-#         null,
-#     ]
-#     "HeightsValues": [
-#         "NaN",
-#         0.0
-#     ]
-# }
-
-
 def pre_response_fos(response: Dict[str, Any], **kwargs):
+    of = kwargs['request'].inputs['of'][0].data
+    if of != 'json':
+        return response
     vis = response['output'].data
-    raster_data = None if vis is None else vis['data']
+    all_raster_data = None if vis is None else vis['data']
+    raster_data = all_raster_data[0]
 
-    if vis.get('bands', 1) >= 2:
-        dtm_data = raster_data[1]
-        raster_data = raster_data[0]
+    if len(all_raster_data) >= 2:
+        dtm_data = all_raster_data[1]
+        ndv = vis.get('ndv')
+        if ndv is not None:
+            ndv = ndv[1]
+            dtm_data = [math.nan if x == ndv else x for x in dtm_data]
     else:
         dtm_data = None
+    raster_data = [None if x < st_hidden else x > st_seenbut for x in raster_data]
 
     bbox = vis.get('bbox')
     miny, minx, maxy, maxx = bbox
@@ -237,7 +193,6 @@ def pre_response_fos(response: Dict[str, Any], **kwargs):
         "HeightsValues": dtm_data,
     }
     response['output'].data = result
-
     return response
 
 

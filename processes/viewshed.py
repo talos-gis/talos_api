@@ -46,7 +46,7 @@ class Viewshed(Process):
             iog.resolution_output(defaults) + \
             iog.threads(defaults) + \
             iog.radio(defaults) + \
-            iog.return_dtm(defaults) + \
+            iog.output_ras(defaults) + \
             iog.fake_raster(defaults)
 
         outputs = iog.output_r() + \
@@ -89,6 +89,7 @@ class Viewshed(Process):
         if color_palette is None and is_czml:
             raise Exception('color_palette is required for czml output')
         discrete_mode = process_helper.get_request_data(request.inputs, 'discrete_mode')
+        output_ras = process_helper.get_request_data(request.inputs, 'output_ras', index=None)
 
         output_filename = None if is_json else tempfile.mktemp(suffix=ext)
 
@@ -118,6 +119,7 @@ class Viewshed(Process):
             operation=operation, operation_hidendv=operation_hidendv,
             in_coords_srs=in_coords_srs, out_crs=out_crs,
             color_palette=color_palette, discrete_mode=discrete_mode,
+            output_ras=output_ras,
             files=files, vp_slice=vp_slice, threads=threads)
 
         response.outputs['r'].data = raster_filename

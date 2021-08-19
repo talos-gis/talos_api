@@ -29,3 +29,9 @@ def get_tasc_refraction(inputs: Dict[str, Any], name: str = 'isuserefraction'):
     is_refraction = inputs.get(name, False)
     return atmospheric_refraction_coeff if not is_refraction else rf_refraction_coeff
 
+
+def get_raster_names(inputs):
+    names = ["heights", "ranges", "azangles", "elangles"]
+    prefixes = ['', 'return', 'isreturn']
+    result = ['v'] + [k for k in names if any([inputs.get(p + k) for p in prefixes])]
+    return result

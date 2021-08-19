@@ -93,67 +93,68 @@ def pre_request_multi_los_inputs(inputs: Dict[str, Any], **kwargs):
 
 def pre_response_multi_los(response: Dict[str, Any], **kwargs):
     of = kwargs['request'].inputs['of'][0].data
-    if of == 'json':
-        output = response['output']
-        data = output.data
-        new_data = [{
-            "features": [
-                {
-                    "geometry": {
-                        "coordinates": [
-                            [
-                                ox,
-                                oy
-                            ],
-                            [
-                                bx,
-                                by
-                            ]
+    if of != 'json':
+        return response
+    output = response['output']
+    data = output.data
+    new_data = [{
+        "features": [
+            {
+                "geometry": {
+                    "coordinates": [
+                        [
+                            ox,
+                            oy
                         ],
-                        "type": "LineString"
-                    },
-                    "properties": {
-                        "height": [
-                            oz,
-                            bz
-                        ],
-                        "Visible": True
-                    },
-                    "type": "Feature"
+                        [
+                            bx,
+                            by
+                        ]
+                    ],
+                    "type": "LineString"
                 },
-                {
-                    "geometry": {
-                        "coordinates": [
-                            [
-                                bx,
-                                by
-                            ],
-                            [
-                                tx,
-                                ty
-                            ]
+                "properties": {
+                    "height": [
+                        oz,
+                        bz
+                    ],
+                    "Visible": True
+                },
+                "type": "Feature"
+            },
+            {
+                "geometry": {
+                    "coordinates": [
+                        [
+                            bx,
+                            by
                         ],
-                        "type": "LineString"
-                    },
-                    "properties": {
-                        "height": [
-                            bz,
-                            tz
-                        ],
-                        "Visible": False
-                    },
-                    "type": "Feature"
-                }
-            ],
-            "type": "FeatureCollection"
-        } for ox, oy, oz,
-              tx, ty, tz,
-              bx, by, bz in zip(data['ox'], data['oy'], data['oz_abs'],
-                                data['tx'], data['ty'], data['tz_abs'],
-                                data['bx'], data['by'], data['bz'])]
-        if len(new_data) == 1:
-            new_data = new_data[0]
-        output.data = new_data
+                        [
+                            tx,
+                            ty
+                        ]
+                    ],
+                    "type": "LineString"
+                },
+                "properties": {
+                    "height": [
+                        bz,
+                        tz
+                    ],
+                    "Visible": False
+                },
+                "type": "Feature"
+            }
+        ],
+        "type": "FeatureCollection"
+    } for ox, oy, oz,
+          tx, ty, tz,
+          bx, by, bz in zip(data['ox'], data['oy'], data['oz_abs'],
+                            data['tx'], data['ty'], data['tz_abs'],
+                            data['bx'], data['by'], data['bz'])]
+    if len(new_data) == 1:
+        new_data = new_data[0]
+    output.data = new_data
     return response
 
 

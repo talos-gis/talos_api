@@ -112,10 +112,12 @@ def threads(defaults):
     ]
 
 
-def return_dtm(defaults):
+def output_ras(defaults):
     return [
-        LiteralInputD(defaults, 'return_dtm', 'return also dtm band', data_type='boolean',
-                      default=False, **mm0)
+        LiteralInputD(defaults, 'output_ras',
+                      'which additional rasters to return '
+                      '[Visibility|Heights|Ranges|Azimuths|Elevations]',
+                      data_type='string', default=None, **mm0)
     ]
 
 def fwd_calc(defaults):

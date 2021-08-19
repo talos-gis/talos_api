@@ -13,13 +13,24 @@ def get_request_data(request_input, name, get_file: bool = False, index=0):
     # result = request_input[name][index].data if name in request_input else None
     if name not in request_input:
         return None
-    result = request_input[name][index]
-    if result.data is None:
-        return None
-    result = result.file if get_file else result.data
-    if result == 'None':
-        return None  # todo: is this a bug?
-    return result
+    inputs = request_input[name]
+    is_single = isinstance(index, int)
+    if is_single:
+        index = [index]
+    elif index is None:
+        index = range(len(inputs))
+    data = []
+    for i in index:
+        input = inputs[i]
+        if input.data is None:
+            return None
+        input = input.file if get_file else input.data
+        if input == 'None':
+            return None  # todo: is this a bug?
+        data.append(input)
+    if is_single:
+        data = data[0]
+    return data
 
 
 def get_input_data_array(request_input) -> List:
