@@ -58,7 +58,8 @@ class LOS(Process):
         )
 
     def _handler(self, request, response: ExecuteResponse):
-        backend, vp_arrays_dict = iog.get_vp(request.inputs, MultiPointParams)
+        ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
+        backend, vp_arrays_dict = iog.get_vp(request.inputs, MultiPointParams, ext_url)
         if isinstance(backend, str):
             backend = ViewshedBackend[backend]
         use_projected_input = backend.requires_projected_ds()
@@ -71,7 +72,6 @@ class LOS(Process):
         del_s = get_request_data(request.inputs, 'del_s') or 0
         operation, operation_hidendv = process_helper.get_operation(request.inputs)
         color_palette = process_helper.get_request_data(request.inputs, 'color_palette', True)
-        ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
         of = str(process_helper.get_request_data(request.inputs, 'of')).lower()
         results = los_calc(
             input_filename=input_file, ovr_idx=ovr_idx, bi=bi, backend=backend,
