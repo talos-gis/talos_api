@@ -5,7 +5,7 @@ from gdalos.talos.geom_util import direction_and_aperture_from_az
 from gdalos.viewshed.viewshed_params import st_hidden, st_seenbut
 from osgeo_utils.auxiliary.osr_util import get_srs
 from processes.adapter_util import get_format
-from processes.tasc_adapter import aoi_to_geojson, get_raster_names
+from processes.tasc_adapter import get_raster_names, handle_aoi
 from .pre_processors_utils import lower_case_keys, pre_request_transform
 
 
@@ -56,7 +56,8 @@ def pre_request_visibility_inputs(inputs: Dict[str, Any], **kwargs):
     inputs['azimuth'], inputs['h_aperture'] = direction_and_aperture_from_az(start_az, end_az, 360)
     inputs['elevation'], inputs['v_aperture'] = direction_and_aperture_from_az(start_el, end_el)
 
-    inputs['cutline'] = aoi_to_geojson(inputs)
+    handle_aoi(inputs)
+
     inputs['output_ras'] = get_raster_names(inputs)
 
     inputs['color_palette'] = {
@@ -112,19 +113,8 @@ def pre_request_fos_inputs(inputs: Dict[str, Any], **kwargs):
     inputs['max_r'] = inputs['radius']
 
     inputs['out_crs'] = 0 if inputs.get('isreturngeo', True) else None
-    inputs['cutline'] = aoi_to_geojson(inputs)
 
-    # once there were two way to set the extent of the output raster:
-    # 1. "LimitToAOI" - meaning clip to the extent of the AOI (cutline)
-    # 2. "CenterGeoRaster" - meaning take the position in pixels of the observer
-    # in the output raster and set the extent around it so it will be EXACTLY in
-    # in the middle of the output raster.
-    if inputs['cutline']:
-        clip_extent_to_aoi = inputs.get('limittoaoi', True)
-        if not clip_extent_to_aoi:
-            raise Exception('Sorry, LimitToAOI=False is not supported if AIO is set')
-    if inputs.get('centergeoraster'):
-        raise Exception('Sorry, CenterGeoRaster is not supported.')
+    handle_aoi(inputs)
 
     if 'of' not in inputs:
         inputs['of'] = get_format(viewshed_formats, default='json', **kwargs)
