@@ -1,3 +1,8 @@
-gdal-mrr
-talosgis>=3.3.4
+gdalos>=0.62.0
+gdal-utils>=3.3.1.5
+gdal>=3.3.1
+czml3>=0.5.4
+talosgis>=3.6.4
+rfmodel>=0.0.9
 tirem
+gdal-mrr

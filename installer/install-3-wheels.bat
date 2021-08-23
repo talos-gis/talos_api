@@ -25,10 +25,10 @@ SET pip_offline=
 if %online%x==x SET pip_offline=--upgrade --no-index --find-links %WHEELS_TARGET%
 
 @echo Install %APP_NAME% python package requirements
-FOR %%R IN (requirements.txt, requirements-opt.txt, requirements-ext.txt, requirements-dev.txt) DO %PYTHON_EXE% -m pip install --prefer-binary %pip_offline% -r %APP_ROOT_PATH%\%%R
+FOR %%R IN (requirements.txt, requirements-ext.txt, requirements-dev.txt) DO %PYTHON_EXE% -m pip install --prefer-binary %pip_offline% -r %APP_ROOT_PATH%\%%R
 
 :: process one requirement at a time so that if one failes it would still process the rest.
-::FOR %%R IN (requirements.txt, requirements-opt.txt, requirements-ext.txt, requirements-dev.txt) DO for /F "tokens=*" %%F in (%APP_ROOT_PATH%\%%R) do %PYTHON_EXE% -m pip install --force-reinstall %pip_offline% %%F
+::FOR %%R IN (requirements.txt, requirements-ext.txt, requirements-dev.txt) DO for /F "tokens=*" %%F in (%APP_ROOT_PATH%\%%R) do %PYTHON_EXE% -m pip install --force-reinstall %pip_offline% %%F
 
 popd
 
