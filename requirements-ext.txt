@@ -1,4 +1,4 @@
-gdalos>=0.62.0
+gdalos>=0.62.1
 gdal-utils>=3.3.1.5
 gdal>=3.3.1
 czml3>=0.5.4
