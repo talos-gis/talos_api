@@ -476,6 +476,29 @@
 					"response": []
 				},
 				{
+					"name": "color_crop_czml json simple",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier\": \"crop_color\",\n\t\"outputs\": \"output\",\n\t\"inputs\": {\n\t\t\"of\": \"tif\",\n        \"extent\": {\n            \"type\": \"bbox\",\n          \t\"bbox\": [30.82, 34.74, 30.85, 34.78]\n        }\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{talos_wps}}",
+							"host": [
+								"{{talos_wps}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "color_crop_czml xml global",
 					"request": {
 						"method": "POST",
@@ -905,7 +928,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"identifier\": \"viewshed\",\n    \"outputs\": \"output\",\n    \"inputs\": {\n        \"backend\": \"radio\",\n        \"mode\":[\"NonFreeSpaceLoss\"],\n        \"of\": \"tif\",\n        \"_color_palette\": {\n            \"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/gradient/percentages.txt\"\n        },\n        \"max_r\": \"250000\",\n        \"res_m\": 30000,\n        \"ox\": \"35.0\",\n        \"oy\": \"32.0\",\n        \"oz\": \"10.0\",\n        \"tz\": \"10.0\",\n        \"omsl\": \"False\",\n        \"tmsl\": \"False\",\n        \"refractivity\": 301,\n        \"conductivity\": 0.028,\n        \"permittivity\": 15,\n        \"humidity\": 10,\n        \"frequency\": 300.0,\n        \"polarity\": \"h\"\n    }\n}\n",
+							"raw": "{\n    \"identifier\": \"viewshed\",\n    \"outputs\": \"output\",\n    \"inputs\": {\n        \"backend\": \"radio\",\n        \"mode\":[\"NonFreeSpaceLoss\"],\n        \"of\": \"tif\",\n        \"_color_palette\": {\n            \"type\": \"reference\",\n            \"href\": \"file:./static/data/color_files/gradient/percentages.txt\"\n        },\n        \"max_r\": 250000,\n        \"res_m\": 30000,\n        \"ox\": 35.0,\n        \"oy\": 32.0,\n        \"oz\": 10.0,\n        \"tz\": 10.0,\n        \"omsl\": false,\n        \"tmsl\": false,\n        \"refractivity\": 301,\n        \"conductivity\": 0.028,\n        \"permittivity\": 15,\n        \"humidity\": 10,\n        \"frequency\": 300.0,\n        \"polarity\": \"h\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1062,15 +1085,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"points\": [\n\t\t{ \"lon\": 34.3, \"lat\": 32.2 },\n\t\t{ \"lon\": 35.5, \"lat\": 32.5 },\n\t\t{ \"lon\": 35.8, \"lat\": 32.8 },\n\t\t{ \"lon\": 36.1, \"lat\": 33.0 },\n\t\t{ \"lon\": 36.2, \"lat\": 33.2 }\n\t]\n}"
+							"raw": "{\n    \"r\": \"./static/data/maps/srtm_30k_32636.tif\",\n\t\"accessToken\": \"test\",\n\t\"from\": {\n\t\t\"lat\": 32.8,\n\t\t\"lon\": 35.8,\n\t\t\"alt\": 1,\n\t\t\"aot\": \"true\"\n\t},\n\t\"to\": {\n\t\t\"lat\": 33.8,\n\t\t\"lon\": 35.8,\n\t\t\"alt\": 1\n\t}\n}"
 						},
 						"url": {
-							"raw": "{{talos_api1}}/ElevationPoint",
+							"raw": "{{talos_api1}}/LOS",
 							"host": [
 								"{{talos_api1}}"
 							],
 							"path": [
-								"ElevationPoint"
+								"LOS"
 							]
 						}
 					},
@@ -1094,7 +1117,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"accessToken\": \"test\",\r\n\t\"analysisType\": \"GoNoGo\",\r\n\t\"from\": [\r\n\t\t{\r\n\t\t\t\"lon\": 35,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.5,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t}\r\n\t],\r\n\t\"obsEqp\": [\r\n\t\t{\r\n\t\t\t\"maxRange\": 20000,\r\n\t\t\t\"minRange\": 0,\r\n\t\t\t\"startAz\": 0,\r\n\t\t\t\"endAz\": 360,\r\n\t\t\t\"startEl\": -90,\r\n\t\t\t\"endEl\": 90\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"maxRange\": 20000,\r\n\t\t\t\"minRange\": 0,\r\n\t\t\t\"startAz\": 0,\r\n\t\t\t\"endAz\": 360,\r\n\t\t\t\"startEl\": -90,\r\n\t\t\t\"endEl\": 90\r\n\t\t}\r\n\t],    \r\n\t\"to\": [\r\n\t\t{\r\n\t\t\t\"lon\": 34.5,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.1,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.25,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},        \r\n\t\t{\r\n\t\t\t\"lon\": 35.6,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t}\r\n\t],\r\n\t\"colors\": {\r\n\t\t\"values\": {\r\n\t\t\t\"0\": \"#FFff0000\",\r\n\t\t\t\"1\": \"#FF00ff00\",\r\n\t\t\t\"254\": \"#66000000\",\r\n\t\t\t\"255\": \"#00000000\"\r\n\t\t},\r\n\t\t\"noDateValue\": \"1.0\"\r\n\t}\r\n}",
+							"raw": "{\r\n    \"r\": \"./static/data/maps/srtm_30k_32636.tif\",    \r\n\t\"accessToken\": \"test\",\r\n\t\"analysisType\": \"GoNoGo\",\r\n\t\"from\": [\r\n\t\t{\r\n\t\t\t\"lon\": 35,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.5,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t}\r\n\t],\r\n\t\"obsEqp\": [\r\n\t\t{\r\n\t\t\t\"maxRange\": 20000,\r\n\t\t\t\"minRange\": 0,\r\n\t\t\t\"startAz\": 0,\r\n\t\t\t\"endAz\": 360,\r\n\t\t\t\"startEl\": -90,\r\n\t\t\t\"endEl\": 90\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"maxRange\": 20000,\r\n\t\t\t\"minRange\": 0,\r\n\t\t\t\"startAz\": 0,\r\n\t\t\t\"endAz\": 360,\r\n\t\t\t\"startEl\": -90,\r\n\t\t\t\"endEl\": 90\r\n\t\t}\r\n\t],    \r\n\t\"to\": [\r\n\t\t{\r\n\t\t\t\"lon\": 34.5,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.1,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"lon\": 35.25,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t},        \r\n\t\t{\r\n\t\t\t\"lon\": 35.6,\r\n\t\t\t\"lat\": 32,\r\n\t\t\t\"alt\": 100\r\n\t\t}\r\n\t],\r\n\t\"colors\": {\r\n\t\t\"values\": {\r\n\t\t\t\"0\": \"#FFff0000\",\r\n\t\t\t\"1\": \"#FF00ff00\",\r\n\t\t\t\"254\": \"#66000000\",\r\n\t\t\t\"255\": \"#00000000\"\r\n\t\t},\r\n\t\t\"noDateValue\": \"1.0\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1244,6 +1267,66 @@
 					"response": []
 				},
 				{
+					"name": "FOS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n\t\"Position\": {\n\t\t\"X\": 34.75,\n\t\t\"Y\": 30.85,\n\t\t\"Z\": 10\n\t},\n\t\"Radius\": 3000.0,\n\t\"CenterAboveTerrain\": true,\n\t\"TargetAlt\": 10.0,\n\t\"IsTargetAltAboveTerrain\": true,\n\t\"IsReturnHeights\": true,\n\t\"IsReturnGeo\": true,\n\t\"AOI\": [],\n\t\"CenterGeoRaster\": false,\n\t\"LimitToAOI\": false,\n\t\"priority\": 0,\n\t\"resolution\": 380.0,\n\t\"centralMeridian\": null,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0\n}"
+						},
+						"url": {
+							"raw": "{{talos_api1}}/FOS",
+							"host": [
+								"{{talos_api1}}"
+							],
+							"path": [
+								"FOS"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FOS boker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.geo+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessToken\": \"token\",\n\t\"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n\t\"Position\": {\n\t\t\"X\": 34.75,\n\t\t\"Y\": 30.85,\n\t\t\"Z\": 10\n\t},\n\t\"Radius\": 3000.0,\n\t\"TargetAlt\": 3000.0,\n\t\"IsTargetAltAboveTerrain\": false,\n\t\"IsReturnHeights\": true,\n\t\"IsReturnGeo\": true,\n\t\"AOI\": [],\n\t\"CenterGeoRaster\": false,\n\t\"CenterAboveTerrain\": true,\n\t\"LimitToAOI\": false,\n\t\"priority\": 0,\n\t\"resolution\": 380.0,\n\t\"centralMeridian\": null,\n\t\"dtmOnly\": false,\n\t\"timeOut\": 0\n}"
+						},
+						"url": {
+							"raw": "{{talos_api1}}/FOS",
+							"host": [
+								"{{talos_api1}}"
+							],
+							"path": [
+								"FOS"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Visibility",
 					"request": {
 						"method": "POST",
@@ -1328,6 +1411,36 @@
 							],
 							"path": [
 								"ExtendedVisibilityBatch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExtendedVisibility boker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "image/tiff;application/zip"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accessToken\": \"test\",\n  \"r\": \"./static/data/maps/srtm1_boker_32636.tif\",\n  \"obsPos\": {\n    \"lat\": 30.85,\n    \"lon\": 34.75,\n    \"alt\": 80\n  },\n  \"obsEqp\": {\n    \"maxRange\": 3000\n  },\n  \"_aoi\": [\n  \t{\"lon\":35.70, \"lat\":32.69 },\n\t{\"lon\":35.90, \"lat\":32.65 },\n\t{\"lon\":35.95, \"lat\":32.50 },\n\t{\"lon\":35.75, \"lat\":32.44 }\n  ],\n  \"returnSingleRaster\": true,\n  \"returnRanges\": true,\n  \"returnElAngles\": true,\n  \"returnAzAngles\": true,\n  \"returnHeights\": true\n}"
+						},
+						"url": {
+							"raw": "{{talos_api1}}/ExtendedVisibility",
+							"host": [
+								"{{talos_api1}}"
+							],
+							"path": [
+								"ExtendedVisibility"
 							]
 						}
 					},
