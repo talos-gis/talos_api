@@ -1,42 +1,13 @@
 from types import SimpleNamespace
-from typing import NamedTuple, Dict, List, Any
+from typing import List
 import numpy as np
-from numpy.testing import assert_almost_equal
+import pytest
 
 from app import app
+from tests.tester_classes import TalosTest, ProfileTest, test_env
 
 
-def test_tasc():
-    env = SimpleNamespace()
-    env.talos = 'http://localhost:5000'
-    env.tasc = env.talos
-    env.talos_wps = env.talos + '/wps'
-    env.tasc_api1 = env.tasc + '/api/1.0'
-    env.talos_api1 = env.talos + '/api/1.0'
-
-    class TalosTest(NamedTuple):
-        url: str
-        request: Any
-        response: Any
-
-        def assert_response(self, other):
-            assert self.response == other
-
-        def run_test(self):
-            rv = c.post(self.url, json=self.request)
-            assert rv.status_code == 200
-            json_data = rv.get_json()
-            self.assert_response(json_data)
-
-    class ProfileTest(TalosTest):
-        def assert_response(self, other):
-            c1 = self.response['features'][0]['geometry']['coordinates']
-            c2 = other['features'][0]['geometry']['coordinates']
-            assert_almost_equal(c1, c2)
-            self.response['features'][0]['geometry']['coordinates'] = None
-            other['features'][0]['geometry']['coordinates'] = None
-            super().assert_response(other)
-
+def tasc_tests(test_env: SimpleNamespace):
     # boston and portland
     lat1 = 42.0 + (15.0 / 60.0)
     lon1 = -71.0 - (7.0 / 60.0)
@@ -54,9 +25,12 @@ def test_tasc():
 
     srtm_30k_global = './static/data/maps/srtm_30k_global.tif'
 
+    c = app.test_client()
+
     tests: List[TalosTest] = [
         TalosTest(
-            url=f'{env.tasc_api1}/ElevationPoint',
+            c=c,
+            url=f'{test_env.tasc_api1}/ElevationPoint',
             request={
                 "r": srtm_30k_global,
                 "accessToken": "token",
@@ -78,7 +52,8 @@ def test_tasc():
                       'type': 'FeatureCollection'}
         ),
         ProfileTest(
-            url=f'{env.tasc_api1}/Profile',
+            c=c,
+            url=f'{test_env.tasc_api1}/Profile',
             request={
                 "r": srtm_30k_global,
                 "accessToken": "token",
@@ -102,7 +77,8 @@ def test_tasc():
                       'type': 'FeatureCollection'}
         ),
         TalosTest(
-            url=f'{env.tasc_api1}/Points2PLoss',
+            c=c,
+            url=f'{test_env.tasc_api1}/Points2PLoss',
             request={
                 "r": srtm_30k_global,
                 "accessToken": "token",
@@ -158,6 +134,9 @@ def test_tasc():
         ),
     ]
 
-    with app.test_client() as c:
-        for test in tests:
-            test.run_test()
+    return tests
+
+
+@pytest.mark.parametrize("test", tasc_tests(test_env=test_env))
+def test_talos_xml(test):
+    test.run_test()
