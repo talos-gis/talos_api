@@ -1,5 +1,5 @@
-gdalos>=0.62.1
-gdal-utils>=3.3.1.5
+gdalos>=0.62.2
+gdal-utils>=3.3.1.6
 gdal>=3.3.1
 czml3>=0.5.4
 talosgis>=3.6.4
