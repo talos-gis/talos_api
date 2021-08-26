@@ -59,7 +59,7 @@ class LOS(Process):
 
     def _handler(self, request, response: ExecuteResponse):
         ext_url = process_helper.get_request_data(request.inputs, 'ext_url')
-        backend, vp_arrays_dict = iog.get_vp(request.inputs, MultiPointParams, ext_url)
+        backend, vp_arrays_dict = iog.get_vp(request.inputs, MultiPointParams)
         if isinstance(backend, str):
             backend = ViewshedBackend[backend]
         use_projected_input = backend.requires_projected_ds()

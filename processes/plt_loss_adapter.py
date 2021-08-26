@@ -69,7 +69,7 @@ def pre_request_plt_loss_inputs(inputs: Dict[str, Any], **kwargs):
 
     # these are the outputs we want to create
     inputs['mode'] = ['PathLoss', 'FreeSpaceLoss', 'LOSVisRes']
-    inputs.setdefault('backend', 'radio')
+    inputs.setdefault('backend', 'rfmodel')
     return inputs
 
 

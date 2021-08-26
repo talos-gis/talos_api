@@ -457,7 +457,7 @@ def get_input_file(raster_filename: PathLikeOrStr, use_data_selector=True) -> \
     return r
 
 
-def get_vp(request_inputs, vp_class, ext_url=None):
+def get_vp(request_inputs, vp_class):
     backend = process_helper.get_request_data(request_inputs, 'backend')
     name_map = {'calc_mode': 'mode'}
     params = list(gdalos_base.get_all_slots(vp_class))
@@ -467,8 +467,6 @@ def get_vp(request_inputs, vp_class, ext_url=None):
     is_radio = calc_mode is not None and any('loss' in str(x).lower() for x in calc_mode)
     if backend is None:
         backend = 'radio' if is_radio else default_LOSBackend.name
-    if backend == 'radio' and ext_url:
-        backend = 'z_rest'
     if calc_mode is None:
         calc_mode = [RadioCalcType.PathLoss if is_radio else RadioCalcType.LOSRange]
     vp_arrays_dict['calc_mode'] = calc_mode
